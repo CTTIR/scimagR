@@ -1,0 +1,47 @@
+Package: scimagR
+Title: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis in R
+Version: 0.1.0
+Authors@R: person("Raban", "Heller", role = c("aut", "cre"),
+                   email = "raban.heller@example.com")
+Description: An end-to-end pipeline for longitudinal MRI and CT analysis
+    in spinal cord injury (SCI) research. Provides R wrappers for the
+    Spinal Cord Toolbox (SCT) including SCIsegV2 lesion segmentation,
+    DICOM anonymization and NIfTI conversion tools, SCI-specific clinical
+    metrics (MSCC, compression ratio, tissue bridge quantification),
+    implant artifact grading, and pipeline orchestration with built-in
+    quality control. Integrates with workflowr for reproducible,
+    publication-ready neuroimaging analyses.
+License: MIT + file LICENSE
+URL: https://github.com/rabanheller/scimagR
+BugReports: https://github.com/rabanheller/scimagR/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: R (>= 4.1.0)
+Imports:
+    cli (>= 3.0),
+    dplyr (>= 1.1),
+    ggplot2 (>= 3.4),
+    glue (>= 1.6),
+    readr,
+    rlang (>= 1.0),
+    tibble,
+    tidyr,
+    viridisLite,
+    writexl
+Suggests:
+    covr,
+    here,
+    knitr,
+    patchwork,
+    rmarkdown,
+    rstudioapi,
+    testthat (>= 3.0),
+    withr,
+    workflowr
+SystemRequirements:
+    Spinal Cord Toolbox (>= 6.4) <https://spinalcordtoolbox.com>,
+    dcm2niix <https://github.com/rordenlab/dcm2niix>,
+    Python 3 with pydicom (pip install pydicom)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

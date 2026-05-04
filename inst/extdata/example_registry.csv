@@ -1,0 +1,9 @@
+pat_id,session,study_date,modality,series_description,field_strength,trauma_date,days_post_trauma,phase,artifact_grade,notes
+SCI001,ses-01,2024-01-20,MRT,T2w_sag,3.0,2024-01-15,5,acute,1,
+SCI001,ses-02,2024-03-15,MRT,T2w_sag,3.0,2024-01-15,60,subacute,0,
+SCI001,ses-03,2024-07-20,MRT,T2w_sag,3.0,2024-01-15,187,intermediate,1,
+SCI002,ses-01,2024-02-25,CT+MRT,T2w_sag,1.5,2024-02-20,5,acute,2,Implant artifact
+SCI002,ses-02,2024-05-20,MRT,T2w_sag,3.0,2024-02-20,90,subacute,0,
+SCI003,ses-01,2024-03-05,CT,CT_cervical,NA,2024-03-01,4,acute,0,CT only
+SCI003,ses-02,2024-06-01,MRT,T2w_sag,3.0,2024-03-01,92,intermediate,1,
+SCI003,ses-03,2025-04-01,MRT,T2w_sag,3.0,2024-03-01,397,chronic,0,

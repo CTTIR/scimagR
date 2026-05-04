@@ -1,0 +1,122 @@
+---
+title: "Getting Started with scimagR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with scimagR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Overview
+
+scimagR provides an end-to-end pipeline for longitudinal MRI and CT analysis
+in spinal cord injury (SCI) research. This vignette walks you through:
+
+1. Installing prerequisites
+2. Creating a new project
+3. Organizing your data
+4. Running the pipeline
+5. Analyzing results
+
+## Prerequisites
+
+scimagR requires the following external tools:
+
+- **Spinal Cord Toolbox (SCT)** >= 6.4: <https://spinalcordtoolbox.com>
+- **dcm2niix**: <https://github.com/rordenlab/dcm2niix>
+- **Python 3** with pydicom: `pip install pydicom`
+
+Check that all tools are available:
+
+```{r check-tools}
+library(scimagR)
+
+check_sct()
+check_dcm2niix()
+check_pydicom()
+```
+
+## Creating a Project
+
+Use `sci_create_project()` to scaffold a new workflowr-based analysis project:
+```{r create-project}
+sci_create_project(
+  path = "~/projects/my-sci-study",
+  title = "Cervical SCI Longitudinal MRI Analysis",
+  author = "Your Name"
+)
+```
+
+This creates a complete directory structure with template files, configuration,
+and analysis Rmd notebooks.
+
+## Data Organization
+
+Place your DICOM files in `data/raw/dicom/` following this structure:
+
+```
+data/raw/dicom/
+├── SCI001/
+│   ├── ses-01/
+│   │   └── *.dcm
+│   └── ses-02/
+│       └── *.dcm
+└── SCI002/
+    └── ses-01/
+        └── *.dcm
+```
+
+Fill in the CSV templates in `data/metadata/`:
+
+- `imaging_registry.csv`: One row per imaging session
+- `clinical_data.csv`: One row per patient
+
+## Running the Pipeline
+
+The pipeline orchestrates all processing steps:
+
+```{r run-pipeline}
+sci_run_pipeline("~/projects/my-sci-study", steps = 1:8)
+```
+
+Check pipeline status at any time:
+
+```{r pipeline-status}
+sci_pipeline_status("~/projects/my-sci-study")
+```
+
+## Computing SCI Metrics
+
+scimagR includes validated implementations of common SCI metrics:
+
+```{r metrics}
+# Maximum Spinal Cord Compression
+compute_mscc(di = 5.2, da = 8.1, db = 8.5)
+
+# Compression ratio
+compute_compression_ratio(ap = 6.5, transverse = 12.0)
+
+# Phase classification
+classify_phase(c(0, 5, 30, 200, 400))
+```
+
+## Visualization
+
+Use the built-in theme and palettes for publication-ready figures:
+
+```{r viz}
+library(ggplot2)
+
+ggplot(data, aes(x = phase, y = mscc, fill = phase)) +
+  geom_violin() +
+  scale_fill_phase() +
+  theme_sci()
+```
