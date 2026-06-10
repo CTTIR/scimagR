@@ -45,3 +45,4 @@ SystemRequirements:
     Python 3 with pydicom (pip install pydicom)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/Needs/website: CTTIR/themakR
