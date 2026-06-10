@@ -12,8 +12,8 @@ Description: An end-to-end pipeline for longitudinal MRI and CT analysis
     quality control. Integrates with workflowr for reproducible,
     publication-ready neuroimaging analyses.
 License: MIT + file LICENSE
-URL: https://github.com/rabanheller/scimagR
-BugReports: https://github.com/rabanheller/scimagR/issues
+URL: https://github.com/cttir/scimagR
+BugReports: https://github.com/cttir/scimagR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
