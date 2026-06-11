@@ -1,7 +1,7 @@
 Package: scimagR
 Title: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis in R
 Version: 0.1.0
-Authors@R: person("Raban", "Heller", role = c("aut", "cre"),
+Authors@R: person("R.", "Heller", role = c("aut", "cre"),
                    email = "raban.heller@example.com")
 Description: An end-to-end pipeline for longitudinal MRI and CT analysis
     in spinal cord injury (SCI) research. Provides R wrappers for the
