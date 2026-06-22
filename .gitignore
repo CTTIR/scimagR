@@ -1,0 +1,10 @@
+.DS_Store
+*.tmp
+*.log
+*~
+*.bak
+*.orig
+.Rhistory
+.RData
+.Rproj.user
+*.Rcheck/
