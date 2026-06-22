@@ -12,14 +12,14 @@ scale_fill_phase(...)
 }
 \arguments{
 \item{...}{Additional arguments passed to
-\code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} / \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}}.}
+\code{\link[ggplot2:scale_colour_manual]{ggplot2::scale_colour_manual()}} / \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 A ggplot2 scale object.
 }
 \description{
-Convenience wrappers around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} and
-\code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}} using \link{pal_phase}.
+Convenience wrappers around \code{\link[ggplot2:scale_colour_manual]{ggplot2::scale_colour_manual()}} and
+\code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}} using \link{pal_phase}.
 }
 \examples{
 \dontrun{

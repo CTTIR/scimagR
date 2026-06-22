@@ -12,7 +12,7 @@ scale_fill_artifact(...)
 }
 \arguments{
 \item{...}{Additional arguments passed to
-\code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} / \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}}.}
+\code{\link[ggplot2:scale_colour_manual]{ggplot2::scale_colour_manual()}} / \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 A ggplot2 scale object.

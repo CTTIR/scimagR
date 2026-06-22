@@ -15,7 +15,7 @@ theme_sci(base_size = 11, base_family = "Arial")
 A ggplot2 theme object.
 }
 \description{
-A clean ggplot2 theme based on \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw()}}, optimized for
+A clean ggplot2 theme based on \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}}, optimized for
 publication-ready neuroimaging figures. Uses Arial font, no minor
 gridlines, and a bottom legend.
 }

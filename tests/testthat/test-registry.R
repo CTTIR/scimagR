@@ -83,3 +83,81 @@ test_that("coverage_matrix produces wide format", {
   expect_true("s1" %in% names(cm))
   expect_true("s2" %in% names(cm))
 })
+
+# --- additional branch coverage ---
+
+test_that("create_registry reads from a CSV path", {
+  dir <- withr::local_tempdir()
+  meta_csv <- file.path(dir, "meta.csv")
+  readr::write_csv(data.frame(
+    pat_id = "SCI001", session = "ses-01",
+    study_date = "2024-01-20", modality = "MRT"
+  ), meta_csv)
+  reg <- create_registry(meta_csv, c(SCI001 = "2024-01-15"))
+  expect_equal(reg$days_post_trauma, 5L)
+})
+
+test_that("create_registry errors on missing required columns", {
+  expect_error(
+    create_registry(data.frame(pat_id = "A"), c(A = "2024-01-01")),
+    "missing columns"
+  )
+})
+
+test_that("create_registry adds op-date fields when op_dates supplied", {
+  meta <- data.frame(
+    pat_id = "SCI001", session = "ses-01",
+    study_date = "2024-01-25", modality = "MRT", stringsAsFactors = FALSE
+  )
+  reg <- create_registry(meta, c(SCI001 = "2024-01-15"),
+                         op_dates = c(SCI001 = "2024-01-18"))
+  expect_true(all(c("op_date", "days_post_op") %in% names(reg)))
+  expect_equal(reg$days_post_op, 7L)
+})
+
+test_that("create_registry writes to output_csv when requested", {
+  dir <- withr::local_tempdir()
+  out <- file.path(dir, "nested", "registry.csv")
+  meta <- data.frame(
+    pat_id = "SCI001", session = "ses-01",
+    study_date = "2024-01-20", modality = "MRT", stringsAsFactors = FALSE
+  )
+  reg <- create_registry(meta, c(SCI001 = "2024-01-15"), output_csv = out)
+  expect_true(file.exists(out))
+})
+
+test_that("validate_registry reads from a CSV path", {
+  reg_csv <- system.file("extdata", "example_registry.csv", package = "scimagR")
+  expect_invisible(validate_registry(reg_csv, strict = FALSE))
+})
+
+test_that("validate_registry on the bundled fixture passes", {
+  reg_csv <- system.file("extdata", "example_registry.csv", package = "scimagR")
+  reg <- suppressMessages(readr::read_csv(reg_csv, show_col_types = FALSE))
+  expect_message(validate_registry(reg), "validation passed")
+})
+
+test_that("validate_registry warns rather than aborts when strict = FALSE", {
+  bad <- data.frame(pat_id = "A", session = "s1",
+                    study_date = "2024-01-01", modality = "PET")
+  expect_warning(validate_registry(bad, strict = FALSE), "Invalid modality")
+})
+
+test_that("create_registry output is stable (snapshot)", {
+  meta <- data.frame(
+    pat_id = c("SCI001", "SCI001"),
+    session = c("ses-01", "ses-02"),
+    study_date = c("2024-01-20", "2024-03-15"),
+    modality = c("MRT", "MRT"),
+    stringsAsFactors = FALSE
+  )
+  reg <- create_registry(meta, c(SCI001 = "2024-01-15"))
+  expect_snapshot_value(
+    list(
+      days = reg$days_post_trauma,
+      phase = as.character(reg$phase),
+      cols = names(reg)
+    ),
+    style = "json2"
+  )
+})

@@ -6,18 +6,25 @@
 \alias{scimagR-package}
 \title{scimagR: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis in R}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 An end-to-end pipeline for longitudinal MRI and CT analysis in spinal cord injury (SCI) research. Provides R wrappers for the Spinal Cord Toolbox (SCT) including SCIsegV2 lesion segmentation, DICOM anonymization and NIfTI conversion tools, SCI-specific clinical metrics (MSCC, compression ratio, tissue bridge quantification), implant artifact grading, and pipeline orchestration with built-in quality control. Integrates with workflowr for reproducible, publication-ready neuroimaging analyses.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/rabanheller/scimagR}
-  \item Report bugs at \url{https://github.com/rabanheller/scimagR/issues}
+  \item \url{https://github.com/cttir/scimagR}
+  \item Report bugs at \url{https://github.com/cttir/scimagR/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Raban Heller \email{raban.heller@example.com}
+\strong{Maintainer}: R. Heller \email{raban.heller@example.com}
+
+Authors:
+\itemize{
+  \item R. Heller \email{raban.heller@example.com}
+}
 
 }
 \keyword{internal}
