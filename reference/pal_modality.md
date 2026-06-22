@@ -8,10 +8,6 @@ Named character vector of 3 colours for imaging modalities.
 pal_modality
 ```
 
-## Format
-
-An object of class `character` of length 3.
-
 ## Examples
 
 ``` r

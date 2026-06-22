@@ -9,10 +9,6 @@ hyperacute, acute, subacute, intermediate, chronic.
 pal_phase
 ```
 
-## Format
-
-An object of class `character` of length 5.
-
 ## Examples
 
 ``` r

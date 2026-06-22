@@ -10,10 +10,6 @@ Named character vector of 5 colours for MRI artifact grades: none
 pal_artifact
 ```
 
-## Format
-
-An object of class `character` of length 5.
-
 ## Examples
 
 ``` r

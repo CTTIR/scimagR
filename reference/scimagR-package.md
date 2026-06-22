@@ -13,10 +13,14 @@ neuroimaging analyses.
 
 Useful links:
 
-- <https://github.com/rabanheller/scimagR>
+- <https://github.com/cttir/scimagR>
 
-- Report bugs at <https://github.com/rabanheller/scimagR/issues>
+- Report bugs at <https://github.com/cttir/scimagR/issues>
 
 ## Author
 
-**Maintainer**: Raban Heller <raban.heller@example.com>
+**Maintainer**: R. Heller <raban.heller@example.com>
+
+Authors:
+
+- R. Heller <raban.heller@example.com>
