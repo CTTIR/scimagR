@@ -1,5 +1,7 @@
 # scimagR
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889958.svg)](https://doi.org/10.5281/zenodo.21889958)
+
 An end-to-end R pipeline for longitudinal MRI and CT analysis in spinal
 cord injury (SCI) research. Provides R wrappers for the Spinal Cord
 Toolbox (SCT), DICOM tools, SCI-specific clinical metrics, and pipeline
