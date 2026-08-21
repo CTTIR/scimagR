@@ -33,6 +33,9 @@ test_that("sct_run captures a successful run via a stub executable", {
   # known always-present command. We mock to an echo-like call.
   fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
   skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
+  # to source, exiting 1 before it runs anything. Clear it for the subprocess.
+  withr::local_envvar(R_TESTS = "")
   local_mocked_bindings(sct_find_executable = function(cmd) fake_exe)
   res <- sct_run("sct_version", args = c("-e", shQuote("cat('hi')")),
                  verbose = FALSE)
@@ -44,6 +47,9 @@ test_that("sct_run captures a successful run via a stub executable", {
 test_that("sct_run warns and reports a non-zero exit code", {
   fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
   skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
+  # to source, exiting 1 before it runs anything. Clear it for the subprocess.
+  withr::local_envvar(R_TESTS = "")
   local_mocked_bindings(sct_find_executable = function(cmd) fake_exe)
   expect_warning(
     res <- sct_run("sct_version", args = c("-e", shQuote("quit(status=3)")),
@@ -56,6 +62,9 @@ test_that("sct_run warns and reports a non-zero exit code", {
 test_that("sct_run prints the command when verbose", {
   fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
   skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
+  # to source, exiting 1 before it runs anything. Clear it for the subprocess.
+  withr::local_envvar(R_TESTS = "")
   local_mocked_bindings(sct_find_executable = function(cmd) fake_exe)
   expect_message(
     sct_run("sct_version", args = c("-e", shQuote("cat(1)")), verbose = TRUE),
