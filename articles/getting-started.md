@@ -15,7 +15,7 @@ MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.or
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
-### Overview
+## Overview
 
 scimagR provides an end-to-end pipeline for longitudinal MRI and CT
 analysis in spinal cord injury (SCI) research. This vignette walks you
@@ -27,7 +27,7 @@ through:
 4.  Running the pipeline
 5.  Analyzing results
 
-### Prerequisites
+## Prerequisites
 
 scimagR requires the following external tools:
 
@@ -46,7 +46,7 @@ check_dcm2niix()
 check_pydicom()
 ```
 
-### Creating a Project
+## Creating a Project
 
 Use
 [`sci_create_project()`](https://cttir.github.io/scimagR/reference/sci_create_project.md)
@@ -64,7 +64,7 @@ sci_create_project(
 This creates a complete directory structure with template files,
 configuration, and analysis Rmd notebooks.
 
-### Data Organization
+## Data Organization
 
 Place your DICOM files in `data/raw/dicom/` following this structure:
 
@@ -83,7 +83,7 @@ Fill in the CSV templates in `data/metadata/`:
 - `imaging_registry.csv`: One row per imaging session
 - `clinical_data.csv`: One row per patient
 
-### Running the Pipeline
+## Running the Pipeline
 
 The pipeline orchestrates all processing steps:
 
@@ -99,7 +99,7 @@ Check pipeline status at any time:
 sci_pipeline_status("~/projects/my-sci-study")
 ```
 
-### Computing SCI Metrics
+## Computing SCI Metrics
 
 scimagR includes validated implementations of common SCI metrics:
 
@@ -115,7 +115,7 @@ compute_compression_ratio(ap = 6.5, transverse = 12.0)
 classify_phase(c(0, 5, 30, 200, 400))
 ```
 
-### Visualization
+## Visualization
 
 Use the built-in theme and palettes for publication-ready figures:
 
@@ -128,21 +128,3 @@ ggplot(data, aes(x = phase, y = mscc, fill = phase)) +
   scale_fill_phase() +
   theme_sci()
 ```
-
-## Use of LLM tools
-
-Portions of this package were prepared with assistance from large
-language model tooling for narrowly defined, non-authorial tasks:
-copyediting, prose smoothing, Markdown/LaTeX formatting, scaffolding of
-boilerplate files (CI configs, build scripts), code refactoring. The
-tools used were [Chat
-AI](https://kisski.gwdg.de/leistungen/2-02-llm-service/), the LLM
-service of KISSKI (GWDG), and a self-hosted **Mistral Small (24B,
-Apache-2.0)** run locally via [Ollama](https://ollama.com/) and the
-`ollamar` R package — local inference only, with no data sent to third
-parties for the self-hosted model.
-
-All scientific claims, methodological choices, analyses,
-interpretations, and conclusions are the author’s own. No LLM-generated
-text was incorporated without review and revision, and every reference
-was verified against its DOI, arXiv ID, or ISBN.
