@@ -1,0 +1,16 @@
+identity,rendered,destination
+scimagR,icon-128.png,man/figures/icon-128.png
+scimagR,icon-256.png,man/figures/icon-256.png
+scimagR,icon-32.png,man/figures/icon-32.png
+scimagR,icon-48.png,man/figures/icon-48.png
+scimagR,icon-64.png,man/figures/icon-64.png
+scimagR,logo-light.png,man/figures/logo-light.png
+scimagR,logo-light.svg,man/figures/logo-light.svg
+scimagR,logo-mono.png,man/figures/logo-mono.png
+scimagR,logo-mono.svg,man/figures/logo-mono.svg
+scimagR,logo-symbol.svg,man/figures/logo-symbol.svg
+scimagR,logo.pdf,man/figures/logo.pdf
+scimagR,logo.png,man/figures/logo.png
+scimagR,logo.svg,man/figures/logo.svg
+scimagR,icon-48.png,pkgdown/favicon/favicon-48x48.png
+scimagR,logo-symbol.svg,scimagR_icon.svg

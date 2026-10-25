@@ -10,3 +10,4 @@
 ^\.DS_Store$
 ^scimagR_icon\.svg$
 ^_coverage$
+^tools/branding$
