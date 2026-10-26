@@ -1,5 +1,13 @@
 # Tests for internal SCT helpers (sct-utils.R)
 
+# R CMD check prepends <check dir>/R_check_bin to PATH. Its Rscript shim only
+# prints "'Rscript' should not be used without a path" and exits 1, so
+# Sys.which("Rscript") cannot be used to launch a nested R. Use the real binary.
+real_rscript <- function() {
+  exe <- if (.Platform$OS.type == "windows") "Rscript.exe" else "Rscript"
+  normalizePath(file.path(R.home("bin"), exe), winslash = "/", mustWork = FALSE)
+}
+
 test_that("sct_find_executable returns empty string for unknown command", {
   withr::local_envvar(SCT_DIR = "")
   expect_identical(sct_find_executable("definitely_not_a_real_cmd_xyz"), "")
@@ -31,8 +39,8 @@ test_that("sct_run captures a successful run via a stub executable", {
   # Mock the resolver to point at a tiny shell-agnostic R script runner is
   # hard cross-platform; instead mock the resolver and rely on system2 of a
   # known always-present command. We mock to an echo-like call.
-  fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
-  skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  fake_exe <- real_rscript()
+  skip_if(!file.exists(fake_exe), "Rscript not resolvable")
   # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
   # to source, exiting 1 before it runs anything. Clear it for the subprocess.
   withr::local_envvar(R_TESTS = "")
@@ -45,8 +53,8 @@ test_that("sct_run captures a successful run via a stub executable", {
 })
 
 test_that("sct_run warns and reports a non-zero exit code", {
-  fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
-  skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  fake_exe <- real_rscript()
+  skip_if(!file.exists(fake_exe), "Rscript not resolvable")
   # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
   # to source, exiting 1 before it runs anything. Clear it for the subprocess.
   withr::local_envvar(R_TESTS = "")
@@ -60,8 +68,8 @@ test_that("sct_run warns and reports a non-zero exit code", {
 })
 
 test_that("sct_run prints the command when verbose", {
-  fake_exe <- normalizePath(Sys.which("Rscript")[[1]], winslash = "/", mustWork = FALSE)
-  skip_if(!nzchar(fake_exe), "Rscript not resolvable")
+  fake_exe <- real_rscript()
+  skip_if(!file.exists(fake_exe), "Rscript not resolvable")
   # R CMD check sets R_TESTS, which a nested Rscript inherits and then fails
   # to source, exiting 1 before it runs anything. Clear it for the subprocess.
   withr::local_envvar(R_TESTS = "")
