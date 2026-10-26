@@ -27,3 +27,9 @@ scimagR,hex.png,man/figures/logo.png
 scimagR,hex.svg,man/figures/logo.svg
 scimagR,icon-48.png,pkgdown/favicon/favicon-48x48.png
 scimagR,hex.svg,scimagR_icon.svg
+scimagR,hex-dark.svg,pkgdown/favicon/favicon.svg
+scimagR,favicon.ico,pkgdown/favicon/favicon.ico
+scimagR,icon-96.png,pkgdown/favicon/favicon-96x96.png
+scimagR,icon-180.png,pkgdown/favicon/apple-touch-icon.png
+scimagR,icon-192.png,pkgdown/favicon/web-app-manifest-192x192.png
+scimagR,icon-512.png,pkgdown/favicon/web-app-manifest-512x512.png
