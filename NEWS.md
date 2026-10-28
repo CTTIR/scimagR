@@ -1,5 +1,9 @@
 # scimagR 0.1.0
 
+* Standardize the named v5 package logo across README, documentation pages
+  and available application headers, with matching light and dark artwork.
+
+
 * Initial release.
 * SCT interface: R wrappers for spinal cord segmentation, lesion segmentation,
   vertebral labeling, and parameter extraction.
