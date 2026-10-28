@@ -1,4 +1,4 @@
-# scimagR ![scimagR hex logo](reference/figures/logo-with-name.png)
+# scimagR ![scimagR logo](reference/figures/logo-with-name.png)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889958.svg)](https://doi.org/10.5281/zenodo.21889958)
 

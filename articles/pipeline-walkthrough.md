@@ -1,5 +1,7 @@
 # Pipeline Walkthrough
 
+![scimagR logo](figures/logo.svg)![scimagR logo](figures/logo-dark.svg)
+
 [![R-CMD-check](https://github.com/CTTIR/scimagR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/scimagR/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/CTTIR/scimagR/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/scimagR/)
 [![CRAN
