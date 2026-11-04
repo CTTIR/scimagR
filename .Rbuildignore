@@ -11,3 +11,6 @@
 ^scimagR_icon\.svg$
 ^_coverage$
 ^tools/branding$
+^\.git$
+^\.zenodo\.json$
+^CITATION\.cff$
