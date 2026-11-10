@@ -1,20 +1,26 @@
 Package: scimagR
-Title: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis in R
-Version: 0.1.0
+Title: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis
+Version: 0.2.0
 Authors@R: person("R.", "Heller", role = c("aut", "cre"),
-                   email = "raban.heller@uni-ulm.de")
-Description: An end-to-end pipeline for longitudinal MRI and CT analysis
-    in spinal cord injury (SCI) research. Provides R wrappers for the
-    Spinal Cord Toolbox (SCT) including SCIsegV2 lesion segmentation,
-    DICOM anonymization and NIfTI conversion tools, SCI-specific clinical
-    metrics (MSCC, compression ratio, tissue bridge quantification),
-    implant artifact grading, and pipeline orchestration with built-in
-    quality control. Integrates with workflowr for reproducible,
-    publication-ready neuroimaging analyses.
+                   email = "raban.heller@uni-ulm.de",
+                   comment = c(ORCID = "0000-0001-8006-9742"))
+Description: An end-to-end pipeline for longitudinal magnetic resonance
+    imaging (MRI) and computed tomography (CT) analysis in spinal cord injury
+    (SCI) research. Provides R wrappers for the 'Spinal Cord Toolbox' (SCT;
+    De Leener et al. (2017) <doi:10.1016/j.neuroimage.2016.10.009>),
+    including 'SCIsegV2' lesion segmentation, DICOM anonymization and NIfTI
+    conversion helpers built on 'pydicom' and 'dcm2niix', SCI-specific
+    clinical metrics (maximum spinal cord compression, compression ratio,
+    tissue bridge quantification), implant artifact grading, and pipeline
+    orchestration with built-in quality control. Integrates with
+    'workflowr' for reproducible, publication-ready neuroimaging analyses.
+    All external tools are optional; the metrics, registry, quality-control
+    and plotting functions work without them.
 License: MIT + file LICENSE
-URL: https://github.com/cttir/scimagR
-BugReports: https://github.com/cttir/scimagR/issues
+URL: https://github.com/CTTIR/scimagR, https://cttir.github.io/scimagR/
+BugReports: https://github.com/CTTIR/scimagR/issues
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.1.0)
 Imports:
@@ -38,11 +44,11 @@ Suggests:
     testthat (>= 3.0),
     withr,
     workflowr
-SystemRequirements:
-    Spinal Cord Toolbox (>= 6.4) <https://spinalcordtoolbox.com>,
-    dcm2niix <https://github.com/rordenlab/dcm2niix>,
-    Python 3 with pydicom (pip install pydicom)
+SystemRequirements: Optional: Spinal Cord Toolbox (>= 6.4)
+    <https://spinalcordtoolbox.com>, dcm2niix
+    <https://github.com/rordenlab/dcm2niix>, Python 3 with pydicom
+    <https://pydicom.github.io>.
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/website: CTTIR/themakR
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1
