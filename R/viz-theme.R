@@ -1,19 +1,21 @@
 #' SCI Publication Theme
 #'
 #' A clean ggplot2 theme based on [ggplot2::theme_bw()], optimized for
-#' publication-ready neuroimaging figures. Uses Arial font, no minor
-#' gridlines, and a bottom legend.
+#' publication-ready neuroimaging figures, with no minor gridlines and a
+#' bottom legend.
 #'
 #' @param base_size Numeric. Base font size. Default `11`.
-#' @param base_family Character. Base font family. Default `"Arial"`.
+#' @param base_family Character. Base font family. Default `""`, the
+#'   device's standard sans-serif font (Helvetica or Arial on most systems),
+#'   which works on every graphics device. Set `"Arial"` explicitly for
+#'   devices that can use installed system fonts (e.g. `ragg` or Cairo PNG);
+#'   the base `pdf()` device does not know this family.
 #' @return A ggplot2 theme object.
 #' @export
 #' @examples
-#' \dontrun{
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) + geom_point() + theme_sci()
-#' }
-theme_sci <- function(base_size = 11, base_family = "Arial") {
+theme_sci <- function(base_size = 11, base_family = "") {
   ggplot2::theme_bw(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
       panel.grid.minor = ggplot2::element_blank(),
@@ -30,6 +32,7 @@ theme_sci <- function(base_size = 11, base_family = "Arial") {
 #' Named character vector of 5 viridis-derived colours for SCI phases:
 #' hyperacute, acute, subacute, intermediate, chronic.
 #'
+#' @format A named character vector of hexadecimal colour codes.
 #' @export
 #' @examples
 #' pal_phase
@@ -44,6 +47,7 @@ pal_phase <- stats::setNames(
 #' none (green), mild (yellow), moderate (orange), severe (red),
 #' non-evaluable (grey).
 #'
+#' @format A named character vector of hexadecimal colour codes.
 #' @export
 #' @examples
 #' pal_artifact
@@ -59,6 +63,7 @@ pal_artifact <- c(
 #'
 #' Named character vector of 3 colours for imaging modalities.
 #'
+#' @format A named character vector of hexadecimal colour codes.
 #' @export
 #' @examples
 #' pal_modality
