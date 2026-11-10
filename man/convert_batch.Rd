@@ -30,6 +30,15 @@ Tibble with columns: \code{pat_id}, \code{session}, \code{status}, \code{n_files
 Iterates over a registry and converts all sessions from DICOM to NIfTI.
 }
 \examples{
+# A session that cannot be converted (here: its DICOM folder is missing)
+# is reported with status "error" and does not stop the batch.
+registry <- data.frame(pat_id = "SCI001", session = "ses-01")
+convert_batch(registry,
+  dicom_root = file.path(tempdir(), "dicom"),
+  nifti_root = file.path(tempdir(), "nifti"),
+  verbose = FALSE
+)
+
 \dontrun{
 # Not run: needs DICOM files and the external 'dcm2niix' converter.
 convert_batch(registry, "data/raw/dicom", "data/nifti")

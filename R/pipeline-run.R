@@ -21,11 +21,10 @@
 #' @return Tibble with pipeline status per step.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Not run: needs DICOM data and the external tools Python 3 with
-#' # 'pydicom', 'dcm2niix' and the Spinal Cord Toolbox.
-#' sci_run_pipeline("~/projects/my-sci-study", steps = 1:3)
-#' }
+#' proj <- file.path(tempdir(), "pipeline-study")
+#' sci_create_project(proj, open = FALSE)
+#' sci_run_pipeline(proj, steps = 1:3, verbose = FALSE)
+#' unlink(proj, recursive = TRUE)
 sci_run_pipeline <- function(project_dir,
                              steps = 1:8,
                              anonymize = FALSE,
