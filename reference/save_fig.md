@@ -45,7 +45,7 @@ Character. Full path to saved file (invisible).
 p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
 out <- save_fig(p, "test_plot.png", tempdir(), width = 3, height = 2,
                 dpi = 72)
-#> ✔ Figure saved: /tmp/RtmptOUSAu/test_plot.png
+#> ✔ Figure saved: /tmp/RtmpGur4Jb/test_plot.png
 file.exists(out)
 #> [1] TRUE
 unlink(out)

@@ -130,11 +130,39 @@ interrupted and resumed at any step.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Not run: needs DICOM data and the external tools Python 3 with</span></span></span>
-<span class="r-in"><span><span class="co"># 'pydicom', 'dcm2niix' and the Spinal Cord Toolbox.</span></span></span>
-<span class="r-in"><span><span class="fu">sci_run_pipeline</span><span class="op">(</span><span class="st">"~/projects/my-sci-study"</span>, steps <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">proj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"pipeline-study"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="sci_create_project.html">sci_create_project</a></span><span class="op">(</span><span class="va">proj</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Creating SCI project: SCI Imaging Analysis</span> <span style="color: #00BBBB;">──────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Directory structure created.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Templates created.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Project created at <span style="color: #0000BB;">/tmp/RtmpGur4Jb/pipeline-study</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Next steps:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   1. Place DICOM files in <span style="color: #0000BB;">data/raw/dicom/</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   2. Fill in <span style="color: #0000BB;">data/metadata/imaging_registry.csv</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   3. Fill in <span style="color: #0000BB;">data/metadata/clinical_data.csv</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   4. Run `sci_run_pipeline()`</span>
+<span class="r-in"><span><span class="fu">sci_run_pipeline</span><span class="op">(</span><span class="va">proj</span>, steps <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Step 1: DICOM metadata extraction</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Running step 1...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Step 2 (Anonymization): skipped (anonymize = FALSE)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Step 3: DICOM to NIfTI conversion</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Running step 3...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Pipeline Summary</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 complete, 0 errors, 1 skipped</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    step name                      status   message            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 DICOM metadata extraction complete <span style="color: #949494;">""</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 Anonymization             skipped  <span style="color: #949494;">"</span>anonymize = FALSE<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 DICOM to NIfTI conversion complete <span style="color: #949494;">""</span>                 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">proj</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

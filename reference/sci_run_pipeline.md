@@ -64,9 +64,37 @@ interrupted and resumed at any step.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Not run: needs DICOM data and the external tools Python 3 with
-# 'pydicom', 'dcm2niix' and the Spinal Cord Toolbox.
-sci_run_pipeline("~/projects/my-sci-study", steps = 1:3)
-} # }
+proj <- file.path(tempdir(), "pipeline-study")
+sci_create_project(proj, open = FALSE)
+#> 
+#> ── Creating SCI project: SCI Imaging Analysis ──────────────────────────────────
+#> ✔ Directory structure created.
+#> ✔ Templates created.
+#> ✔ Project created at /tmp/RtmpGur4Jb/pipeline-study
+#> ℹ Next steps:
+#>   1. Place DICOM files in data/raw/dicom/
+#>   2. Fill in data/metadata/imaging_registry.csv
+#>   3. Fill in data/metadata/clinical_data.csv
+#>   4. Run `sci_run_pipeline()`
+sci_run_pipeline(proj, steps = 1:3)
+#> 
+#> ── Step 1: DICOM metadata extraction ──
+#> 
+#> ℹ Running step 1...
+#> Step 2 (Anonymization): skipped (anonymize = FALSE)
+#> 
+#> ── Step 3: DICOM to NIfTI conversion ──
+#> 
+#> ℹ Running step 3...
+#> 
+#> ── Pipeline Summary ──
+#> 
+#> 2 complete, 0 errors, 1 skipped
+#> # A tibble: 3 × 4
+#>    step name                      status   message            
+#>   <int> <chr>                     <chr>    <chr>              
+#> 1     1 DICOM metadata extraction complete ""                 
+#> 2     2 Anonymization             skipped  "anonymize = FALSE"
+#> 3     3 DICOM to NIfTI conversion complete ""                 
+unlink(proj, recursive = TRUE)
 ```
