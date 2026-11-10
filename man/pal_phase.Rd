@@ -3,6 +3,9 @@
 \name{pal_phase}
 \alias{pal_phase}
 \title{SCI Phase Colour Palette}
+\format{
+A named character vector of hexadecimal colour codes.
+}
 \usage{
 pal_phase
 }

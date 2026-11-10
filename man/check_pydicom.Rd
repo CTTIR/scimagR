@@ -19,7 +19,8 @@ Named list with components: \code{available}, \code{version}, \code{path}.
 Verifies that Python 3 with pydicom is available.
 }
 \examples{
-\dontrun{
-check_pydicom()
+\donttest{
+# Starts the Python interpreter, if one is installed, to import 'pydicom'.
+check_pydicom(verbose = FALSE)$available
 }
 }

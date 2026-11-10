@@ -29,7 +29,9 @@ Filters a dataset to sessions that meet artifact grade and modality
 criteria for analysis.
 }
 \examples{
-\dontrun{
-evaluable <- filter_evaluable(registry, max_artifact = 2)
-}
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+evaluable <- filter_evaluable(reg, max_artifact = 1)
+evaluable
 }

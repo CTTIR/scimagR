@@ -14,6 +14,7 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 #' sct_segment_sc("sub-01_T2w.nii.gz")
 #' }
 sct_segment_sc <- function(input,
@@ -75,6 +76,7 @@ sct_segment_sc <- function(input,
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 #' sct_segment_lesion("sub-01_T2w.nii.gz")
 #' }
 sct_segment_lesion <- function(input,

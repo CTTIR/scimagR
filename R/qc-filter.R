@@ -11,9 +11,11 @@
 #' @return Filtered data frame.
 #' @export
 #' @examples
-#' \dontrun{
-#' evaluable <- filter_evaluable(registry, max_artifact = 2)
-#' }
+#' reg <- validate_registry(
+#'   system.file("extdata", "example_registry.csv", package = "scimagR")
+#' )
+#' evaluable <- filter_evaluable(reg, max_artifact = 1)
+#' evaluable
 filter_evaluable <- function(df,
                              max_artifact = 2,
                              modalities = c("MRT", "CT+MRT"),

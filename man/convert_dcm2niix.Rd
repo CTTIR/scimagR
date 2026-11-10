@@ -23,6 +23,7 @@ Converts a single session's DICOM files to NIfTI format using dcm2niix.
 }
 \examples{
 \dontrun{
+# Not run: needs DICOM files and the external 'dcm2niix' converter.
 convert_dcm2niix("data/raw/dicom/SCI001/ses-01", "data/nifti/SCI001/ses-01")
 }
 }

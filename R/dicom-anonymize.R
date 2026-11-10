@@ -17,6 +17,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Not run: needs a directory of DICOM files and Python 3 with 'pydicom'.
 #' anonymize_dicom("data/raw/dicom", "/secure/id_mapping.csv")
 #' }
 anonymize_dicom <- function(dicom_dir,

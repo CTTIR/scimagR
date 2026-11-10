@@ -45,6 +45,8 @@ interrupted and resumed at any step.
 }
 \examples{
 \dontrun{
+# Not run: needs DICOM data and the external tools Python 3 with
+# 'pydicom', 'dcm2niix' and the Spinal Cord Toolbox.
 sci_run_pipeline("~/projects/my-sci-study", steps = 1:3)
 }
 }

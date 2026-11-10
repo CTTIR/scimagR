@@ -36,6 +36,7 @@ Runs SCT's contrast-agnostic spinal cord segmentation model.
 }
 \examples{
 \dontrun{
+# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 sct_segment_sc("sub-01_T2w.nii.gz")
 }
 }

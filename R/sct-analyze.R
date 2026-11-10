@@ -11,6 +11,7 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
 #' sct_analyze_lesion("sub-01_lesion_seg.nii.gz", "sub-01_seg.nii.gz")
 #' }
 sct_analyze_lesion <- function(lesion_seg,
@@ -62,6 +63,7 @@ sct_analyze_lesion <- function(lesion_seg,
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
 #' sct_process_segmentation("sub-01_seg.nii.gz", "sub-01_labels-disc.nii.gz")
 #' }
 sct_process_segmentation <- function(sc_seg,

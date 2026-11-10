@@ -3,6 +3,9 @@
 \name{pal_artifact}
 \alias{pal_artifact}
 \title{Artifact Grade Colour Palette}
+\format{
+A named character vector of hexadecimal colour codes.
+}
 \usage{
 pal_artifact
 }

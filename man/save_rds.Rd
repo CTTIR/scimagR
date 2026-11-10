@@ -20,7 +20,7 @@ Character. Full path to saved file (invisible).
 Saves any R object as .rds with a confirmation message.
 }
 \examples{
-\dontrun{
-save_rds(mtcars, "cars.rds", tempdir())
-}
+out <- save_rds(mtcars, "cars.rds", tempdir())
+identical(readRDS(out), mtcars)
+unlink(out)
 }

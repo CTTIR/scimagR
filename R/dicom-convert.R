@@ -10,6 +10,7 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs DICOM files and the external 'dcm2niix' converter.
 #' convert_dcm2niix("data/raw/dicom/SCI001/ses-01", "data/nifti/SCI001/ses-01")
 #' }
 convert_dcm2niix <- function(dicom_dir,
@@ -67,6 +68,7 @@ convert_dcm2niix <- function(dicom_dir,
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs DICOM files and the external 'dcm2niix' converter.
 #' convert_batch(registry, "data/raw/dicom", "data/nifti")
 #' }
 convert_batch <- function(registry,

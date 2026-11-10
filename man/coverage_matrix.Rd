@@ -18,8 +18,8 @@ per session containing the modality.
 Shows which patients have which modalities at which timepoints.
 }
 \examples{
-\dontrun{
-reg <- validate_registry("imaging_registry.csv", strict = FALSE)
-cm <- coverage_matrix(reg)
-}
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+coverage_matrix(reg)
 }

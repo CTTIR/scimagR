@@ -32,6 +32,7 @@ Creates an HTML QC report overlaying a segmentation on the original image.
 }
 \examples{
 \dontrun{
+# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 sct_generate_qc("sub-01_T2w.nii.gz", "sub-01_T2w_seg.nii.gz", "qc/")
 }
 }

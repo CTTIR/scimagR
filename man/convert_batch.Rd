@@ -31,6 +31,7 @@ Iterates over a registry and converts all sessions from DICOM to NIfTI.
 }
 \examples{
 \dontrun{
+# Not run: needs DICOM files and the external 'dcm2niix' converter.
 convert_batch(registry, "data/raw/dicom", "data/nifti")
 }
 }

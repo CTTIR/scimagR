@@ -12,11 +12,18 @@
 #' @return Tibble with registry columns.
 #' @export
 #' @examples
-#' \dontrun{
-#' meta <- read.csv("dicom_metadata.csv")
+#' # Metadata as returned by extract_dicom_metadata() (synthetic values).
+#' meta <- data.frame(
+#'   pat_id = c("SCI001", "SCI001", "SCI002"),
+#'   session = c("ses-01", "ses-02", "ses-01"),
+#'   study_date = c("2024-01-20", "2024-03-15", "2024-02-25"),
+#'   modality = c("MRT", "MRT", "CT"),
+#'   series_description = c("T2w_sag", "T2w_sag", "CT_cervical"),
+#'   field_strength = c(3, 3, NA)
+#' )
 #' trauma <- c(SCI001 = "2024-01-15", SCI002 = "2024-02-20")
 #' reg <- create_registry(meta, trauma)
-#' }
+#' reg
 create_registry <- function(dicom_meta,
                             trauma_dates,
                             op_dates = NULL,
@@ -82,9 +89,10 @@ create_registry <- function(dicom_meta,
 #' @return Invisibly returns the validated registry tibble.
 #' @export
 #' @examples
-#' \dontrun{
-#' validate_registry("data/metadata/imaging_registry.csv")
-#' }
+#' reg_file <- system.file("extdata", "example_registry.csv",
+#'                         package = "scimagR")
+#' reg <- validate_registry(reg_file)
+#' reg
 validate_registry <- function(registry, strict = TRUE) {
   if (is.character(registry) && length(registry) == 1) {
     registry <- readr::read_csv(registry, show_col_types = FALSE)

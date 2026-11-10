@@ -9,9 +9,10 @@
 #' @return Invisibly returns `df`.
 #' @export
 #' @examples
-#' \dontrun{
-#' registry |> integrity_summary(id_cols = c("pat_id", "session"))
-#' }
+#' reg <- validate_registry(
+#'   system.file("extdata", "example_registry.csv", package = "scimagR")
+#' )
+#' integrity_summary(reg, id_cols = c("pat_id", "session"))
 integrity_summary <- function(df, id_cols = NULL) {
   rlang::check_required(df)
   df <- tibble::as_tibble(df)

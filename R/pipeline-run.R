@@ -22,6 +22,8 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' # Not run: needs DICOM data and the external tools Python 3 with
+#' # 'pydicom', 'dcm2niix' and the Spinal Cord Toolbox.
 #' sci_run_pipeline("~/projects/my-sci-study", steps = 1:3)
 #' }
 sci_run_pipeline <- function(project_dir,
@@ -133,9 +135,10 @@ sci_run_pipeline <- function(project_dir,
 #'   `lesion_seg`, `vert_labels`, `qc_done`, `params_extracted`.
 #' @export
 #' @examples
-#' \dontrun{
-#' sci_pipeline_status("~/projects/my-sci-study")
-#' }
+#' proj <- file.path(tempdir(), "status-study")
+#' sci_create_project(proj, open = FALSE)
+#' sci_pipeline_status(proj)
+#' unlink(proj, recursive = TRUE)
 sci_pipeline_status <- function(project_dir) {
   rlang::check_required(project_dir)
 

@@ -27,7 +27,10 @@ Creates a violin plot with embedded boxplot (no outlier points) and
 jittered individual data points. Uses viridis palette by default.
 }
 \examples{
-\dontrun{
+set.seed(1)
+df <- data.frame(
+  phase = rep(c("acute", "subacute", "chronic"), each = 10),
+  mscc = c(rnorm(10, 30, 8), rnorm(10, 22, 6), rnorm(10, 15, 5))
+)
 plot_violin_box(df, x = "phase", y = "mscc", fill = "phase")
-}
 }

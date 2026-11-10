@@ -12,11 +12,12 @@
 #' @return Character. Path to created project (invisible).
 #' @export
 #' @examples
-#' \dontrun{
-#' sci_create_project("~/projects/my-sci-study",
+#' proj <- file.path(tempdir(), "my-sci-study")
+#' sci_create_project(proj,
 #'   title = "Cervical SCI Longitudinal MRI Analysis",
-#'   author = "Raban Heller")
-#' }
+#'   author = "Jane Doe", open = FALSE)
+#' list.files(proj)
+#' unlink(proj, recursive = TRUE)
 sci_create_project <- function(path,
                                title = "SCI Imaging Analysis",
                                author = "Author Name",

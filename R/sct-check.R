@@ -10,9 +10,8 @@
 #'   - `path`: Character. Path to `sct_version` executable or `NA`.
 #' @export
 #' @examples
-#' \dontrun{
-#' check_sct()
-#' }
+#' # Reports availability; returns `available = FALSE` when not installed.
+#' check_sct(verbose = FALSE)$available
 check_sct <- function(verbose = TRUE) {
   exe <- sct_find_executable("sct_version")
   available <- nzchar(exe)
@@ -53,9 +52,8 @@ check_sct <- function(verbose = TRUE) {
 #' @return Named list with components: `available`, `version`, `path`.
 #' @export
 #' @examples
-#' \dontrun{
-#' check_dcm2niix()
-#' }
+#' # Reports availability; returns `available = FALSE` when not installed.
+#' check_dcm2niix(verbose = FALSE)$available
 check_dcm2niix <- function(verbose = TRUE) {
   exe <- unname(Sys.which("dcm2niix"))
   available <- nzchar(exe)
@@ -99,8 +97,9 @@ check_dcm2niix <- function(verbose = TRUE) {
 #' @return Named list with components: `available`, `version`, `path`.
 #' @export
 #' @examples
-#' \dontrun{
-#' check_pydicom()
+#' \donttest{
+#' # Starts the Python interpreter, if one is installed, to import 'pydicom'.
+#' check_pydicom(verbose = FALSE)$available
 #' }
 check_pydicom <- function(python = Sys.getenv("PYTHON_BIN", "python3"),
                           verbose = TRUE) {

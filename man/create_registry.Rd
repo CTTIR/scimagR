@@ -25,9 +25,16 @@ it into a proper imaging registry with computed fields (days_post_trauma,
 phase classification), and optionally saves to CSV.
 }
 \examples{
-\dontrun{
-meta <- read.csv("dicom_metadata.csv")
+# Metadata as returned by extract_dicom_metadata() (synthetic values).
+meta <- data.frame(
+  pat_id = c("SCI001", "SCI001", "SCI002"),
+  session = c("ses-01", "ses-02", "ses-01"),
+  study_date = c("2024-01-20", "2024-03-15", "2024-02-25"),
+  modality = c("MRT", "MRT", "CT"),
+  series_description = c("T2w_sag", "T2w_sag", "CT_cervical"),
+  field_strength = c(3, 3, NA)
+)
 trauma <- c(SCI001 = "2024-01-15", SCI002 = "2024-02-20")
 reg <- create_registry(meta, trauma)
-}
+reg
 }

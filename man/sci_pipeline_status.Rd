@@ -18,7 +18,8 @@ Scans the project directory and reports which processing steps are
 complete for each patient and session.
 }
 \examples{
-\dontrun{
-sci_pipeline_status("~/projects/my-sci-study")
-}
+proj <- file.path(tempdir(), "status-study")
+sci_create_project(proj, open = FALSE)
+sci_pipeline_status(proj)
+unlink(proj, recursive = TRUE)
 }

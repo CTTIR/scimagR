@@ -20,12 +20,11 @@ Updated QC log tibble.
 Adds one or more QC entries to a QC log.
 }
 \examples{
-\dontrun{
 qc <- create_qc_log()
 entry <- tibble::tibble(
   pat_id = "SCI001", session = "ses-01", rater = "RH",
   date = Sys.Date(), seg_type = "sc", quality = "good", notes = ""
 )
 qc <- update_qc_log(qc, entry)
-}
+qc
 }

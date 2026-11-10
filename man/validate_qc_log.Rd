@@ -15,3 +15,11 @@ Invisibly returns the validated QC log.
 \description{
 Checks required columns and valid quality values.
 }
+\examples{
+qc <- tibble::tibble(
+  pat_id = "SCI001", session = "ses-01", rater = "RH",
+  date = as.Date("2025-01-10"), seg_type = "sc", quality = "good",
+  notes = ""
+)
+validate_qc_log(qc)
+}

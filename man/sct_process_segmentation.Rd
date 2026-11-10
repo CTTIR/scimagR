@@ -32,6 +32,7 @@ AP diameter, and transverse diameter per vertebral level.
 }
 \examples{
 \dontrun{
+# Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
 sct_process_segmentation("sub-01_seg.nii.gz", "sub-01_labels-disc.nii.gz")
 }
 }

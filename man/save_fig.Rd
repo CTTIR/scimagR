@@ -26,8 +26,9 @@ Character. Full path to saved file (invisible).
 Saves a ggplot2 plot at publication-ready resolution with white background.
 }
 \examples{
-\dontrun{
 p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-save_fig(p, "test_plot.png", tempdir())
-}
+out <- save_fig(p, "test_plot.png", tempdir(), width = 3, height = 2,
+                dpi = 72)
+file.exists(out)
+unlink(out)
 }

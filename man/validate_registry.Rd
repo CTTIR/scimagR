@@ -21,7 +21,8 @@ dates are valid, days_post_trauma >= 0, artifact_grade in 0--4,
 modality in allowed values.
 }
 \examples{
-\dontrun{
-validate_registry("data/metadata/imaging_registry.csv")
-}
+reg_file <- system.file("extdata", "example_registry.csv",
+                        package = "scimagR")
+reg <- validate_registry(reg_file)
+reg
 }

@@ -24,6 +24,7 @@ damage ratio, and tissue bridge measurements.
 }
 \examples{
 \dontrun{
+# Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
 sct_analyze_lesion("sub-01_lesion_seg.nii.gz", "sub-01_seg.nii.gz")
 }
 }

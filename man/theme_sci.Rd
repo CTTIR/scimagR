@@ -4,24 +4,26 @@
 \alias{theme_sci}
 \title{SCI Publication Theme}
 \usage{
-theme_sci(base_size = 11, base_family = "Arial")
+theme_sci(base_size = 11, base_family = "")
 }
 \arguments{
 \item{base_size}{Numeric. Base font size. Default \code{11}.}
 
-\item{base_family}{Character. Base font family. Default \code{"Arial"}.}
+\item{base_family}{Character. Base font family. Default \code{""}, the
+device's standard sans-serif font (Helvetica or Arial on most systems),
+which works on every graphics device. Set \code{"Arial"} explicitly for
+devices that can use installed system fonts (e.g. \code{ragg} or Cairo PNG);
+the base \code{pdf()} device does not know this family.}
 }
 \value{
 A ggplot2 theme object.
 }
 \description{
 A clean ggplot2 theme based on \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}}, optimized for
-publication-ready neuroimaging figures. Uses Arial font, no minor
-gridlines, and a bottom legend.
+publication-ready neuroimaging figures, with no minor gridlines and a
+bottom legend.
 }
 \examples{
-\dontrun{
 library(ggplot2)
 ggplot(mtcars, aes(wt, mpg)) + geom_point() + theme_sci()
-}
 }

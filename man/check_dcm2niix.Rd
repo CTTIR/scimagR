@@ -16,7 +16,6 @@ Named list with components: \code{available}, \code{version}, \code{path}.
 Verifies that dcm2niix is installed and on PATH.
 }
 \examples{
-\dontrun{
-check_dcm2niix()
-}
+# Reports availability; returns `available = FALSE` when not installed.
+check_dcm2niix(verbose = FALSE)$available
 }

@@ -22,7 +22,6 @@ Verifies that SCT is installed and on PATH. Returns version and path
 information.
 }
 \examples{
-\dontrun{
-check_sct()
-}
+# Reports availability; returns `available = FALSE` when not installed.
+check_sct(verbose = FALSE)$available
 }

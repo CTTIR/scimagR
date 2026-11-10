@@ -20,7 +20,7 @@ Character. Full path to saved file (invisible).
 Saves a data frame as .xlsx via writexl.
 }
 \examples{
-\dontrun{
-save_table(mtcars, "cars.xlsx", tempdir())
-}
+out <- save_table(mtcars, "cars.xlsx", tempdir())
+file.exists(out)
+unlink(out)
 }

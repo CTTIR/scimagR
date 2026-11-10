@@ -17,7 +17,8 @@ Creates a tile plot showing modality coverage per patient and session,
 with optional artifact grade overlay.
 }
 \examples{
-\dontrun{
-plot_coverage(registry)
-}
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+plot_coverage(reg)
 }

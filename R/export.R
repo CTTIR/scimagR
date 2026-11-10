@@ -11,10 +11,11 @@
 #' @return Character. Full path to saved file (invisible).
 #' @export
 #' @examples
-#' \dontrun{
 #' p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-#' save_fig(p, "test_plot.png", tempdir())
-#' }
+#' out <- save_fig(p, "test_plot.png", tempdir(), width = 3, height = 2,
+#'                 dpi = 72)
+#' file.exists(out)
+#' unlink(out)
 save_fig <- function(plot, filename, path, width = 7, height = 5, dpi = 600) {
   rlang::check_required(plot)
   rlang::check_required(filename)
@@ -49,9 +50,9 @@ save_fig <- function(plot, filename, path, width = 7, height = 5, dpi = 600) {
 #' @return Character. Full path to saved file (invisible).
 #' @export
 #' @examples
-#' \dontrun{
-#' save_table(mtcars, "cars.xlsx", tempdir())
-#' }
+#' out <- save_table(mtcars, "cars.xlsx", tempdir())
+#' file.exists(out)
+#' unlink(out)
 save_table <- function(df, filename, path) {
   rlang::check_required(df)
   rlang::check_required(filename)
@@ -78,9 +79,9 @@ save_table <- function(df, filename, path) {
 #' @return Character. Full path to saved file (invisible).
 #' @export
 #' @examples
-#' \dontrun{
-#' save_rds(mtcars, "cars.rds", tempdir())
-#' }
+#' out <- save_rds(mtcars, "cars.rds", tempdir())
+#' identical(readRDS(out), mtcars)
+#' unlink(out)
 save_rds <- function(obj, filename, path) {
   rlang::check_required(filename)
   rlang::check_required(path)

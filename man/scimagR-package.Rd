@@ -4,26 +4,27 @@
 \name{scimagR-package}
 \alias{scimagR}
 \alias{scimagR-package}
-\title{scimagR: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis in R}
+\title{scimagR: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis}
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
-An end-to-end pipeline for longitudinal MRI and CT analysis in spinal cord injury (SCI) research. Provides R wrappers for the Spinal Cord Toolbox (SCT) including SCIsegV2 lesion segmentation, DICOM anonymization and NIfTI conversion tools, SCI-specific clinical metrics (MSCC, compression ratio, tissue bridge quantification), implant artifact grading, and pipeline orchestration with built-in quality control. Integrates with workflowr for reproducible, publication-ready neuroimaging analyses.
+An end-to-end pipeline for longitudinal magnetic resonance imaging (MRI) and computed tomography (CT) analysis in spinal cord injury (SCI) research. Provides R wrappers for the 'Spinal Cord Toolbox' (SCT; De Leener et al. (2017) \doi{10.1016/j.neuroimage.2016.10.009}), including 'SCIsegV2' lesion segmentation, DICOM anonymization and NIfTI conversion helpers built on 'pydicom' and 'dcm2niix', SCI-specific clinical metrics (maximum spinal cord compression, compression ratio, tissue bridge quantification), implant artifact grading, and pipeline orchestration with built-in quality control. Integrates with 'workflowr' for reproducible, publication-ready neuroimaging analyses. All external tools are optional; the metrics, registry, quality-control and plotting functions work without them.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/cttir/scimagR}
-  \item Report bugs at \url{https://github.com/cttir/scimagR/issues}
+  \item \url{https://github.com/CTTIR/scimagR}
+  \item \url{https://cttir.github.io/scimagR/}
+  \item Report bugs at \url{https://github.com/CTTIR/scimagR/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: R. Heller \email{raban.heller@example.com}
+\strong{Maintainer}: R. Heller \email{raban.heller@uni-ulm.de} (\href{https://orcid.org/0000-0001-8006-9742}{ORCID})
 
 Authors:
 \itemize{
-  \item R. Heller \email{raban.heller@example.com}
+  \item R. Heller \email{raban.heller@uni-ulm.de} (\href{https://orcid.org/0000-0001-8006-9742}{ORCID})
 }
 
 }

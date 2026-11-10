@@ -35,6 +35,7 @@ Runs SCIsegV2 lesion segmentation model via SCT.
 }
 \examples{
 \dontrun{
+# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 sct_segment_lesion("sub-01_T2w.nii.gz")
 }
 }

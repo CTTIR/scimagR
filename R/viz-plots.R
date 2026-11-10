@@ -12,9 +12,12 @@
 #' @return A ggplot2 object.
 #' @export
 #' @examples
-#' \dontrun{
+#' set.seed(1)
+#' df <- data.frame(
+#'   phase = rep(c("acute", "subacute", "chronic"), each = 10),
+#'   mscc = c(rnorm(10, 30, 8), rnorm(10, 22, 6), rnorm(10, 15, 5))
+#' )
 #' plot_violin_box(df, x = "phase", y = "mscc", fill = "phase")
-#' }
 plot_violin_box <- function(df, x, y, fill = x, title = NULL, ylab = y) {
   rlang::check_required(df)
   rlang::check_required(x)
@@ -50,10 +53,14 @@ plot_violin_box <- function(df, x, y, fill = x, title = NULL, ylab = y) {
 #' @return A ggplot2 object.
 #' @export
 #' @examples
-#' \dontrun{
+#' df <- data.frame(
+#'   pat_id = rep(c("SCI001", "SCI002", "SCI003"), each = 3),
+#'   days_post_trauma = rep(c(5, 60, 180), times = 3),
+#'   csa = c(72, 68, 65, 70, 69, 66, 75, 70, 64),
+#'   phase = rep(c("acute", "subacute", "intermediate"), times = 3)
+#' )
 #' plot_spaghetti(df, x = "days_post_trauma", y = "csa",
-#'                group = "pat_id", colour = "phase")
-#' }
+#'                group = "pat_id", colour = "phase", smoother = FALSE)
 plot_spaghetti <- function(df, x, y, group, colour = NULL,
                            smoother = TRUE, title = NULL) {
   rlang::check_required(df)
@@ -100,7 +107,6 @@ plot_spaghetti <- function(df, x, y, group, colour = NULL,
 #' @return A ggplot2 object.
 #' @export
 #' @examples
-#' \dontrun{
 #' est <- data.frame(
 #'   model = c("Full", "Sensitivity 1", "Sensitivity 2"),
 #'   estimate = c(-2.1, -1.9, -2.3),
@@ -108,7 +114,6 @@ plot_spaghetti <- function(df, x, y, group, colour = NULL,
 #'   ci_upper = c(-0.7, -0.4, -0.8)
 #' )
 #' plot_forest(est)
-#' }
 plot_forest <- function(estimates_df, xlab = "Estimate", title = NULL,
                         vline = 0) {
   rlang::check_required(estimates_df)

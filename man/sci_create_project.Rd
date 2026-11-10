@@ -32,9 +32,10 @@ pre-configured YAML files, template Rmd files, CSV templates, and
 a \code{.gitignore} tuned for neuroimaging projects.
 }
 \examples{
-\dontrun{
-sci_create_project("~/projects/my-sci-study",
+proj <- file.path(tempdir(), "my-sci-study")
+sci_create_project(proj,
   title = "Cervical SCI Longitudinal MRI Analysis",
-  author = "Raban Heller")
-}
+  author = "Jane Doe", open = FALSE)
+list.files(proj)
+unlink(proj, recursive = TRUE)
 }

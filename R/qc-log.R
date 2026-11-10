@@ -34,14 +34,13 @@ create_qc_log <- function(path = NULL) {
 #' @return Updated QC log tibble.
 #' @export
 #' @examples
-#' \dontrun{
 #' qc <- create_qc_log()
 #' entry <- tibble::tibble(
 #'   pat_id = "SCI001", session = "ses-01", rater = "RH",
 #'   date = Sys.Date(), seg_type = "sc", quality = "good", notes = ""
 #' )
 #' qc <- update_qc_log(qc, entry)
-#' }
+#' qc
 update_qc_log <- function(qc_log, entries, output_csv = NULL) {
   rlang::check_required(qc_log)
   rlang::check_required(entries)
@@ -63,6 +62,13 @@ update_qc_log <- function(qc_log, entries, output_csv = NULL) {
 #' @param qc_log Data frame or path to CSV.
 #' @return Invisibly returns the validated QC log.
 #' @export
+#' @examples
+#' qc <- tibble::tibble(
+#'   pat_id = "SCI001", session = "ses-01", rater = "RH",
+#'   date = as.Date("2025-01-10"), seg_type = "sc", quality = "good",
+#'   notes = ""
+#' )
+#' validate_qc_log(qc)
 validate_qc_log <- function(qc_log) {
   if (is.character(qc_log) && length(qc_log) == 1) {
     qc_log <- readr::read_csv(qc_log, show_col_types = FALSE)

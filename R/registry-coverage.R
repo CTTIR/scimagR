@@ -8,10 +8,10 @@
 #'   per session containing the modality.
 #' @export
 #' @examples
-#' \dontrun{
-#' reg <- validate_registry("imaging_registry.csv", strict = FALSE)
-#' cm <- coverage_matrix(reg)
-#' }
+#' reg <- validate_registry(
+#'   system.file("extdata", "example_registry.csv", package = "scimagR")
+#' )
+#' coverage_matrix(reg)
 coverage_matrix <- function(registry) {
   rlang::check_required(registry)
   registry <- tibble::as_tibble(registry)
@@ -40,9 +40,10 @@ coverage_matrix <- function(registry) {
 #' @return A ggplot2 object.
 #' @export
 #' @examples
-#' \dontrun{
-#' plot_coverage(registry)
-#' }
+#' reg <- validate_registry(
+#'   system.file("extdata", "example_registry.csv", package = "scimagR")
+#' )
+#' plot_coverage(reg)
 plot_coverage <- function(registry) {
   rlang::check_required(registry)
   registry <- tibble::as_tibble(registry)

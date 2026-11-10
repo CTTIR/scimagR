@@ -3,6 +3,9 @@
 \name{pal_modality}
 \alias{pal_modality}
 \title{Modality Colour Palette}
+\format{
+A named character vector of hexadecimal colour codes.
+}
 \usage{
 pal_modality
 }

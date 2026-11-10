@@ -20,7 +20,8 @@ Reports dimensions, missing values per column, and duplicate count for
 a data frame. Returns the data frame invisibly for piping.
 }
 \examples{
-\dontrun{
-registry |> integrity_summary(id_cols = c("pat_id", "session"))
-}
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+integrity_summary(reg, id_cols = c("pat_id", "session"))
 }

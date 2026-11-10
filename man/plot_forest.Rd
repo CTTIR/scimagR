@@ -24,7 +24,6 @@ Creates a forest plot for comparing model estimates with confidence
 intervals. Useful for sensitivity analysis comparisons.
 }
 \examples{
-\dontrun{
 est <- data.frame(
   model = c("Full", "Sensitivity 1", "Sensitivity 2"),
   estimate = c(-2.1, -1.9, -2.3),
@@ -32,5 +31,4 @@ est <- data.frame(
   ci_upper = c(-0.7, -0.4, -0.8)
 )
 plot_forest(est)
-}
 }
