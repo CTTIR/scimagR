@@ -45,9 +45,22 @@ Character. Path to created project (invisible).
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-sci_create_project("~/projects/my-sci-study",
+proj <- file.path(tempdir(), "my-sci-study")
+sci_create_project(proj,
   title = "Cervical SCI Longitudinal MRI Analysis",
-  author = "Raban Heller")
-} # }
+  author = "Jane Doe", open = FALSE)
+#> 
+#> ── Creating SCI project: Cervical SCI Longitudinal MRI Analysis ────────────────
+#> ✔ Directory structure created.
+#> ✔ Templates created.
+#> ✔ Project created at /tmp/RtmpMNcM7s/my-sci-study
+#> ℹ Next steps:
+#>   1. Place DICOM files in data/raw/dicom/
+#>   2. Fill in data/metadata/imaging_registry.csv
+#>   3. Fill in data/metadata/clinical_data.csv
+#>   4. Run `sci_run_pipeline()`
+list.files(proj)
+#> [1] "analysis"   "code"       "data"       "manuscript" "results"   
+#> [6] "scripts"   
+unlink(proj, recursive = TRUE)
 ```

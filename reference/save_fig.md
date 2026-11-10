@@ -42,8 +42,11 @@ Character. Full path to saved file (invisible).
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-save_fig(p, "test_plot.png", tempdir())
-} # }
+out <- save_fig(p, "test_plot.png", tempdir(), width = 3, height = 2,
+                dpi = 72)
+#> ✔ Figure saved: /tmp/RtmpMNcM7s/test_plot.png
+file.exists(out)
+#> [1] TRUE
+unlink(out)
 ```

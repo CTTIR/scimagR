@@ -46,8 +46,12 @@ A ggplot2 object.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+df <- data.frame(
+  pat_id = rep(c("SCI001", "SCI002", "SCI003"), each = 3),
+  days_post_trauma = rep(c(5, 60, 180), times = 3),
+  csa = c(72, 68, 65, 70, 69, 66, 75, 70, 64),
+  phase = rep(c("acute", "subacute", "intermediate"), times = 3)
+)
 plot_spaghetti(df, x = "days_post_trauma", y = "csa",
-               group = "pat_id", colour = "phase")
-} # }
+               group = "pat_id", colour = "phase", smoother = FALSE)
 ```

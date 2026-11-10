@@ -17,3 +17,15 @@ validate_qc_log(qc_log)
 ## Value
 
 Invisibly returns the validated QC log.
+
+## Examples
+
+``` r
+qc <- tibble::tibble(
+  pat_id = "SCI001", session = "ses-01", rater = "RH",
+  date = as.Date("2025-01-10"), seg_type = "sc", quality = "good",
+  notes = ""
+)
+validate_qc_log(qc)
+#> ✔ QC log validation passed.
+```

@@ -28,7 +28,7 @@ Named list with components:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-check_sct()
-} # }
+# Reports availability; returns `available = FALSE` when not installed.
+check_sct(verbose = FALSE)$available
+#> [1] FALSE
 ```

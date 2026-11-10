@@ -22,3 +22,13 @@ scale_fill_modality(...)
 ## Value
 
 A ggplot2 scale object.
+
+## Examples
+
+``` r
+library(ggplot2)
+df <- data.frame(modality = c("CT", "MRT", "CT+MRT"), n = c(5, 14, 3))
+ggplot(df, aes(modality, n, fill = modality)) +
+  geom_col() +
+  scale_fill_modality()
+```

@@ -29,7 +29,9 @@ Character. Full path to saved file (invisible).
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-save_rds(mtcars, "cars.rds", tempdir())
-} # }
+out <- save_rds(mtcars, "cars.rds", tempdir())
+#> ✔ RDS saved: /tmp/RtmpMNcM7s/cars.rds
+identical(readRDS(out), mtcars)
+#> [1] TRUE
+unlink(out)
 ```

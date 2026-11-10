@@ -30,12 +30,15 @@ Updated QC log tibble.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 qc <- create_qc_log()
 entry <- tibble::tibble(
   pat_id = "SCI001", session = "ses-01", rater = "RH",
   date = Sys.Date(), seg_type = "sc", quality = "good", notes = ""
 )
 qc <- update_qc_log(qc, entry)
-} # }
+qc
+#> # A tibble: 1 × 7
+#>   pat_id session rater date       seg_type quality notes
+#>   <chr>  <chr>   <chr> <date>     <chr>    <chr>   <chr>
+#> 1 SCI001 ses-01  RH    2026-11-10 sc       good    ""   
 ```

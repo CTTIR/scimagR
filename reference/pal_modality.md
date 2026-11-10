@@ -8,6 +8,10 @@ Named character vector of 3 colours for imaging modalities.
 pal_modality
 ```
 
+## Format
+
+A named character vector of hexadecimal colour codes.
+
 ## Examples
 
 ``` r

@@ -21,7 +21,7 @@ Named list with components: `available`, `version`, `path`.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-check_dcm2niix()
-} # }
+# Reports availability; returns `available = FALSE` when not installed.
+check_dcm2niix(verbose = FALSE)$available
+#> [1] FALSE
 ```

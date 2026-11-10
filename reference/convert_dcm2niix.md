@@ -34,6 +34,7 @@ Character vector of output NIfTI paths.
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run: needs DICOM files and the external 'dcm2niix' converter.
 convert_dcm2niix("data/raw/dicom/SCI001/ses-01", "data/nifti/SCI001/ses-01")
 } # }
 ```

@@ -26,7 +26,9 @@ Named list with components: `available`, `version`, `path`.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-check_pydicom()
-} # }
+# \donttest{
+# Starts the Python interpreter, if one is installed, to import 'pydicom'.
+check_pydicom(verbose = FALSE)$available
+#> [1] FALSE
+# }
 ```

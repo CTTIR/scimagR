@@ -22,3 +22,14 @@ scale_fill_artifact(...)
 ## Value
 
 A ggplot2 scale object.
+
+## Examples
+
+``` r
+library(ggplot2)
+df <- data.frame(grade = c("none", "mild", "moderate", "severe"),
+                 n = c(12, 7, 3, 1))
+ggplot(df, aes(grade, n, fill = grade)) +
+  geom_col() +
+  scale_fill_artifact()
+```

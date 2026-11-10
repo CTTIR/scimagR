@@ -49,6 +49,7 @@ Character. Path to output segmentation file, or `NA` on failure.
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 sct_segment_sc("sub-01_T2w.nii.gz")
 } # }
 ```

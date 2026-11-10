@@ -17,7 +17,9 @@ pak::pak("cttir/scimagR")
 
 ## Prerequisites
 
-scimagR requires the following external tools:
+The wrappers for image processing need the following external tools.
+They are optional: the metrics, registry, quality-control and plotting
+functions work without them.
 
 | Tool | Version | Purpose |
 |----|----|----|
@@ -72,8 +74,8 @@ sci_run_pipeline("~/projects/my-sci-study")
 If you use scimagR in your research, please cite:
 
     Heller R (2026). scimagR: Spinal Cord Injury Imaging Pipeline for MRI and
-    CT Analysis in R. R package version 0.1.0.
-    https://github.com/cttir/scimagR
+    CT Analysis. R package version 0.2.0.
+    https://github.com/CTTIR/scimagR
 
 ## License
 

@@ -10,6 +10,10 @@ Named character vector of 5 colours for MRI artifact grades: none
 pal_artifact
 ```
 
+## Format
+
+A named character vector of hexadecimal colour codes.
+
 ## Examples
 
 ``` r

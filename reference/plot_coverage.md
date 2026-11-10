@@ -22,7 +22,9 @@ A ggplot2 object.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-plot_coverage(registry)
-} # }
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+#> ✔ Registry validation passed.
+plot_coverage(reg)
 ```

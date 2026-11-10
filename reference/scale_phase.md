@@ -31,7 +31,13 @@ A ggplot2 scale object.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-ggplot(df, aes(x, y, colour = phase)) + geom_point() + scale_colour_phase()
-} # }
+library(ggplot2)
+df <- data.frame(
+  days = c(3, 40, 150, 400),
+  csa = c(70, 64, 60, 58),
+  phase = c("acute", "subacute", "intermediate", "chronic")
+)
+ggplot(df, aes(days, csa, colour = phase)) +
+  geom_point(size = 3) +
+  scale_colour_phase()
 ```

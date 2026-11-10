@@ -29,7 +29,9 @@ Character. Full path to saved file (invisible).
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-save_table(mtcars, "cars.xlsx", tempdir())
-} # }
+out <- save_table(mtcars, "cars.xlsx", tempdir())
+#> ✔ Table saved: /tmp/RtmpMNcM7s/cars.xlsx
+file.exists(out)
+#> [1] TRUE
+unlink(out)
 ```

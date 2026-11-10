@@ -27,7 +27,18 @@ Invisibly returns `df`.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-registry |> integrity_summary(id_cols = c("pat_id", "session"))
-} # }
+reg <- validate_registry(
+  system.file("extdata", "example_registry.csv", package = "scimagR")
+)
+#> ✔ Registry validation passed.
+integrity_summary(reg, id_cols = c("pat_id", "session"))
+#> 
+#> ── Data Integrity Summary ──
+#> 
+#> Dimensions: 8 rows x 11 columns
+#> 
+#> ── Missing Values 
+#> field_strength: 1 (12.5%)
+#> notes: 6 (75%)
+#> ✔ No duplicates on pat_id x session.
 ```

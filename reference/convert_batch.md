@@ -44,6 +44,7 @@ Tibble with columns: `pat_id`, `session`, `status`, `n_files`.
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run: needs DICOM files and the external 'dcm2niix' converter.
 convert_batch(registry, "data/raw/dicom", "data/nifti")
 } # }
 ```

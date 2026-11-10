@@ -9,6 +9,10 @@ hyperacute, acute, subacute, intermediate, chronic.
 pal_phase
 ```
 
+## Format
+
+A named character vector of hexadecimal colour codes.
+
 ## Examples
 
 ``` r

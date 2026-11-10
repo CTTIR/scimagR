@@ -38,6 +38,7 @@ Character. Path to output CSV (invisible).
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run: needs a directory of DICOM files and Python 3 with 'pydicom'.
 extract_dicom_metadata("data/raw/dicom", "data/metadata/dicom_metadata.csv")
 } # }
 ```

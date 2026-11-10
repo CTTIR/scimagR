@@ -49,6 +49,7 @@ Character. Path to output lesion segmentation, or `NA` on failure.
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
 sct_segment_lesion("sub-01_T2w.nii.gz")
 } # }
 ```

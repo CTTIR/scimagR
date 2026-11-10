@@ -1,5 +1,24 @@
 # Changelog
 
+## scimagR 0.2.0
+
+- Prepared the package for a first CRAN submission.
+- [`theme_sci()`](https://cttir.github.io/scimagR/reference/theme_sci.md)
+  now defaults to `base_family = ""` (the device’s sans-serif font). The
+  previous default `"Arial"` made every plot fail on the base
+  [`pdf()`](https://rdrr.io/r/grDevices/pdf.html) device; pass
+  `base_family = "Arial"` to keep the old look on devices that can use
+  system fonts.
+- Examples now run on bundled or synthetic data for all functions that
+  do not need external software (registry, coverage, quality control,
+  plotting, export and project scaffolding). Examples of the wrappers
+  around the Spinal Cord Toolbox, ‘dcm2niix’ and ‘pydicom’ stay in
+  `\dontrun{}` with an explanation.
+- `DESCRIPTION`: title without “in R”, expanded description with a
+  reference for the Spinal Cord Toolbox, optional `SystemRequirements`,
+  `Language`, pkgdown URL and the maintainer’s ORCID.
+- Documented the colour palettes’ format.
+
 ## scimagR 0.1.0
 
 - Standardize the named v5 package logo across README, documentation
