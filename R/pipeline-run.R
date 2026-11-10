@@ -23,7 +23,7 @@
 #' @examples
 #' proj <- file.path(tempdir(), "pipeline-study")
 #' sci_create_project(proj, open = FALSE)
-#' sci_run_pipeline(proj, steps = 1:3, verbose = FALSE)
+#' sci_run_pipeline(proj, steps = 1:3)
 #' unlink(proj, recursive = TRUE)
 sci_run_pipeline <- function(project_dir,
                              steps = 1:8,
