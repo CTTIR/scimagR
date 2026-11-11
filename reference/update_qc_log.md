@@ -40,5 +40,5 @@ qc
 #> # A tibble: 1 × 7
 #>   pat_id session rater date       seg_type quality notes
 #>   <chr>  <chr>   <chr> <date>     <chr>    <chr>   <chr>
-#> 1 SCI001 ses-01  RH    2026-11-10 sc       good    ""   
+#> 1 SCI001 ses-01  RH    2026-11-11 sc       good    ""   
 ```

@@ -54,7 +54,7 @@ convert_batch(reg[1, ],
   nifti_root = file.path(tempdir(), "nifti")
 )
 #> Warning: Conversion failed for SCI001/ses-01: DICOM directory not found:
-#> /tmp/RtmpGur4Jb/dicom/SCI001/ses-01
+#> /tmp/Rtmpbqybiy/dicom/SCI001/ses-01
 #> Batch conversion: 0 succeeded, 1 failed.
 #> # A tibble: 1 × 4
 #>   pat_id session status n_files

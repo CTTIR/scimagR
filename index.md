@@ -52,7 +52,7 @@ sci_create_project(
 
 # 2. Place DICOMs in data/raw/dicom/, fill registry CSVs
 
-# 3. Run the pipeline
+# 3. Plan the processing steps; each row names the function to run
 sci_run_pipeline("~/projects/my-sci-study")
 ```
 
@@ -66,7 +66,7 @@ sci_run_pipeline("~/projects/my-sci-study")
 | **Registry** | [`create_registry()`](https://cttir.github.io/scimagR/reference/create_registry.md), [`validate_registry()`](https://cttir.github.io/scimagR/reference/validate_registry.md), [`coverage_matrix()`](https://cttir.github.io/scimagR/reference/coverage_matrix.md) | Structured time-point tracking |
 | **QC System** | [`filter_evaluable()`](https://cttir.github.io/scimagR/reference/filter_evaluable.md), [`log_exclusion()`](https://cttir.github.io/scimagR/reference/log_exclusion.md), [`integrity_summary()`](https://cttir.github.io/scimagR/reference/integrity_summary.md) | Artifact grading and exclusion tracking |
 | **Visualization** | [`theme_sci()`](https://cttir.github.io/scimagR/reference/theme_sci.md), [`scale_colour_phase()`](https://cttir.github.io/scimagR/reference/scale_phase.md), [`plot_violin_box()`](https://cttir.github.io/scimagR/reference/plot_violin_box.md) | Publication-ready figures |
-| **Pipeline** | [`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md), [`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md) | Orchestration with resume support |
+| **Pipeline** | [`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md), [`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md) | Step plan and output status |
 | **Scaffold** | [`sci_create_project()`](https://cttir.github.io/scimagR/reference/sci_create_project.md) | Workflowr project setup |
 
 ## Citation

@@ -19,10 +19,12 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## Overview
 
+The SCI imaging workflow has 8 sequential steps, each performed by its
+own function (Spinal Cord Toolbox, ‘dcm2niix’ and ‘pydicom’ wrappers).
 [`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md)
-orchestrates the full SCI imaging processing workflow in 8 sequential
-steps. Each step is idempotent and the pipeline can be interrupted and
-resumed at any point.
+checks the project and returns this plan, naming the function to run for
+every requested step; it does not run the external tools itself, so each
+step is reported as `"pending"`.
 
 ## Pipeline Steps
 
@@ -37,7 +39,7 @@ resumed at any point.
 | 7    | Parameter extraction      | SCT            | CSVs with metrics           |
 | 8    | Merge & export            | R              | combined dataset            |
 
-## Running the Full Pipeline
+## Planning the Pipeline
 
 ``` r
 
@@ -52,14 +54,15 @@ status <- sci_run_pipeline(
 
 ## Running Individual Steps
 
-Run only specific steps by setting the `steps` argument:
+Plan only specific steps by setting the `steps` argument, then run the
+function each row names:
 
 ``` r
 
-# Just convert DICOMs
+# Just the DICOM conversion
 sci_run_pipeline("~/projects/my-sci-study", steps = 3)
 
-# Run segmentation steps
+# The segmentation steps
 sci_run_pipeline("~/projects/my-sci-study", steps = 4:5)
 ```
 
@@ -119,14 +122,11 @@ each timepoint, with artifact grades overlaid.
 
 ## Resuming After Interruption
 
-The pipeline is designed to be resilient to interruptions. Simply re-run
-with the same arguments — existing outputs will be detected and skipped:
+[`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md)
+scans the project for existing outputs, so after an interruption it
+shows where to continue:
 
 ``` r
 
-# Re-running skips completed steps automatically
-sci_run_pipeline("~/projects/my-sci-study", steps = 1:8)
-
-# Force re-processing with overwrite = TRUE
-sci_run_pipeline("~/projects/my-sci-study", steps = 4:5, overwrite = TRUE)
+sci_pipeline_status("~/projects/my-sci-study")
 ```

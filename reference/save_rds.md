@@ -30,7 +30,7 @@ Character. Full path to saved file (invisible).
 
 ``` r
 out <- save_rds(mtcars, "cars.rds", tempdir())
-#> ✔ RDS saved: /tmp/RtmpGur4Jb/cars.rds
+#> ✔ RDS saved: /tmp/Rtmpbqybiy/cars.rds
 identical(readRDS(out), mtcars)
 #> [1] TRUE
 unlink(out)

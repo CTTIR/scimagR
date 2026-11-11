@@ -29,12 +29,12 @@ sci_create_project(proj, open = FALSE)
 #> ── Creating SCI project: SCI Imaging Analysis ──────────────────────────────────
 #> ✔ Directory structure created.
 #> ✔ Templates created.
-#> ✔ Project created at /tmp/RtmpGur4Jb/status-study
+#> ✔ Project created at /tmp/Rtmpbqybiy/status-study
 #> ℹ Next steps:
 #>   1. Place DICOM files in data/raw/dicom/
 #>   2. Fill in data/metadata/imaging_registry.csv
 #>   3. Fill in data/metadata/clinical_data.csv
-#>   4. Run `sci_run_pipeline()`
+#>   4. Plan the processing steps with `sci_run_pipeline()`
 sci_pipeline_status(proj)
 #> # A tibble: 0 × 0
 unlink(proj, recursive = TRUE)

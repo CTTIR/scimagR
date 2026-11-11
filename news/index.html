@@ -53,7 +53,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="scimagr-020">scimagR 0.2.0<a class="anchor" aria-label="anchor" href="#scimagr-020"></a></h2>
-<ul><li>Prepared the package for a first CRAN submission.</li>
+<ul><li>
+<code><a href="../reference/sci_run_pipeline.html">sci_run_pipeline()</a></code> no longer reports steps as complete without running them. It returns the step plan with status <code>"pending"</code> and the function that performs each step; the vignettes and README describe it that way.</li>
+<li>Prepared the package for a first CRAN submission.</li>
 <li>
 <code><a href="../reference/theme_sci.html">theme_sci()</a></code> now defaults to <code>base_family = ""</code> (the device’s sans-serif font). The previous default <code>"Arial"</code> made every plot fail on the base <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> device; pass <code>base_family = "Arial"</code> to keep the old look on devices that can use system fonts.</li>
 <li>Examples now run on bundled or synthetic data for all functions that do not need external software (registry, coverage, quality control, plotting, export and project scaffolding). Examples of the wrappers around the Spinal Cord Toolbox, ‘dcm2niix’ and ‘pydicom’ stay in <code>\dontrun{}</code> with an explanation.</li>

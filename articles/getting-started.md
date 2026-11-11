@@ -87,7 +87,8 @@ Fill in the CSV templates in `data/metadata/`:
 
 ## Running the Pipeline
 
-The pipeline orchestrates all processing steps:
+[`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md)
+lists the processing steps and the function that runs each one:
 
 ``` r
 

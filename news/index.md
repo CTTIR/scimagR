@@ -2,6 +2,10 @@
 
 ## scimagR 0.2.0
 
+- [`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md)
+  no longer reports steps as complete without running them. It returns
+  the step plan with status `"pending"` and the function that performs
+  each step; the vignettes and README describe it that way.
 - Prepared the package for a first CRAN submission.
 - [`theme_sci()`](https://cttir.github.io/scimagR/reference/theme_sci.md)
   now defaults to `base_family = ""` (the device’s sans-serif font). The
