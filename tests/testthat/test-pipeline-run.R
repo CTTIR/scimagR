@@ -19,11 +19,15 @@ test_that("sci_run_pipeline errors when config file is absent", {
   expect_error(sci_run_pipeline(proj), "Config file not found")
 })
 
-test_that("sci_run_pipeline marks requested steps complete", {
+test_that("sci_run_pipeline reports requested steps as pending, never complete", {
   proj <- make_project()
   res <- sci_run_pipeline(proj, steps = c(1, 3, 4), verbose = FALSE)
   expect_equal(nrow(res), 3)
-  expect_true(all(res$status == "complete"))
+  expect_true(all(res$status == "pending"))
+  expect_false(any(res$status == "complete"))
+  expect_equal(res$message, c("run extract_dicom_metadata()",
+                              "run convert_batch()",
+                              "run sct_segment_sc()"))
   expect_named(res, c("step", "name", "status", "message"))
 })
 
@@ -37,7 +41,8 @@ test_that("sci_run_pipeline skips step 2 when anonymize is FALSE", {
 test_that("sci_run_pipeline runs step 2 when anonymize is TRUE", {
   proj <- make_project()
   res <- sci_run_pipeline(proj, steps = 2, anonymize = TRUE, verbose = FALSE)
-  expect_equal(res$status, "complete")
+  expect_equal(res$status, "pending")
+  expect_equal(res$message, "run anonymize_dicom()")
 })
 
 test_that("sci_run_pipeline warns on and skips invalid step numbers", {

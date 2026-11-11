@@ -19,29 +19,35 @@ sci_run_pipeline(
 
 \item{anonymize}{Logical. Run anonymization step. Default \code{FALSE}.}
 
-\item{overwrite}{Logical. Re-process existing outputs. Default \code{FALSE}.}
+\item{overwrite}{Logical. Kept for compatibility; not used while the
+runner only plans steps. Default \code{FALSE}.}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
 }
 \value{
-Tibble with pipeline status per step.
+Tibble with one row per requested step: \code{step}, \code{name},
+\code{status} (\code{"pending"} or \code{"skipped"}) and \code{message} (the function to
+run, or the reason for skipping).
 }
 \description{
-Orchestrates all external tool steps in sequence:
+Checks a project created with \code{\link[=sci_create_project]{sci_create_project()}} and returns the plan
+of processing steps, each with the function that performs it:
 \enumerate{
-\item DICOM metadata extraction
-\item Anonymization (if requested)
-\item DICOM to NIfTI conversion
-\item Spinal cord segmentation
-\item Lesion segmentation (SCIsegV2)
-\item Vertebral labeling
-\item Parameter extraction
-\item Merge & export
+\item DICOM metadata extraction (\code{\link[=extract_dicom_metadata]{extract_dicom_metadata()}})
+\item Anonymization, if requested (\code{\link[=anonymize_dicom]{anonymize_dicom()}})
+\item DICOM to NIfTI conversion (\code{\link[=convert_batch]{convert_batch()}})
+\item Spinal cord segmentation (\code{\link[=sct_segment_sc]{sct_segment_sc()}})
+\item Lesion segmentation with SCIsegV2 (\code{\link[=sct_segment_lesion]{sct_segment_lesion()}})
+\item Vertebral labeling (\code{\link[=sct_label_vertebrae]{sct_label_vertebrae()}})
+\item Parameter extraction (\code{\link[=sct_analyze_lesion]{sct_analyze_lesion()}},
+\code{\link[=sct_process_segmentation]{sct_process_segmentation()}})
+\item Merge & export (\code{\link[=save_table]{save_table()}}, \code{\link[=save_rds]{save_rds()}})
 }
 }
 \details{
-Each step checks for existing outputs (idempotent). The pipeline can be
-interrupted and resumed at any step.
+\code{sci_run_pipeline()} does not run the external tools itself: every
+requested step is reported as \code{"pending"} until you run its function.
+Use \code{\link[=sci_pipeline_status]{sci_pipeline_status()}} to see which outputs already exist.
 }
 \examples{
 proj <- file.path(tempdir(), "pipeline-study")

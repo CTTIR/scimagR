@@ -249,7 +249,7 @@ sci_create_project <- function(path,
     " " = "1. Place DICOM files in {.path data/raw/dicom/}",
     " " = "2. Fill in {.path data/metadata/imaging_registry.csv}",
     " " = "3. Fill in {.path data/metadata/clinical_data.csv}",
-    " " = "4. Run {.fn sci_run_pipeline}"
+    " " = "4. Plan the processing steps with {.fn sci_run_pipeline}"
   ))
 
   invisible(path)

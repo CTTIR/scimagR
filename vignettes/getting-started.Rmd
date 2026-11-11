@@ -116,7 +116,8 @@ Fill in the CSV templates in `data/metadata/`:
 
 ## Running the Pipeline
 
-The pipeline orchestrates all processing steps:
+`sci_run_pipeline()` lists the processing steps and the function that runs
+each one:
 
 ```{r run-pipeline}
 sci_run_pipeline("~/projects/my-sci-study", steps = 1:8)

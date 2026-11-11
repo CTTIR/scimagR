@@ -58,7 +58,7 @@ sci_create_project(
 
 # 2. Place DICOMs in data/raw/dicom/, fill registry CSVs
 
-# 3. Run the pipeline
+# 3. Plan the processing steps; each row names the function to run
 sci_run_pipeline("~/projects/my-sci-study")
 ```
 
@@ -72,7 +72,7 @@ sci_run_pipeline("~/projects/my-sci-study")
 | **Registry** | `create_registry()`, `validate_registry()`, `coverage_matrix()` | Structured time-point tracking |
 | **QC System** | `filter_evaluable()`, `log_exclusion()`, `integrity_summary()` | Artifact grading and exclusion tracking |
 | **Visualization** | `theme_sci()`, `scale_colour_phase()`, `plot_violin_box()` | Publication-ready figures |
-| **Pipeline** | `sci_run_pipeline()`, `sci_pipeline_status()` | Orchestration with resume support |
+| **Pipeline** | `sci_run_pipeline()`, `sci_pipeline_status()` | Step plan and output status |
 | **Scaffold** | `sci_create_project()` | Workflowr project setup |
 
 ## Citation

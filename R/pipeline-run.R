@@ -1,24 +1,30 @@
 #' Run the SCI Analysis Pipeline
 #'
-#' Orchestrates all external tool steps in sequence:
-#' 1. DICOM metadata extraction
-#' 2. Anonymization (if requested)
-#' 3. DICOM to NIfTI conversion
-#' 4. Spinal cord segmentation
-#' 5. Lesion segmentation (SCIsegV2)
-#' 6. Vertebral labeling
-#' 7. Parameter extraction
-#' 8. Merge & export
+#' Checks a project created with [sci_create_project()] and returns the plan
+#' of processing steps, each with the function that performs it:
+#' 1. DICOM metadata extraction ([extract_dicom_metadata()])
+#' 2. Anonymization, if requested ([anonymize_dicom()])
+#' 3. DICOM to NIfTI conversion ([convert_batch()])
+#' 4. Spinal cord segmentation ([sct_segment_sc()])
+#' 5. Lesion segmentation with SCIsegV2 ([sct_segment_lesion()])
+#' 6. Vertebral labeling ([sct_label_vertebrae()])
+#' 7. Parameter extraction ([sct_analyze_lesion()],
+#'    [sct_process_segmentation()])
+#' 8. Merge & export ([save_table()], [save_rds()])
 #'
-#' Each step checks for existing outputs (idempotent). The pipeline can be
-#' interrupted and resumed at any step.
+#' `sci_run_pipeline()` does not run the external tools itself: every
+#' requested step is reported as `"pending"` until you run its function.
+#' Use [sci_pipeline_status()] to see which outputs already exist.
 #'
 #' @param project_dir Character. Path to workflowr project root.
 #' @param steps Integer vector. Which steps to run. Default `1:8`.
 #' @param anonymize Logical. Run anonymization step. Default `FALSE`.
-#' @param overwrite Logical. Re-process existing outputs. Default `FALSE`.
+#' @param overwrite Logical. Kept for compatibility; not used while the
+#'   runner only plans steps. Default `FALSE`.
 #' @param verbose Logical. Print progress. Default `TRUE`.
-#' @return Tibble with pipeline status per step.
+#' @return Tibble with one row per requested step: `step`, `name`,
+#'   `status` (`"pending"` or `"skipped"`) and `message` (the function to
+#'   run, or the reason for skipping).
 #' @export
 #' @examples
 #' proj <- file.path(tempdir(), "pipeline-study")
@@ -55,6 +61,17 @@ sci_run_pipeline <- function(project_dir,
     "Merge & export"
   )
 
+  step_functions <- c(
+    "extract_dicom_metadata()",
+    "anonymize_dicom()",
+    "convert_batch()",
+    "sct_segment_sc()",
+    "sct_segment_lesion()",
+    "sct_label_vertebrae()",
+    "sct_analyze_lesion() and sct_process_segmentation()",
+    "save_table() and save_rds()"
+  )
+
   status_log <- tibble::tibble(
     step = integer(),
     name = character(),
@@ -81,24 +98,12 @@ sci_run_pipeline <- function(project_dir,
       cli::cli_h2("Step {s}: {step_names[s]}")
     }
 
-    step_status <- tryCatch(
-      {
-        if (verbose) cli::cli_alert_info("Running step {s}...")
-        tibble::tibble(
-          step = as.integer(s),
-          name = step_names[s],
-          status = "complete",
-          message = ""
-        )
-      },
-      error = function(e) {
-        tibble::tibble(
-          step = as.integer(s),
-          name = step_names[s],
-          status = "error",
-          message = conditionMessage(e)
-        )
-      }
+    if (verbose) cli::cli_alert_info("Run {.code {step_functions[s]}} for this step.")
+    step_status <- tibble::tibble(
+      step = as.integer(s),
+      name = step_names[s],
+      status = "pending",
+      message = paste("run", step_functions[s])
     )
 
     status_log <- dplyr::bind_rows(status_log, step_status)
@@ -114,11 +119,10 @@ sci_run_pipeline <- function(project_dir,
   }
 
   if (verbose) {
-    n_ok <- sum(status_log$status == "complete")
-    n_err <- sum(status_log$status == "error")
+    n_pending <- sum(status_log$status == "pending")
     n_skip <- sum(status_log$status == "skipped")
     cli::cli_h2("Pipeline Summary")
-    cli::cli_inform("{n_ok} complete, {n_err} errors, {n_skip} skipped")
+    cli::cli_inform("{n_pending} pending, {n_skip} skipped")
   }
 
   status_log
