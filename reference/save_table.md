@@ -30,7 +30,7 @@ Character. Full path to saved file (invisible).
 
 ``` r
 out <- save_table(mtcars, "cars.xlsx", tempdir())
-#> ✔ Table saved: /tmp/Rtmpbqybiy/cars.xlsx
+#> ✔ Table saved: /tmp/RtmpkiFDcU/cars.xlsx
 file.exists(out)
 #> [1] TRUE
 unlink(out)
