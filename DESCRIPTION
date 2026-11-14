@@ -41,7 +41,7 @@ Suggests:
     patchwork,
     rmarkdown,
     rstudioapi,
-    testthat (>= 3.0),
+    testthat (>= 3.1.7),
     withr,
     workflowr
 SystemRequirements: Optional: Spinal Cord Toolbox (>= 6.4)
