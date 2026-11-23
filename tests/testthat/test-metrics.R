@@ -149,3 +149,20 @@ test_that("classify_artifact rejects fractional grades and non-numeric input", {
   expect_equal(as.character(res), c("mild", NA, "moderate"))
   expect_error(classify_artifact("2"), class = "scimagR_error_input")
 })
+
+test_that("metric functions reject lengths that cannot be recycled", {
+  # Regression: base recycling paired a length-4 vector with a length-2
+  # vector without any warning, silently mixing up measurements.
+  expect_error(compute_mscc(c(4, 5, 6, 7), c(8, 9), 8),
+               class = "scimagR_error_input")
+  expect_error(compute_mscc(c(1, 2, 3), c(8, 8), 8),
+               class = "scimagR_error_input")
+  expect_error(compute_compression_ratio(c(6, 7, 8, 9), c(12, 11)),
+               class = "scimagR_error_input")
+  expect_error(compute_csa_ratio(numeric(), c(70, 71), 72),
+               class = "scimagR_error_input")
+  # Length-1 arguments are still recycled
+  expect_equal(compute_mscc(c(4, 6), 8, c(8, 8)), c(50, 25))
+  expect_equal(compute_csa_ratio(c(35, 70), 70, 70), c(0.5, 1))
+  expect_equal(compute_compression_ratio(numeric(), 12), numeric())
+})

@@ -3,8 +3,10 @@
 #' Calculates MSCC as defined by Fehlings et al. (1999):
 #' \deqn{MSCC = (1 - d_i / ((d_a + d_b) / 2)) \times 100}
 #'
-#' All arguments are vectorised and recycled to a common length, so the
-#' function can be used inside [dplyr::mutate()] on registry columns.
+#' All arguments are vectorised, so the function can be used inside
+#' [dplyr::mutate()] on registry columns. An argument of length 1 is
+#' recycled to the length of the others; any other mismatch of lengths is
+#' an error.
 #'
 #' @param di Numeric. Sagittal AP diameter at injury level (mm).
 #' @param da Numeric. Sagittal AP diameter one level above (mm).
@@ -32,7 +34,9 @@ compute_mscc <- function(di, da, db) {
   na_if_nonpositive(out, ref)
 }
 
-# Abort unless every argument is numeric (or all-NA logical).
+# Abort unless every argument is numeric (or all-NA logical) and the
+# lengths can be recycled: each argument has length 1 or the common length
+# (0 if any argument is empty), as in the tidyverse recycling rules.
 check_metric_inputs <- function(..., call = rlang::caller_env()) {
   args <- list(...)
   ok <- vapply(
@@ -43,6 +47,20 @@ check_metric_inputs <- function(..., call = rlang::caller_env()) {
   if (!all(ok)) {
     cli::cli_abort(
       "{.arg {names(args)[!ok]}} must be numeric.",
+      class = "scimagR_error_input",
+      call = call
+    )
+  }
+  sizes <- lengths(args)
+  common <- if (any(sizes == 0L)) 0L else max(sizes)
+  bad <- !(sizes == 1L | sizes == common)
+  if (any(bad)) {
+    lens <- paste0(names(args), " = ", sizes, collapse = ", ")
+    cli::cli_abort(
+      c(
+        "The inputs must have length 1 or a common length.",
+        "i" = "Lengths: {lens}."
+      ),
       class = "scimagR_error_input",
       call = call
     )

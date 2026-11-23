@@ -23,8 +23,10 @@ Calculates MSCC as defined by Fehlings et al. (1999):
 \deqn{MSCC = (1 - d_i / ((d_a + d_b) / 2)) \times 100}
 }
 \details{
-All arguments are vectorised and recycled to a common length, so the
-function can be used inside \code{\link[dplyr:mutate]{dplyr::mutate()}} on registry columns.
+All arguments are vectorised, so the function can be used inside
+\code{\link[dplyr:mutate]{dplyr::mutate()}} on registry columns. An argument of length 1 is
+recycled to the length of the others; any other mismatch of lengths is
+an error.
 }
 \examples{
 compute_mscc(di = 5.2, da = 8.1, db = 8.5)

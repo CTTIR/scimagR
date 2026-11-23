@@ -19,7 +19,8 @@ its reference is <= 0 or any of its inputs is \code{NA}.
 }
 \description{
 Calculates the ratio of CSA at the injury level to the reference CSA
-(average of adjacent levels). Vectorised over all arguments.
+(average of adjacent levels). Vectorised over all arguments; an argument
+of length 1 is recycled, other length mismatches are an error.
 }
 \examples{
 compute_csa_ratio(csa_injury = 45, csa_above = 70, csa_below = 72)

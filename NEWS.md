@@ -57,6 +57,8 @@
 * `compute_mscc()`, `compute_compression_ratio()` and `compute_csa_ratio()`
   are vectorised (they failed on vectors, e.g. inside `dplyr::mutate()`)
   and cite their definitions (Fehlings et al. 1999; Ogino et al. 1983).
+  Arguments of length 1 are recycled; any other length mismatch is an
+  error instead of being recycled silently.
 * `classify_phase()` returns `NA` with a warning for negative days, and
   `classify_artifact()` for grades that are not whole numbers.
 * The phase, artefact and modality scales list legend entries in palette

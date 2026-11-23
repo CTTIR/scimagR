@@ -2,7 +2,8 @@
 #'
 #' Calculates the anteroposterior compression ratio of the spinal cord, the
 #' ratio of its anterior-posterior (sagittal) diameter to its transverse
-#' diameter (Ogino et al. 1983). Vectorised over both arguments.
+#' diameter (Ogino et al. 1983). Vectorised over both arguments; an
+#' argument of length 1 is recycled, other length mismatches are an error.
 #'
 #' @param ap Numeric. Anterior-posterior diameter (mm).
 #' @param transverse Numeric. Transverse diameter (mm).
@@ -25,7 +26,8 @@ compute_compression_ratio <- function(ap, transverse) {
 #' Compute Cross-Sectional Area Ratio
 #'
 #' Calculates the ratio of CSA at the injury level to the reference CSA
-#' (average of adjacent levels). Vectorised over all arguments.
+#' (average of adjacent levels). Vectorised over all arguments; an argument
+#' of length 1 is recycled, other length mismatches are an error.
 #'
 #' @param csa_injury Numeric. CSA at injury level (mm^2).
 #' @param csa_above Numeric. CSA one level above (mm^2).

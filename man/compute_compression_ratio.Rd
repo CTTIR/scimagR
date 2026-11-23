@@ -18,7 +18,8 @@ Numeric vector of compression ratios (unitless). An element is
 \description{
 Calculates the anteroposterior compression ratio of the spinal cord, the
 ratio of its anterior-posterior (sagittal) diameter to its transverse
-diameter (Ogino et al. 1983). Vectorised over both arguments.
+diameter (Ogino et al. 1983). Vectorised over both arguments; an
+argument of length 1 is recycled, other length mismatches are an error.
 }
 \examples{
 compute_compression_ratio(ap = 6.5, transverse = 12.0)
