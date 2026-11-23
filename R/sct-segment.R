@@ -106,7 +106,8 @@ sct_segment_sc <- function(input,
 #' @param output Character. Path for output lesion segmentation.
 #'   Auto-generated if `NULL`: `<input>_lesion_seg.nii.gz` in `output_dir`.
 #' @return Character. Path to output lesion segmentation, or `NA` on failure
-#'   (non-zero exit status, or no lesion mask written).
+#'   (non-zero exit status, no lesion mask written, or the mask could not be
+#'   saved to `output`).
 #' @references Karthik EN, Valošek J, Farner L, et al. (2025). SCIsegV2: A
 #'   universal tool for segmentation of intramedullary lesions in spinal cord
 #'   injury. In *Applications of Medical Artificial Intelligence* (AMAI 2024),
@@ -188,19 +189,34 @@ sct_segment_lesion <- function(input,
   }
 
   dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
-  file.copy(lesion_tmp, output, overwrite = TRUE)
+  if (!copy_sct_output(lesion_tmp, output, "lesion mask")) {
+    return(NA_character_)
+  }
   sc_tmp <- paste0(stem, "_sc_seg", ext)
   if (file.exists(sc_tmp)) {
     sc_out <- paste0(
       sub("_lesion_seg$", "", nii_stem(output)), "_sc_seg", ext
     )
-    file.copy(sc_tmp, sc_out, overwrite = TRUE)
+    copy_sct_output(sc_tmp, sc_out, "spinal cord mask")
   }
 
   if (verbose) {
     cli::cli_alert_success("Lesion segmentation saved: {.path {output}}")
   }
   output
+}
+
+# Copy a file SCT wrote to its final path; warn and return FALSE when the
+# copy fails (e.g. the target folder cannot be created or written).
+copy_sct_output <- function(from, to, what) {
+  ok <- suppressWarnings(file.copy(from, to, overwrite = TRUE))
+  if (!isTRUE(ok)) {
+    cli::cli_warn(c(
+      "Could not save the {what} to {.path {to}}.",
+      "i" = "Check that its folder exists and is writable."
+    ))
+  }
+  isTRUE(ok)
 }
 
 # Abort unless `x` is a single character string (a file path).

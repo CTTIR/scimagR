@@ -9,7 +9,8 @@
   exited with status 0, so the wrappers used to report success without an
   output file.
 * All wrappers now check that SCT wrote the expected file and return `NA`
-  with a warning when it did not.
+  with a warning when it did not. `sct_segment_lesion()` also returns `NA`
+  with a warning when the lesion mask cannot be copied to `output`.
 * The wrappers return the files SCT actually writes:
   `sct_segment_lesion()` saves the SCIsegV2 lesion mask under `output` and
   the cord mask next to it as `*_sc_seg.nii.gz` (SCT appends `_lesion_seg`

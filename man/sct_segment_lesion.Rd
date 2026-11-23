@@ -32,7 +32,8 @@ QC report to this directory.}
 }
 \value{
 Character. Path to output lesion segmentation, or \code{NA} on failure
-(non-zero exit status, or no lesion mask written).
+(non-zero exit status, no lesion mask written, or the mask could not be
+saved to \code{output}).
 }
 \description{
 Runs the SCIsegV2 lesion segmentation model (Karthik et al. 2025) through

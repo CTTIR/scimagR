@@ -143,6 +143,22 @@ test_that("sct_segment_lesion honours a custom output path", {
   expect_true(file.exists(file.path(dir, "out", "lesion_sc_seg.nii.gz")))
 })
 
+test_that("sct_segment_lesion returns NA when the mask cannot be saved", {
+  # Regression: a failed copy to `output` was ignored and the path of a
+  # file that does not exist was returned as a success.
+  dir <- withr::local_tempdir()
+  input <- touch(file.path(dir, "sub-01.nii.gz"))
+  blocker <- touch(file.path(dir, "not-a-folder"))
+  local_fake_sct()
+  expect_warning(
+    res <- sct_segment_lesion(input,
+                              output = file.path(blocker, "lesion.nii.gz"),
+                              verbose = FALSE),
+    "Could not save the lesion mask"
+  )
+  expect_true(is.na(res))
+})
+
 test_that("sct_segment_lesion warns and returns NA without a lesion mask", {
   dir <- withr::local_tempdir()
   input <- touch(file.path(dir, "sub-01.nii.gz"))
