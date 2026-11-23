@@ -1,27 +1,33 @@
-#' Run the SCI Analysis Pipeline
+#' Plan the SCI Analysis Pipeline
 #'
 #' Checks a project created with [sci_create_project()] and returns the plan
 #' of processing steps, each with the function that performs it:
 #' 1. DICOM metadata extraction ([extract_dicom_metadata()])
-#' 2. Anonymization, if requested ([anonymize_dicom()])
+#' 2. Anonymisation, if requested ([anonymize_dicom()])
 #' 3. DICOM to NIfTI conversion ([convert_batch()])
 #' 4. Spinal cord segmentation ([sct_segment_sc()])
 #' 5. Lesion segmentation with SCIsegV2 ([sct_segment_lesion()])
-#' 6. Vertebral labeling ([sct_label_vertebrae()])
+#' 6. Vertebral labelling ([sct_label_vertebrae()])
 #' 7. Parameter extraction ([sct_analyze_lesion()],
 #'    [sct_process_segmentation()])
 #' 8. Merge & export ([save_table()], [save_rds()])
 #'
-#' `sci_run_pipeline()` does not run the external tools itself: every
-#' requested step is reported as `"pending"` until you run its function.
-#' Use [sci_pipeline_status()] to see which outputs already exist.
+#' `sci_run_pipeline()` is a planner, not a runner. It does **not** call
+#' the Spinal Cord Toolbox, 'dcm2niix' or 'pydicom', does not read or write
+#' any image, and does not look at which outputs already exist: every
+#' requested step is reported as `"pending"` (step 2 as `"skipped"` unless
+#' `anonymize = TRUE`), whatever its state on disk. Run the function named
+#' in each row to perform the step, and use [sci_pipeline_status()] to see
+#' which outputs exist.
 #'
 #' @param project_dir Character. Path to workflowr project root.
-#' @param steps Integer vector. Which steps to run. Default `1:8`.
-#' @param anonymize Logical. Run anonymization step. Default `FALSE`.
-#' @param overwrite Logical. Kept for compatibility; not used while the
-#'   runner only plans steps. Default `FALSE`.
-#' @param verbose Logical. Print progress. Default `TRUE`.
+#' @param steps Integer vector. Which steps (1--8) to include in the plan.
+#'   Default `1:8`. Other values are skipped with a warning.
+#' @param anonymize Logical. Include the anonymisation step (step 2).
+#'   Default `FALSE`.
+#' @param overwrite Logical. Kept for compatibility; not used, because no
+#'   step is run. Default `FALSE`.
+#' @param verbose Logical. Print the plan. Default `TRUE`.
 #' @return Tibble with one row per requested step: `step`, `name`,
 #'   `status` (`"pending"` or `"skipped"`) and `message` (the function to
 #'   run, or the reason for skipping).
@@ -110,10 +116,10 @@ sci_run_pipeline <- function(project_dir,
 
     if (s == 5 && verbose) {
       cli::cli_alert_warning(
-        "QC PAUSE: Review lesion segmentations before proceeding."
+        "QC PAUSE: review the lesion segmentations before steps 6-8."
       )
       cli::cli_inform(
-        "Run {.fn sct_generate_qc} and check QC reports, then continue."
+        "Check the QC reports (argument {.arg qc_dir} or {.fn sct_generate_qc})."
       )
     }
   }
@@ -130,12 +136,23 @@ sci_run_pipeline <- function(project_dir,
 
 #' Get Pipeline Status
 #'
-#' Scans the project directory and reports which processing steps are
-#' complete for each patient and session.
+#' Scans `data/nifti/<pat_id>/<session>/` of the project and reports which
+#' processing outputs exist for each patient and session. A step counts as
+#' done when its file is present:
+#' * `converted`: any `.nii` or `.nii.gz` file;
+#' * `sc_seg`: a spinal cord mask, `*_seg.nii(.gz)` other than a lesion mask;
+#' * `lesion_seg`: a lesion mask, `*_lesion_seg.nii(.gz)`;
+#' * `vert_labels`: vertebral labels from [sct_label_vertebrae()],
+#'   `*_labeled.nii(.gz)` or `*_labeled_discs.nii(.gz)` (the earlier
+#'   naming `*_labels-disc.nii(.gz)` is also recognised);
+#' * `qc_done`: a `qc/` folder in the session folder;
+#' * `params_extracted`: a `.csv` file or an `*_analysis.xls(x)`
+#'   spreadsheet from [sct_analyze_lesion()].
 #'
 #' @param project_dir Character. Path to workflowr project root.
-#' @return Tibble with columns: `pat_id`, `session`, `converted`, `sc_seg`,
-#'   `lesion_seg`, `vert_labels`, `qc_done`, `params_extracted`.
+#' @return Tibble with one row per session and the columns `pat_id`,
+#'   `session`, `converted`, `sc_seg`, `lesion_seg`, `vert_labels`,
+#'   `qc_done`, `params_extracted` (zero rows if no session folder exists).
 #' @export
 #' @examples
 #' proj <- file.path(tempdir(), "status-study")
@@ -153,23 +170,13 @@ sci_pipeline_status <- function(project_dir) {
 
   if (!dir.exists(nifti_root)) {
     cli::cli_inform("No NIfTI directory found. Pipeline has not been started.")
-    return(tibble::tibble(
-      pat_id = character(),
-      session = character(),
-      converted = logical(),
-      sc_seg = logical(),
-      lesion_seg = logical(),
-      vert_labels = logical(),
-      qc_done = logical(),
-      params_extracted = logical()
-    ))
+    return(empty_pipeline_status())
   }
 
   patients <- list.dirs(nifti_root, recursive = FALSE, full.names = FALSE)
 
-  results <- vector("list", length(patients))
-  for (i in seq_along(patients)) {
-    pid <- patients[i]
+  results <- list()
+  for (pid in patients) {
     sessions <- list.dirs(
       file.path(nifti_root, pid),
       recursive = FALSE, full.names = FALSE
@@ -177,20 +184,41 @@ sci_pipeline_status <- function(project_dir) {
 
     for (ses in sessions) {
       ses_dir <- file.path(nifti_root, pid, ses)
-      nii_files <- list.files(ses_dir, pattern = "\\.nii(\\.gz)?$")
+      files <- list.files(ses_dir)
+      nii_files <- grep("\\.nii(\\.gz)?$", files, value = TRUE)
+      seg_files <- grep("_seg\\.nii(\\.gz)?$", nii_files, value = TRUE)
 
-      results <- c(results, list(tibble::tibble(
+      results[[length(results) + 1L]] <- tibble::tibble(
         pat_id = pid,
         session = ses,
         converted = length(nii_files) > 0,
-        sc_seg = any(grepl("_seg\\.nii", nii_files)),
-        lesion_seg = any(grepl("_lesion_seg\\.nii", nii_files)),
-        vert_labels = any(grepl("_labels-disc\\.nii", nii_files)),
+        sc_seg = any(!grepl("_lesion_seg\\.nii", seg_files)),
+        lesion_seg = any(grepl("_lesion_seg\\.nii", seg_files)),
+        vert_labels = any(grepl(
+          "(_labeled|_labeled_discs|_labels-disc)\\.nii(\\.gz)?$", nii_files
+        )),
         qc_done = dir.exists(file.path(ses_dir, "qc")),
-        params_extracted = any(grepl("\\.csv$", list.files(ses_dir)))
-      )))
+        params_extracted = any(grepl("(\\.csv|_analysis\\.xlsx?)$", files))
+      )
     }
   }
 
+  if (length(results) == 0L) {
+    return(empty_pipeline_status())
+  }
   dplyr::bind_rows(results)
+}
+
+# Zero-row result of sci_pipeline_status() with the documented columns.
+empty_pipeline_status <- function() {
+  tibble::tibble(
+    pat_id = character(),
+    session = character(),
+    converted = logical(),
+    sc_seg = logical(),
+    lesion_seg = logical(),
+    vert_labels = logical(),
+    qc_done = logical(),
+    params_extracted = logical()
+  )
 }

@@ -101,3 +101,52 @@ test_that("sci_pipeline_status detects per-session processing artefacts", {
   expect_true(res$qc_done)
   expect_true(res$params_extracted)
 })
+
+test_that("sci_pipeline_status recognises the file names SCT writes", {
+  proj <- make_project()
+  ses <- file.path(proj, "data", "nifti", "SCI002", "ses-01")
+  dir.create(ses, recursive = TRUE)
+  file.create(file.path(ses, c(
+    "t2.nii.gz", "t2_lesion_seg.nii.gz", "t2_seg_labeled.nii.gz",
+    "t2_lesion_seg_analysis.xlsx"
+  )))
+
+  res <- sci_pipeline_status(proj)
+  expect_true(res$converted)
+  # a lesion mask alone is not a spinal cord segmentation
+  expect_false(res$sc_seg)
+  expect_true(res$lesion_seg)
+  expect_true(res$vert_labels)
+  expect_true(res$params_extracted)
+  expect_false(res$qc_done)
+})
+
+test_that("sci_pipeline_status counts the SCIsegV2 cord mask as sc_seg", {
+  proj <- make_project()
+  ses <- file.path(proj, "data", "nifti", "SCI003", "ses-01")
+  dir.create(ses, recursive = TRUE)
+  file.create(file.path(ses, c("t2.nii.gz", "t2_sc_seg.nii.gz")))
+  res <- sci_pipeline_status(proj)
+  expect_true(res$sc_seg)
+  expect_false(res$lesion_seg)
+  expect_false(res$vert_labels)
+  expect_false(res$params_extracted)
+})
+
+test_that("sci_pipeline_status keeps its columns when no session exists", {
+  proj <- make_project()
+  dir.create(file.path(proj, "data", "nifti", "SCI001"), recursive = TRUE)
+  res <- sci_pipeline_status(proj)
+  expect_equal(nrow(res), 0)
+  expect_named(res, c("pat_id", "session", "converted", "sc_seg",
+                      "lesion_seg", "vert_labels", "qc_done", "params_extracted"))
+})
+
+test_that("sci_run_pipeline never runs a step or touches the project", {
+  proj <- make_project()
+  before <- list.files(proj, recursive = TRUE, all.files = TRUE)
+  res <- sci_run_pipeline(proj, verbose = FALSE)
+  expect_equal(res$step, 1:8)
+  expect_setequal(unique(res$status), c("pending", "skipped"))
+  expect_equal(list.files(proj, recursive = TRUE, all.files = TRUE), before)
+})

@@ -10,12 +10,25 @@ sci_pipeline_status(project_dir)
 \item{project_dir}{Character. Path to workflowr project root.}
 }
 \value{
-Tibble with columns: \code{pat_id}, \code{session}, \code{converted}, \code{sc_seg},
-\code{lesion_seg}, \code{vert_labels}, \code{qc_done}, \code{params_extracted}.
+Tibble with one row per session and the columns \code{pat_id},
+\code{session}, \code{converted}, \code{sc_seg}, \code{lesion_seg}, \code{vert_labels},
+\code{qc_done}, \code{params_extracted} (zero rows if no session folder exists).
 }
 \description{
-Scans the project directory and reports which processing steps are
-complete for each patient and session.
+Scans \verb{data/nifti/<pat_id>/<session>/} of the project and reports which
+processing outputs exist for each patient and session. A step counts as
+done when its file is present:
+\itemize{
+\item \code{converted}: any \code{.nii} or \code{.nii.gz} file;
+\item \code{sc_seg}: a spinal cord mask, \verb{*_seg.nii(.gz)} other than a lesion mask;
+\item \code{lesion_seg}: a lesion mask, \verb{*_lesion_seg.nii(.gz)};
+\item \code{vert_labels}: vertebral labels from \code{\link[=sct_label_vertebrae]{sct_label_vertebrae()}},
+\verb{*_labeled.nii(.gz)} or \verb{*_labeled_discs.nii(.gz)} (the earlier
+naming \verb{*_labels-disc.nii(.gz)} is also recognised);
+\item \code{qc_done}: a \verb{qc/} folder in the session folder;
+\item \code{params_extracted}: a \code{.csv} file or an \verb{*_analysis.xls(x)}
+spreadsheet from \code{\link[=sct_analyze_lesion]{sct_analyze_lesion()}}.
+}
 }
 \examples{
 proj <- file.path(tempdir(), "status-study")

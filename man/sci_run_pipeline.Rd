@@ -2,7 +2,7 @@
 % Please edit documentation in R/pipeline-run.R
 \name{sci_run_pipeline}
 \alias{sci_run_pipeline}
-\title{Run the SCI Analysis Pipeline}
+\title{Plan the SCI Analysis Pipeline}
 \usage{
 sci_run_pipeline(
   project_dir,
@@ -15,14 +15,16 @@ sci_run_pipeline(
 \arguments{
 \item{project_dir}{Character. Path to workflowr project root.}
 
-\item{steps}{Integer vector. Which steps to run. Default \code{1:8}.}
+\item{steps}{Integer vector. Which steps (1--8) to include in the plan.
+Default \code{1:8}. Other values are skipped with a warning.}
 
-\item{anonymize}{Logical. Run anonymization step. Default \code{FALSE}.}
+\item{anonymize}{Logical. Include the anonymisation step (step 2).
+Default \code{FALSE}.}
 
-\item{overwrite}{Logical. Kept for compatibility; not used while the
-runner only plans steps. Default \code{FALSE}.}
+\item{overwrite}{Logical. Kept for compatibility; not used, because no
+step is run. Default \code{FALSE}.}
 
-\item{verbose}{Logical. Print progress. Default \code{TRUE}.}
+\item{verbose}{Logical. Print the plan. Default \code{TRUE}.}
 }
 \value{
 Tibble with one row per requested step: \code{step}, \code{name},
@@ -34,20 +36,24 @@ Checks a project created with \code{\link[=sci_create_project]{sci_create_projec
 of processing steps, each with the function that performs it:
 \enumerate{
 \item DICOM metadata extraction (\code{\link[=extract_dicom_metadata]{extract_dicom_metadata()}})
-\item Anonymization, if requested (\code{\link[=anonymize_dicom]{anonymize_dicom()}})
+\item Anonymisation, if requested (\code{\link[=anonymize_dicom]{anonymize_dicom()}})
 \item DICOM to NIfTI conversion (\code{\link[=convert_batch]{convert_batch()}})
 \item Spinal cord segmentation (\code{\link[=sct_segment_sc]{sct_segment_sc()}})
 \item Lesion segmentation with SCIsegV2 (\code{\link[=sct_segment_lesion]{sct_segment_lesion()}})
-\item Vertebral labeling (\code{\link[=sct_label_vertebrae]{sct_label_vertebrae()}})
+\item Vertebral labelling (\code{\link[=sct_label_vertebrae]{sct_label_vertebrae()}})
 \item Parameter extraction (\code{\link[=sct_analyze_lesion]{sct_analyze_lesion()}},
 \code{\link[=sct_process_segmentation]{sct_process_segmentation()}})
 \item Merge & export (\code{\link[=save_table]{save_table()}}, \code{\link[=save_rds]{save_rds()}})
 }
 }
 \details{
-\code{sci_run_pipeline()} does not run the external tools itself: every
-requested step is reported as \code{"pending"} until you run its function.
-Use \code{\link[=sci_pipeline_status]{sci_pipeline_status()}} to see which outputs already exist.
+\code{sci_run_pipeline()} is a planner, not a runner. It does \strong{not} call
+the Spinal Cord Toolbox, 'dcm2niix' or 'pydicom', does not read or write
+any image, and does not look at which outputs already exist: every
+requested step is reported as \code{"pending"} (step 2 as \code{"skipped"} unless
+\code{anonymize = TRUE}), whatever its state on disk. Run the function named
+in each row to perform the step, and use \code{\link[=sci_pipeline_status]{sci_pipeline_status()}} to see
+which outputs exist.
 }
 \examples{
 proj <- file.path(tempdir(), "pipeline-study")
