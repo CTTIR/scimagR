@@ -7,7 +7,8 @@
 classify_phase(days)
 }
 \arguments{
-\item{days}{Numeric vector. Days since trauma.}
+\item{days}{Numeric vector. Days since trauma. Negative values (an
+imaging date before the trauma date) give \code{NA} with a warning.}
 }
 \value{
 Ordered factor with 5 levels: hyperacute < acute < subacute <

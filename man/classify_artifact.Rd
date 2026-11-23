@@ -7,8 +7,8 @@
 classify_artifact(grade)
 }
 \arguments{
-\item{grade}{Integer vector (0--4). Values outside this range produce \code{NA}
-with a warning.}
+\item{grade}{Integer vector (0--4). Values outside this range, and values
+that are not whole numbers, produce \code{NA} with a warning.}
 }
 \value{
 Ordered factor with 5 levels: none < mild < moderate < severe <

@@ -9,8 +9,7 @@ test_that("compute_mscc returns correct percentage", {
 
 test_that("compute_mscc handles full compression", {
   # di=0 -> MSCC = 100%
-
-expect_equal(compute_mscc(0, 8, 8), 100)
+  expect_equal(compute_mscc(0, 8, 8), 100)
 })
 
 test_that("compute_mscc handles no compression", {
@@ -134,4 +133,17 @@ test_that("metric functions reject non-numeric input", {
   expect_error(compute_compression_ratio(6, "12"), class = "scimagR_error_input")
   expect_error(compute_csa_ratio(45, 70, list(72)), class = "scimagR_error_input")
   expect_true(is.na(compute_mscc(NA, NA, NA)))
+})
+
+test_that("classify_phase sets negative days to NA with a warning", {
+  expect_warning(res <- classify_phase(c(-3, 0, 20)), "Negative days")
+  expect_equal(as.character(res), c(NA, "hyperacute", "subacute"))
+  expect_error(classify_phase("5"), class = "scimagR_error_input")
+  expect_equal(as.character(classify_phase(NA)), NA_character_)
+})
+
+test_that("classify_artifact rejects fractional grades and non-numeric input", {
+  expect_warning(res <- classify_artifact(c(1, 1.5, 2)), "whole numbers")
+  expect_equal(as.character(res), c("mild", NA, "moderate"))
+  expect_error(classify_artifact("2"), class = "scimagR_error_input")
 })

@@ -8,14 +8,23 @@
 #' - 91--365 days: intermediate
 #' - more than 365 days: chronic
 #'
-#' @param days Numeric vector. Days since trauma.
+#' @param days Numeric vector. Days since trauma. Negative values (an
+#'   imaging date before the trauma date) give `NA` with a warning.
 #' @return Ordered factor with 5 levels: hyperacute < acute < subacute <
 #'   intermediate < chronic.
 #' @export
 #' @examples
 #' classify_phase(c(0, 5, 30, 200, 400))
 classify_phase <- function(days) {
-  stopifnot(is.numeric(days))
+  check_metric_inputs(days = days)
+
+  negative <- !is.na(days) & days < 0
+  if (any(negative)) {
+    cli::cli_warn(
+      "Negative days since trauma are set to NA: {days[negative]}"
+    )
+    days[negative] <- NA
+  }
 
   levels <- c("hyperacute", "acute", "subacute", "intermediate", "chronic")
 
@@ -40,15 +49,15 @@ classify_phase <- function(days) {
 #' - 3: severe
 #' - 4: non-evaluable
 #'
-#' @param grade Integer vector (0--4). Values outside this range produce `NA`
-#'   with a warning.
+#' @param grade Integer vector (0--4). Values outside this range, and values
+#'   that are not whole numbers, produce `NA` with a warning.
 #' @return Ordered factor with 5 levels: none < mild < moderate < severe <
 #'   non-evaluable.
 #' @export
 #' @examples
 #' classify_artifact(c(0, 1, 2, 3, 4))
 classify_artifact <- function(grade) {
-  stopifnot(is.numeric(grade))
+  check_metric_inputs(grade = grade)
 
   levels <- c("none", "mild", "moderate", "severe", "non-evaluable")
   labels_map <- stats::setNames(levels, as.character(0:4))
@@ -59,6 +68,13 @@ classify_artifact <- function(grade) {
       "Artifact grade values outside 0-4 will be set to NA: {grade[out_of_range]}"
     )
   }
+  fractional <- !is.na(grade) & !out_of_range & grade != round(grade)
+  if (any(fractional)) {
+    cli::cli_warn(
+      "Artifact grades must be whole numbers; set to NA: {grade[fractional]}"
+    )
+  }
+  out_of_range <- out_of_range | fractional
 
   result <- labels_map[as.character(grade)]
   result[out_of_range] <- NA_character_
