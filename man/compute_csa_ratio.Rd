@@ -14,13 +14,14 @@ compute_csa_ratio(csa_injury, csa_above, csa_below)
 \item{csa_below}{Numeric. CSA one level below (mm^2).}
 }
 \value{
-Numeric. CSA ratio (unitless). \code{NA} if reference is <= 0 or any
-input is \code{NA}.
+Numeric vector of CSA ratios (unitless). An element is \code{NA} if
+its reference is <= 0 or any of its inputs is \code{NA}.
 }
 \description{
 Calculates the ratio of CSA at the injury level to the reference CSA
-(average of adjacent levels).
+(average of adjacent levels). Vectorised over all arguments.
 }
 \examples{
 compute_csa_ratio(csa_injury = 45, csa_above = 70, csa_below = 72)
+compute_csa_ratio(csa_injury = c(45, 60), csa_above = 70, csa_below = 72)
 }

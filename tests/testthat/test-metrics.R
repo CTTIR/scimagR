@@ -108,3 +108,30 @@ test_that("classify_artifact handles NA", {
   result <- classify_artifact(c(0, NA, 2))
   expect_equal(as.character(result), c("none", NA, "moderate"))
 })
+
+# --- vectorisation (regression: scalar-only `if` failed on vectors) ---
+
+test_that("metric functions are vectorised with element-wise NA handling", {
+  expect_equal(compute_mscc(c(5, 0, NA, 4), c(10, 8, 8, 0), c(10, 8, 8, 0)),
+               c(50, 100, NA, NA))
+  expect_equal(compute_compression_ratio(c(6, 6, NA), c(12, 0, 10)),
+               c(0.5, NA, NA))
+  expect_equal(compute_csa_ratio(c(45, 60), c(70, 0), c(72, 0)),
+               c(45 / 71, NA))
+  # recycling of scalar references
+  expect_equal(compute_mscc(c(4, 6), 8, 8), c(50, 25))
+  expect_equal(compute_mscc(numeric(), 8, 8), numeric())
+})
+
+test_that("metric functions work inside dplyr::mutate()", {
+  df <- data.frame(di = c(5, 6), da = c(8, 8), db = c(8, 9))
+  out <- dplyr::mutate(df, mscc = compute_mscc(di, da, db))
+  expect_equal(out$mscc, (1 - df$di / ((df$da + df$db) / 2)) * 100)
+})
+
+test_that("metric functions reject non-numeric input", {
+  expect_error(compute_mscc("5", 8, 8), class = "scimagR_error_input")
+  expect_error(compute_compression_ratio(6, "12"), class = "scimagR_error_input")
+  expect_error(compute_csa_ratio(45, 70, list(72)), class = "scimagR_error_input")
+  expect_true(is.na(compute_mscc(NA, NA, NA)))
+})

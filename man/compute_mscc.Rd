@@ -14,14 +14,29 @@ compute_mscc(di, da, db)
 \item{db}{Numeric. Sagittal AP diameter one level below (mm).}
 }
 \value{
-Numeric. MSCC percentage. \code{NA} if any input is \code{NA} or if the
-reference diameter is <= 0.
+Numeric vector of MSCC percentages. An element is \code{NA} if any of
+its inputs is \code{NA} or if its reference diameter (\code{(da + db) / 2}) is
+<= 0.
 }
 \description{
-Calculates MSCC using the formula:
+Calculates MSCC as defined by Fehlings et al. (1999):
 \deqn{MSCC = (1 - d_i / ((d_a + d_b) / 2)) \times 100}
+}
+\details{
+All arguments are vectorised and recycled to a common length, so the
+function can be used inside \code{\link[dplyr:mutate]{dplyr::mutate()}} on registry columns.
 }
 \examples{
 compute_mscc(di = 5.2, da = 8.1, db = 8.5)
 compute_mscc(di = 0, da = 8, db = 8) # 100\% compression
+
+# Vectorised: one value per measurement
+compute_mscc(di = c(5.2, 6.0, NA), da = c(8.1, 8.0, 8.2), db = 8.4)
+}
+\references{
+Fehlings MG, Rao SC, Tator CH, et al. (1999). The optimal
+radiologic method for assessing spinal canal compromise and cord
+compression in patients with cervical spinal cord injury. Part II:
+Results of a multicenter study. \emph{Spine} 24(6):605--613
+(MSCC definition in the Methods). \doi{10.1097/00007632-199903150-00023}
 }

@@ -12,12 +12,20 @@ compute_compression_ratio(ap, transverse)
 \item{transverse}{Numeric. Transverse diameter (mm).}
 }
 \value{
-Numeric. Compression ratio (unitless). \code{NA} if \code{transverse} <= 0
-or any input is \code{NA}.
+Numeric vector of compression ratios (unitless). An element is
+\code{NA} if \code{transverse} <= 0 or any of its inputs is \code{NA}.
 }
 \description{
-Calculates the ratio of anterior-posterior to transverse diameter.
+Calculates the anteroposterior compression ratio of the spinal cord, the
+ratio of its anterior-posterior (sagittal) diameter to its transverse
+diameter (Ogino et al. 1983). Vectorised over both arguments.
 }
 \examples{
 compute_compression_ratio(ap = 6.5, transverse = 12.0)
+compute_compression_ratio(ap = c(6.5, 7.1), transverse = c(12.0, 11.4))
+}
+\references{
+Ogino H, Tada K, Okada K, et al. (1983). Canal diameter,
+anteroposterior compression ratio, and spondylotic myelopathy of the
+cervical spine. \emph{Spine} 8(1):1--15. \doi{10.1097/00007632-198301000-00001}
 }
