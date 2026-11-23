@@ -3,7 +3,7 @@
 #' Runs `sct_analyze_lesion` to compute lesion volume, length, maximum axial
 #' damage ratio and tissue bridge measurements. SCT writes the results to a
 #' spreadsheet named after the lesion mask: `<lesion_seg>_analysis.xlsx`
-#' (SCT 7.0 and later) or `<lesion_seg>_analysis.xls` (earlier versions).
+#' (SCT 6.5 and later) or `<lesion_seg>_analysis.xls` (SCT 6.4).
 #'
 #' @param lesion_seg Character. Path to lesion segmentation NIfTI.
 #' @param sc_seg Character. Path to spinal cord segmentation NIfTI.
@@ -77,9 +77,10 @@ sct_analyze_lesion <- function(lesion_seg,
 #' Runs `sct_process_segmentation` to compute cross-sectional area (CSA),
 #' AP diameter, transverse diameter and other shape metrics of the spinal
 #' cord. By default SCT averages the metrics over all slices of the
-#' segmentation (the `VertLevel` column of the CSV lists the vertebral
-#' levels covered). Use `vert` to restrict the average to vertebral levels,
-#' and `perlevel = TRUE` to get one row per level.
+#' segmentation and leaves the `VertLevel` column of the CSV empty. Use
+#' `vert` to restrict the average to vertebral levels (`VertLevel` then
+#' lists them), `perlevel = TRUE` to get one row per level, or
+#' `perslice = TRUE` to get one row per slice with its vertebral level.
 #'
 #' @param sc_seg Character. Path to spinal cord segmentation NIfTI.
 #' @param vert_labels Character. Path to the vertebral level file, i.e. the

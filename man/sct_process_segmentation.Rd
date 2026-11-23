@@ -42,9 +42,10 @@ failure (non-zero exit status, or no CSV written).
 Runs \code{sct_process_segmentation} to compute cross-sectional area (CSA),
 AP diameter, transverse diameter and other shape metrics of the spinal
 cord. By default SCT averages the metrics over all slices of the
-segmentation (the \code{VertLevel} column of the CSV lists the vertebral
-levels covered). Use \code{vert} to restrict the average to vertebral levels,
-and \code{perlevel = TRUE} to get one row per level.
+segmentation and leaves the \code{VertLevel} column of the CSV empty. Use
+\code{vert} to restrict the average to vertebral levels (\code{VertLevel} then
+lists them), \code{perlevel = TRUE} to get one row per level, or
+\code{perslice = TRUE} to get one row per slice with its vertebral level.
 }
 \examples{
 # Inputs are checked before SCT is called:

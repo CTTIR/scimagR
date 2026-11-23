@@ -24,7 +24,7 @@ Character. Path to the analysis spreadsheet written by SCT, or
 Runs \code{sct_analyze_lesion} to compute lesion volume, length, maximum axial
 damage ratio and tissue bridge measurements. SCT writes the results to a
 spreadsheet named after the lesion mask: \verb{<lesion_seg>_analysis.xlsx}
-(SCT 7.0 and later) or \verb{<lesion_seg>_analysis.xls} (earlier versions).
+(SCT 6.5 and later) or \verb{<lesion_seg>_analysis.xls} (SCT 6.4).
 }
 \examples{
 # Inputs are checked before SCT is called:

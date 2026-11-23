@@ -18,15 +18,15 @@
   returns `<segmentation>_labeled.nii.gz`, the vertebral level file that
   `sct_process_segmentation()` needs (it used to return a
   `*_labels-disc.nii.gz` path that SCT never writes);
-  `sct_analyze_lesion()` returns the `*_analysis.xlsx` (SCT 7) or
-  `*_analysis.xls` (SCT 6) spreadsheet instead of a non-existent CSV.
+  `sct_analyze_lesion()` returns the `*_analysis.xlsx` (SCT 6.5 and later)
+  or `*_analysis.xls` (SCT 6.4) spreadsheet instead of a non-existent CSV.
 * `sct_segment_sc()` and `sct_segment_lesion()` pass `qc_dir` to
   `sct_deepseg -qc`. `sct_generate_qc()` defaults to the valid `sct_qc`
   process `"sct_deepseg_sc"` (the former default `"sct_deepseg"` is mapped
   to it) and gains `lesion` and `plane` for lesion reports.
 * `sct_process_segmentation()` gains `vert` and `perlevel` to aggregate
   per vertebral level; its documentation now says that by default SCT
-  averages over all slices.
+  averages over all slices and leaves the `VertLevel` column empty.
 * Arguments passed to SCT are shell-quoted, so paths with spaces work.
 
 ## Pipeline, DICOM and registry

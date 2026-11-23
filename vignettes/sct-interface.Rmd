@@ -129,7 +129,7 @@ vert_labels <- sct_label_vertebrae(
 
 ```{r analyze}
 # Lesion parameters (volume, length, tissue bridges): an Excel spreadsheet,
-# *_analysis.xlsx with SCT 7 (*_analysis.xls with SCT 6)
+# *_analysis.xlsx (*_analysis.xls with SCT 6.4)
 lesion_xlsx <- sct_analyze_lesion(
   lesion_seg = lesion_seg,
   sc_seg = "sub-01_T2w_sc_seg.nii.gz"
@@ -146,7 +146,7 @@ csa_csv <- sct_process_segmentation(
 ```
 
 Without `vert`, `sct_process_segmentation()` averages the metrics over all
-slices of the segmentation.
+slices of the segmentation, and the `VertLevel` column of the CSV is empty.
 
 ## QC Reports
 
