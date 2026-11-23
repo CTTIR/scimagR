@@ -8,6 +8,11 @@
 #' used by [validate_registry()] and the plotting palettes; `"CT"` and
 #' `"CT+MRT"` are kept.
 #'
+#' Trauma and surgery dates are matched to the patients by name, comparing
+#' `pat_id` as text, so numeric patient IDs (e.g. folders named `1`, `2`,
+#' ...) get their own dates. A CSV is read with `pat_id` and `session` as
+#' text.
+#'
 #' @param dicom_meta Data frame or character path to DICOM metadata CSV.
 #' @param trauma_dates Named vector: names = pat_id, values = trauma date
 #'   (Date or character coercible to Date).
@@ -36,7 +41,7 @@ create_registry <- function(dicom_meta,
   rlang::check_required(trauma_dates)
 
   if (is.character(dicom_meta) && length(dicom_meta) == 1) {
-    dicom_meta <- readr::read_csv(dicom_meta, show_col_types = FALSE)
+    dicom_meta <- read_id_csv(dicom_meta)
   }
   dicom_meta <- tibble::as_tibble(dicom_meta)
 
@@ -48,7 +53,11 @@ create_registry <- function(dicom_meta,
 
   trauma_dates <- as.Date(trauma_dates)
 
-  no_date <- setdiff(unique(dicom_meta$pat_id), names(trauma_dates))
+  # Look dates up by name: indexing a named vector with a numeric pat_id
+  # would pick dates by position and silently give patients wrong dates.
+  no_date <- setdiff(
+    unique(as.character(dicom_meta$pat_id)), names(trauma_dates)
+  )
   if (length(no_date) > 0) {
     cli::cli_warn(
       paste(
@@ -64,7 +73,7 @@ create_registry <- function(dicom_meta,
         .data$modality %in% "MR", "MRT", as.character(.data$modality)
       ),
       study_date = as.Date(.data$study_date),
-      trauma_date = trauma_dates[.data$pat_id],
+      trauma_date = trauma_dates[as.character(.data$pat_id)],
       days_post_trauma = as.integer(
         difftime(.data$study_date, .data$trauma_date, units = "days")
       ),
@@ -75,7 +84,7 @@ create_registry <- function(dicom_meta,
     op_dates <- as.Date(op_dates)
     registry <- registry |>
       dplyr::mutate(
-        op_date = op_dates[.data$pat_id],
+        op_date = op_dates[as.character(.data$pat_id)],
         days_post_op = as.integer(
           difftime(.data$study_date, .data$op_date, units = "days")
         )
@@ -112,7 +121,7 @@ create_registry <- function(dicom_meta,
 #' reg
 validate_registry <- function(registry, strict = TRUE) {
   if (is.character(registry) && length(registry) == 1) {
-    registry <- readr::read_csv(registry, show_col_types = FALSE)
+    registry <- read_id_csv(registry)
   }
   registry <- tibble::as_tibble(registry)
 
@@ -185,4 +194,18 @@ validate_registry <- function(registry, strict = TRUE) {
   }
 
   invisible(registry)
+}
+
+# Read a metadata or registry CSV with the ID columns `pat_id` and `session`
+# as text, so that IDs such as "12" stay IDs instead of becoming numbers.
+read_id_csv <- function(path) {
+  header <- names(readr::read_csv(path, n_max = 0, show_col_types = FALSE))
+  id_cols <- intersect(c("pat_id", "session"), header)
+  id_types <- stats::setNames(
+    rep(list(readr::col_character()), length(id_cols)), id_cols
+  )
+  col_types <- do.call(
+    readr::cols, c(id_types, list(.default = readr::col_guess()))
+  )
+  readr::read_csv(path, col_types = col_types)
 }

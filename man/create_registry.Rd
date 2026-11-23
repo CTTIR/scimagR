@@ -28,6 +28,11 @@ phase classification), and optionally saves to CSV.
 The DICOM modality code \code{"MR"} is recoded to the registry code \code{"MRT"}
 used by \code{\link[=validate_registry]{validate_registry()}} and the plotting palettes; \code{"CT"} and
 \code{"CT+MRT"} are kept.
+
+Trauma and surgery dates are matched to the patients by name, comparing
+\code{pat_id} as text, so numeric patient IDs (e.g. folders named \code{1}, \code{2},
+...) get their own dates. A CSV is read with \code{pat_id} and \code{session} as
+text.
 }
 \examples{
 # Metadata as returned by extract_dicom_metadata() (synthetic values).

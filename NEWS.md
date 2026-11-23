@@ -40,6 +40,11 @@
 * `create_registry()` recodes the DICOM modality `"MR"` to `"MRT"`, so
   registries built from extracted metadata pass `validate_registry()`, and
   warns about patients without a trauma date.
+* `create_registry()` matches trauma and surgery dates to patients by ID
+  text. A numeric `pat_id` (e.g. from folders named `1`, `2`, ...) used to
+  pick the dates by position, so patients could silently get another
+  patient's trauma date, days since trauma and phase. `create_registry()`
+  and `validate_registry()` read `pat_id` and `session` from a CSV as text.
 * `convert_dcm2niix()` raises an error when 'dcm2niix' fails.
 * `anonymize_dicom()` documents exactly which tags it changes and that it
   is not a full DICOM PS3.15 de-identification.

@@ -181,3 +181,45 @@ test_that("create_registry warns about patients without a trauma date", {
   expect_true(is.na(reg$days_post_trauma[2]))
   expect_equal(reg$days_post_trauma[1], 5L)
 })
+
+test_that("create_registry matches dates by ID when pat_id is numeric", {
+  # Regression: a numeric pat_id indexed the named date vector by position,
+  # so patients silently got another patient's trauma date.
+  csv <- withr::local_tempfile(fileext = ".csv")
+  writeLines(c(
+    "pat_id,session,study_date,modality",
+    "2,1,2024-03-01,MR",
+    "1,1,2024-01-20,MR",
+    "10,1,2024-02-01,MR"
+  ), csv)
+  dates <- c("10" = "2024-01-31", "2" = "2024-02-25", "1" = "2024-01-15")
+  reg <- create_registry(csv, dates)
+  expect_type(reg$pat_id, "character")
+  expect_type(reg$session, "character")
+  expect_equal(reg$days_post_trauma, c(5L, 5L, 1L))
+
+  df <- data.frame(
+    pat_id = c(2, 1), session = "s1",
+    study_date = c("2024-03-01", "2024-01-20"), modality = "MR"
+  )
+  reg2 <- create_registry(
+    df, dates,
+    op_dates = c("1" = "2024-01-16", "2" = "2024-02-26")
+  )
+  expect_equal(reg2$days_post_trauma, c(5L, 5L))
+  expect_equal(reg2$days_post_op, c(4L, 4L))
+  expect_warning(create_registry(df, c("1" = "2024-01-15")),
+                 "No trauma date")
+})
+
+test_that("validate_registry reads ID columns from a CSV as text", {
+  csv <- withr::local_tempfile(fileext = ".csv")
+  writeLines(c(
+    "pat_id,session,study_date,modality",
+    "12,1,2024-03-01,MRT",
+    "7,1,2024-01-20,CT"
+  ), csv)
+  reg <- suppressMessages(validate_registry(csv))
+  expect_equal(reg$pat_id, c("12", "7"))
+  expect_equal(reg$session, c("1", "1"))
+})
