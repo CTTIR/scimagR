@@ -24,5 +24,5 @@ Records before/after row counts and reason for an exclusion step.
 Useful for building a CONSORT-style exclusion flow.
 }
 \examples{
-log_exclusion("Artifact filter", 100, 85, "artifact_grade > 2")
+log_exclusion("Artefact filter", 100, 85, "artifact_grade > 2")
 }

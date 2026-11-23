@@ -2,7 +2,7 @@
 % Please edit documentation in R/dicom-anonymize.R
 \name{anonymize_dicom}
 \alias{anonymize_dicom}
-\title{Anonymize DICOM Files}
+\title{Anonymise DICOM Files}
 \usage{
 anonymize_dicom(
   dicom_dir,
@@ -16,7 +16,7 @@ anonymize_dicom(
 
 \item{mapping_csv}{Character. Path for ID mapping output. \strong{Store securely!}}
 
-\item{prefix}{Character. Anonymized ID prefix. Default \code{"SCI"}.}
+\item{prefix}{Character. Anonymised ID prefix. Default \code{"SCI"}.}
 
 \item{python}{Character. Python executable. Default uses \code{PYTHON_BIN}
 environment variable or \code{"python3"}.}

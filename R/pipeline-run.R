@@ -58,11 +58,11 @@ sci_run_pipeline <- function(project_dir,
 
   step_names <- c(
     "DICOM metadata extraction",
-    "Anonymization",
+    "Anonymisation",
     "DICOM to NIfTI conversion",
     "Spinal cord segmentation",
     "Lesion segmentation (SCIsegV2)",
-    "Vertebral labeling",
+    "Vertebral labelling",
     "Parameter extraction",
     "Merge & export"
   )
@@ -93,7 +93,7 @@ sci_run_pipeline <- function(project_dir,
 
     if (s == 2 && !anonymize) {
       if (verbose) {
-        cli::cli_inform("Step 2 (Anonymization): skipped (anonymize = FALSE)")
+        cli::cli_inform("Step 2 (Anonymisation): skipped (anonymize = FALSE)")
       }
       status_log <- dplyr::bind_rows(status_log, tibble::tibble(
         step = 2L, name = step_names[2], status = "skipped",

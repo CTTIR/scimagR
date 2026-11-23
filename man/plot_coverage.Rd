@@ -14,7 +14,7 @@ A ggplot2 object.
 }
 \description{
 Creates a tile plot showing modality coverage per patient and session,
-with optional artifact grade overlay.
+with optional artefact grade overlay.
 }
 \examples{
 reg <- validate_registry(

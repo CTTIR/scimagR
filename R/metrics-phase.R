@@ -40,7 +40,7 @@ classify_phase <- function(days) {
   factor(phase, levels = levels, ordered = TRUE)
 }
 
-#' Classify MRI Artifact Grade
+#' Classify MRI Artefact Grade
 #'
 #' Maps integer grades 0--4 to an ordered factor:
 #' - 0: none
@@ -65,13 +65,13 @@ classify_artifact <- function(grade) {
   out_of_range <- !is.na(grade) & (grade < 0 | grade > 4)
   if (any(out_of_range)) {
     cli::cli_warn(
-      "Artifact grades outside 0-4 will be set to NA: {grade[out_of_range]}"
+      "Artefact grades outside 0-4 will be set to NA: {grade[out_of_range]}"
     )
   }
   fractional <- !is.na(grade) & !out_of_range & grade != round(grade)
   if (any(fractional)) {
     cli::cli_warn(
-      "Artifact grades must be whole numbers; set to NA: {grade[fractional]}"
+      "Artefact grades must be whole numbers; set to NA: {grade[fractional]}"
     )
   }
   out_of_range <- out_of_range | fractional

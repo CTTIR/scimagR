@@ -19,7 +19,7 @@ the base \code{pdf()} device does not know this family.}
 A ggplot2 theme object.
 }
 \description{
-A clean ggplot2 theme based on \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}}, optimized for
+A clean ggplot2 theme based on \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}}, optimised for
 publication-ready neuroimaging figures, with no minor gridlines and a
 bottom legend.
 }

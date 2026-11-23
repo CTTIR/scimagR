@@ -2,7 +2,7 @@
 % Please edit documentation in R/metrics-phase.R
 \name{classify_artifact}
 \alias{classify_artifact}
-\title{Classify MRI Artifact Grade}
+\title{Classify MRI Artefact Grade}
 \usage{
 classify_artifact(grade)
 }

@@ -7,7 +7,7 @@
 integrity_summary(df, id_cols = NULL)
 }
 \arguments{
-\item{df}{Data frame to summarize.}
+\item{df}{Data frame to summarise.}
 
 \item{id_cols}{Character vector. Columns to check for duplicates.
 Default \code{NULL} (skip duplicate check).}

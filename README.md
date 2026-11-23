@@ -5,7 +5,7 @@
 [![R-CMD-check](https://github.com/CTTIR/scimagR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/scimagR/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/CTTIR/scimagR/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/scimagR/)
 [![Codecov test coverage](https://codecov.io/gh/CTTIR/scimagR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CTTIR/scimagR?branch=main)
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Licence: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889958.svg)](https://doi.org/10.5281/zenodo.21889958)
 <!-- badges: end -->
@@ -34,7 +34,7 @@ work without them.
 |------|---------|---------|
 | [Spinal Cord Toolbox](https://spinalcordtoolbox.com) | >= 6.4 (6.x and 7.x) | Segmentation, labelling, parameter extraction |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | any | DICOM to NIfTI conversion |
-| Python 3 + pydicom | any | DICOM metadata extraction & anonymization |
+| Python 3 + pydicom | any | DICOM metadata extraction & anonymisation |
 
 Verify installation:
 
@@ -76,11 +76,11 @@ outputs exist.
 | Module | Key Functions | Description |
 |--------|---------------|-------------|
 | **SCT Interface** | `sct_segment_sc()`, `sct_segment_lesion()`, `sct_label_vertebrae()` | Wrappers for SCT segmentation, labelling, QC and morphometry (SCT 6 and 7) |
-| **DICOM Tools** | `extract_dicom_metadata()`, `anonymize_dicom()`, `convert_dcm2niix()` | Metadata extraction, anonymization, conversion |
+| **DICOM Tools** | `extract_dicom_metadata()`, `anonymize_dicom()`, `convert_dcm2niix()` | Metadata extraction, anonymisation, conversion |
 | **SCI Metrics** | `compute_mscc()`, `compute_compression_ratio()`, `classify_phase()` | Domain-specific clinical measures |
 | **Registry** | `create_registry()`, `validate_registry()`, `coverage_matrix()` | Structured time-point tracking |
-| **QC System** | `filter_evaluable()`, `log_exclusion()`, `integrity_summary()` | Artifact grading and exclusion tracking |
-| **Visualization** | `theme_sci()`, `scale_colour_phase()`, `plot_violin_box()` | Publication-ready figures |
+| **QC System** | `filter_evaluable()`, `log_exclusion()`, `integrity_summary()` | Artefact grading and exclusion tracking |
+| **Visualisation** | `theme_sci()`, `scale_colour_phase()`, `plot_violin_box()` | Publication-ready figures |
 | **Pipeline** | `sci_run_pipeline()`, `sci_pipeline_status()` | Step plan and output status |
 | **Scaffold** | `sci_create_project()` | Workflowr project setup |
 
@@ -94,7 +94,7 @@ CT Analysis. R package version 0.2.0.
 https://github.com/CTTIR/scimagR
 ```
 
-## License
+## Licence
 
 MIT
 

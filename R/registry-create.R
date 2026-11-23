@@ -96,9 +96,9 @@ create_registry <- function(dicom_meta,
 
 #' Validate an Imaging Registry
 #'
-#' Checks: required columns present, no duplicate pat_id x session,
-#' dates are valid, days_post_trauma >= 0, artifact_grade in 0--4,
-#' modality in allowed values.
+#' Checks: required columns present, no duplicate `pat_id` x `session`,
+#' dates are valid, `days_post_trauma` >= 0, `artifact_grade` in 0--4,
+#' `modality` in allowed values (`"CT"`, `"MRT"`, `"CT+MRT"`).
 #'
 #' @param registry Data frame or character path to CSV.
 #' @param strict Logical. Stop on errors (`TRUE`) or warn (`FALSE`).

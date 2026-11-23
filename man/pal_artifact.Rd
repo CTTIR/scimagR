@@ -2,7 +2,7 @@
 % Please edit documentation in R/viz-theme.R
 \name{pal_artifact}
 \alias{pal_artifact}
-\title{Artifact Grade Colour Palette}
+\title{Artefact Grade Colour Palette}
 \format{
 A named character vector of hexadecimal colour codes.
 }
@@ -10,7 +10,7 @@ A named character vector of hexadecimal colour codes.
 pal_artifact
 }
 \description{
-Named character vector of 5 colours for MRI artifact grades:
+Named character vector of 5 colours for MRI artefact grades:
 none (green), mild (yellow), moderate (orange), severe (red),
 non-evaluable (grey).
 }

@@ -1,10 +1,10 @@
 #' Filter to Evaluable Imaging Sessions
 #'
-#' Filters a dataset to sessions that meet artifact grade and modality
+#' Filters a dataset to sessions that meet artefact grade and modality
 #' criteria for analysis.
 #'
 #' @param df Data frame with `artifact_grade` and `modality` columns.
-#' @param max_artifact Integer. Maximum artifact grade to include. Default `2`.
+#' @param max_artifact Integer. Maximum artefact grade to include. Default `2`.
 #' @param modalities Character vector. Modalities to include.
 #'   Default `c("MRT", "CT+MRT")`.
 #' @param verbose Logical. Print exclusion summary. Default `TRUE`.
@@ -60,7 +60,7 @@ filter_evaluable <- function(df,
 #'   `n_excluded`, `reason`.
 #' @export
 #' @examples
-#' log_exclusion("Artifact filter", 100, 85, "artifact_grade > 2")
+#' log_exclusion("Artefact filter", 100, 85, "artifact_grade > 2")
 log_exclusion <- function(step, n_before, n_after, reason = "") {
   rlang::check_required(step)
   rlang::check_required(n_before)

@@ -3,7 +3,7 @@
 #' Reports dimensions, missing values per column, and duplicate count for
 #' a data frame. Returns the data frame invisibly for piping.
 #'
-#' @param df Data frame to summarize.
+#' @param df Data frame to summarise.
 #' @param id_cols Character vector. Columns to check for duplicates.
 #'   Default `NULL` (skip duplicate check).
 #' @return Invisibly returns `df`.

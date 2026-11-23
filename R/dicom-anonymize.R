@@ -1,4 +1,4 @@
-#' Anonymize DICOM Files
+#' Anonymise DICOM Files
 #'
 #' Replaces identifying header fields and removes private tags in every file
 #' below `dicom_dir`, using the bundled Python script and 'pydicom'. Each
@@ -8,7 +8,7 @@
 #'
 #' @param dicom_dir Character. Root DICOM directory.
 #' @param mapping_csv Character. Path for ID mapping output. **Store securely!**
-#' @param prefix Character. Anonymized ID prefix. Default `"SCI"`.
+#' @param prefix Character. Anonymised ID prefix. Default `"SCI"`.
 #' @param python Character. Python executable. Default uses `PYTHON_BIN`
 #'   environment variable or `"python3"`.
 #' @return Exit code (invisible).
@@ -60,7 +60,7 @@ anonymize_dicom <- function(dicom_dir,
   pydicom_check <- check_pydicom(python = python, verbose = FALSE)
   if (!pydicom_check$available) {
     cli::cli_abort(c(
-      "pydicom is required for DICOM anonymization.",
+      "pydicom is required for DICOM anonymisation.",
       "i" = "Install with: {.code pip install pydicom}"
     ))
   }
@@ -93,11 +93,11 @@ anonymize_dicom <- function(dicom_dir,
   )
 
   if (exit_code != 0L) {
-    cli::cli_abort("DICOM anonymization failed with exit code {exit_code}.")
+    cli::cli_abort("DICOM anonymisation failed with exit code {exit_code}.")
   }
 
   cli::cli_alert_success(
-    "DICOM anonymization complete. Mapping: {.path {mapping_csv}}"
+    "DICOM anonymisation complete. Mapping: {.path {mapping_csv}}"
   )
   invisible(exit_code)
 }

@@ -4,7 +4,7 @@
 \alias{scale_artifact}
 \alias{scale_colour_artifact}
 \alias{scale_fill_artifact}
-\title{Colour and Fill Scales for Artifact Grades}
+\title{Colour and Fill Scales for Artefact Grades}
 \usage{
 scale_colour_artifact(...)
 
@@ -18,7 +18,7 @@ scale_fill_artifact(...)
 A ggplot2 scale object.
 }
 \description{
-Colour and Fill Scales for Artifact Grades
+Colour and Fill Scales for Artefact Grades
 }
 \examples{
 library(ggplot2)

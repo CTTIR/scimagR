@@ -1,6 +1,6 @@
 #' SCI Publication Theme
 #'
-#' A clean ggplot2 theme based on [ggplot2::theme_bw()], optimized for
+#' A clean ggplot2 theme based on [ggplot2::theme_bw()], optimised for
 #' publication-ready neuroimaging figures, with no minor gridlines and a
 #' bottom legend.
 #'
@@ -41,9 +41,9 @@ pal_phase <- stats::setNames(
   c("hyperacute", "acute", "subacute", "intermediate", "chronic")
 )
 
-#' Artifact Grade Colour Palette
+#' Artefact Grade Colour Palette
 #'
-#' Named character vector of 5 colours for MRI artifact grades:
+#' Named character vector of 5 colours for MRI artefact grades:
 #' none (green), mild (yellow), moderate (orange), severe (red),
 #' non-evaluable (grey).
 #'

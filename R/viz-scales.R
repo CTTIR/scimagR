@@ -28,7 +28,7 @@ scale_fill_phase <- function(...) {
   ggplot2::scale_fill_manual(values = pal_phase, ...)
 }
 
-#' Colour and Fill Scales for Artifact Grades
+#' Colour and Fill Scales for Artefact Grades
 #'
 #' @param ... Additional arguments passed to
 #'   [ggplot2::scale_colour_manual()] / [ggplot2::scale_fill_manual()].

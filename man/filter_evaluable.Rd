@@ -14,7 +14,7 @@ filter_evaluable(
 \arguments{
 \item{df}{Data frame with \code{artifact_grade} and \code{modality} columns.}
 
-\item{max_artifact}{Integer. Maximum artifact grade to include. Default \code{2}.}
+\item{max_artifact}{Integer. Maximum artefact grade to include. Default \code{2}.}
 
 \item{modalities}{Character vector. Modalities to include.
 Default \code{c("MRT", "CT+MRT")}.}
@@ -25,7 +25,7 @@ Default \code{c("MRT", "CT+MRT")}.}
 Filtered data frame.
 }
 \description{
-Filters a dataset to sessions that meet artifact grade and modality
+Filters a dataset to sessions that meet artefact grade and modality
 criteria for analysis.
 }
 \examples{

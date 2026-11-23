@@ -16,9 +16,9 @@ Default \code{TRUE}.}
 Invisibly returns the validated registry tibble.
 }
 \description{
-Checks: required columns present, no duplicate pat_id x session,
-dates are valid, days_post_trauma >= 0, artifact_grade in 0--4,
-modality in allowed values.
+Checks: required columns present, no duplicate \code{pat_id} x \code{session},
+dates are valid, \code{days_post_trauma} >= 0, \code{artifact_grade} in 0--4,
+\code{modality} in allowed values (\code{"CT"}, \code{"MRT"}, \code{"CT+MRT"}).
 }
 \examples{
 reg_file <- system.file("extdata", "example_registry.csv",

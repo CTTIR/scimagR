@@ -34,7 +34,7 @@ coverage_matrix <- function(registry) {
 #' Plot Modality Coverage Matrix
 #'
 #' Creates a tile plot showing modality coverage per patient and session,
-#' with optional artifact grade overlay.
+#' with optional artefact grade overlay.
 #'
 #' @param registry Data frame. Validated registry.
 #' @return A ggplot2 object.
