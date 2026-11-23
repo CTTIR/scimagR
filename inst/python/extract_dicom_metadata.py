@@ -22,8 +22,10 @@ except ImportError:
     sys.exit(1)
 
 
+# The patient and session IDs come from the folder names
+# (<dicom_root>/<pat_id>/<session>/), not from the PatientID header, which
+# may hold an identifying hospital number before anonymization.
 FIELDS = [
-    ("PatientID", "pat_id"),
     ("StudyDate", "study_date"),
     ("Modality", "modality"),
     ("SeriesDescription", "series_description"),
@@ -113,14 +115,7 @@ def main():
         print("Warning: No DICOM metadata extracted.", file=sys.stderr)
         sys.exit(0)
 
-    fieldnames = ["pat_id", "session", "dcm_path"] + [f[1] for f in FIELDS if f[1] not in ("pat_id",)]
-    # Deduplicate while preserving order
-    seen = set()
-    unique_fields = []
-    for f in fieldnames:
-        if f not in seen:
-            seen.add(f)
-            unique_fields.append(f)
+    unique_fields = ["pat_id", "session", "dcm_path"] + [f[1] for f in FIELDS]
 
     with open(output_csv, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=unique_fields, extrasaction="ignore")

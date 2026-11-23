@@ -18,23 +18,49 @@ anonymize_dicom(
 
 \item{prefix}{Character. Anonymized ID prefix. Default \code{"SCI"}.}
 
-\item{python}{Character. Python executable. Default \code{"python3"}.}
+\item{python}{Character. Python executable. Default uses \code{PYTHON_BIN}
+environment variable or \code{"python3"}.}
 }
 \value{
 Exit code (invisible).
 }
 \description{
-Replaces identifying header fields (PatientName, PatientID,
-PatientBirthDate, etc.) and removes private tags. Saves an ID mapping
-CSV to a user-specified secure location.
+Replaces identifying header fields and removes private tags in every file
+below \code{dicom_dir}, using the bundled Python script and 'pydicom'. Each
+patient folder (\verb{<dicom_dir>/<folder>/}) gets a new ID \verb{<prefix>001},
+\verb{<prefix>002}, ... in alphabetical folder order; the mapping from folder
+name to new ID is saved to \code{mapping_csv}.
 }
 \details{
 \strong{WARNING:} This modifies DICOM files in-place. Create a backup first.
 The mapping CSV must NOT be stored in the project directory.
+
+What is changed: \code{PatientID} is set to the new ID; \code{PatientName},
+\code{PatientBirthDate}, \code{PatientAddress}, \code{PatientTelephoneNumbers},
+\code{ReferringPhysicianName}, \code{InstitutionName}, \code{InstitutionAddress},
+\code{InstitutionalDepartmentName}, \code{PhysiciansOfRecord},
+\code{PerformingPhysicianName} and \code{OperatorsName} are emptied, and all
+private tags are removed. Everything else is kept, including dates,
+\code{PatientSex}, \code{PatientAge}, \code{AccessionNumber}, UIDs and burned-in
+annotations in the pixel data. The folder names are not changed either,
+so rename folders that carry names or hospital numbers yourself. This is
+a minimal de-identification, not the DICOM PS3.15 Basic Application
+Level Confidentiality Profile; check it against your data protection
+requirements before sharing data.
 }
 \examples{
-\dontrun{
-# Not run: needs a directory of DICOM files and Python 3 with 'pydicom'.
-anonymize_dicom("data/raw/dicom", "/secure/id_mapping.csv")
+\donttest{
+# Needs Python 3 with 'pydicom'. Works on a copy of the bundled
+# synthetic DICOM files, because the files are changed in place.
+if (check_pydicom(verbose = FALSE)$available) {
+  work <- file.path(tempdir(), "anon-example")
+  dir.create(work, showWarnings = FALSE)
+  file.copy(system.file("extdata", "dicom", package = "scimagR"), work,
+            recursive = TRUE)
+  mapping <- file.path(tempdir(), "secure", "id_mapping.csv")
+  anonymize_dicom(file.path(work, "dicom"), mapping)
+  utils::read.csv(mapping)
+  unlink(c(work, dirname(mapping)), recursive = TRUE)
+}
 }
 }

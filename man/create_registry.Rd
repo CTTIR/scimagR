@@ -24,13 +24,18 @@ Takes raw DICOM metadata (from \code{\link[=extract_dicom_metadata]{extract_dico
 it into a proper imaging registry with computed fields (days_post_trauma,
 phase classification), and optionally saves to CSV.
 }
+\details{
+The DICOM modality code \code{"MR"} is recoded to the registry code \code{"MRT"}
+used by \code{\link[=validate_registry]{validate_registry()}} and the plotting palettes; \code{"CT"} and
+\code{"CT+MRT"} are kept.
+}
 \examples{
 # Metadata as returned by extract_dicom_metadata() (synthetic values).
 meta <- data.frame(
   pat_id = c("SCI001", "SCI001", "SCI002"),
   session = c("ses-01", "ses-02", "ses-01"),
   study_date = c("2024-01-20", "2024-03-15", "2024-02-25"),
-  modality = c("MRT", "MRT", "CT"),
+  modality = c("MR", "MR", "CT"),
   series_description = c("T2w_sag", "T2w_sag", "CT_cervical"),
   field_strength = c(3, 3, NA)
 )

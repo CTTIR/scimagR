@@ -40,8 +40,14 @@ convert_batch(reg[1, ],
   nifti_root = file.path(tempdir(), "nifti")
 )
 
-\dontrun{
-# Not run: needs DICOM files and the external 'dcm2niix' converter.
-convert_batch(reg, "data/raw/dicom", "data/nifti")
+\donttest{
+# Needs the external 'dcm2niix' converter: both sessions of the bundled
+# synthetic DICOM files.
+if (check_dcm2niix(verbose = FALSE)$available) {
+  convert_batch(reg[1:2, ],
+    dicom_root = system.file("extdata", "dicom", package = "scimagR"),
+    nifti_root = file.path(tempdir(), "nifti")
+  )
+}
 }
 }

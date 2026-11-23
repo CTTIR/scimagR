@@ -161,3 +161,23 @@ test_that("create_registry output is stable (snapshot)", {
     style = "json2"
   )
 })
+
+test_that("create_registry recodes the DICOM modality MR to MRT", {
+  meta <- data.frame(
+    pat_id = c("P1", "P1", "P1"), session = c("s1", "s2", "s3"),
+    study_date = c("2024-01-20", "2024-01-21", "2024-01-22"),
+    modality = c("MR", "CT", NA)
+  )
+  reg <- create_registry(meta, c(P1 = "2024-01-15"))
+  expect_equal(reg$modality, c("MRT", "CT", NA))
+})
+
+test_that("create_registry warns about patients without a trauma date", {
+  meta <- data.frame(
+    pat_id = c("P1", "P2"), session = c("s1", "s1"),
+    study_date = c("2024-01-20", "2024-01-21"), modality = "MRT"
+  )
+  expect_warning(reg <- create_registry(meta, c(P1 = "2024-01-15")), "P2")
+  expect_true(is.na(reg$days_post_trauma[2]))
+  expect_equal(reg$days_post_trauma[1], 5L)
+})

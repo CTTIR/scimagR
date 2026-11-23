@@ -77,3 +77,28 @@ test_that("convert_batch tabulates per-session success and failure", {
   expect_equal(res$n_files, c(2L, 0L))
   expect_named(res, c("pat_id", "session", "status", "n_files"))
 })
+
+test_that("convert_dcm2niix aborts when dcm2niix exits with an error", {
+  din <- withr::local_tempdir()
+  dout <- file.path(withr::local_tempdir(), "nifti")
+  local_mocked_bindings(
+    check_dcm2niix = function(...) list(available = TRUE, version = "x", path = "x")
+  )
+  testthat::local_mocked_bindings(
+    system2 = function(...) structure("Error: no DICOM found", status = 2L),
+    .package = "base"
+  )
+  expect_error(convert_dcm2niix(din, dout, verbose = FALSE), "exit code 2")
+})
+
+test_that("convert_dcm2niix converts the bundled synthetic DICOM", {
+  skip_on_cran()
+  skip_if_not(check_dcm2niix(verbose = FALSE)$available, "dcm2niix not installed")
+  session <- system.file("extdata", "dicom", "SCI001", "ses-01",
+                         package = "scimagR")
+  dout <- file.path(withr::local_tempdir(), "nifti")
+  out <- convert_dcm2niix(session, dout, verbose = FALSE)
+  expect_length(out, 1)
+  expect_match(basename(out), "\\.nii\\.gz$")
+  expect_gt(file.size(out), 0)
+})

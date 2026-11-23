@@ -6,12 +6,18 @@
 #' @param output_dir Character. Path for NIfTI output.
 #' @param compress Logical. Gzip output. Default `TRUE`.
 #' @param verbose Logical. Print progress. Default `TRUE`.
-#' @return Character vector of output NIfTI paths.
+#' @return Character vector of the NIfTI paths in `output_dir`. An error is
+#'   raised if 'dcm2niix' exits with a non-zero status.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Not run: needs DICOM files and the external 'dcm2niix' converter.
-#' convert_dcm2niix("data/raw/dicom/SCI001/ses-01", "data/nifti/SCI001/ses-01")
+#' \donttest{
+#' # Needs the external 'dcm2niix' converter. Converts one session of the
+#' # bundled synthetic DICOM files.
+#' if (check_dcm2niix(verbose = FALSE)$available) {
+#'   session <- system.file("extdata", "dicom", "SCI001", "ses-01",
+#'                          package = "scimagR")
+#'   convert_dcm2niix(session, file.path(tempdir(), "nifti", "ses-01"))
+#' }
 #' }
 convert_dcm2niix <- function(dicom_dir,
                              output_dir,
@@ -41,7 +47,16 @@ convert_dcm2niix <- function(dicom_dir,
 
   if (verbose) cli::cli_inform("Converting: {.path {dicom_dir}}")
 
-  exit_code <- system2("dcm2niix", args = args, stdout = TRUE, stderr = TRUE)
+  log <- suppressWarnings(
+    system2(dcm2niix_check$path, args = args, stdout = TRUE, stderr = TRUE)
+  )
+  status <- attr(log, "status")
+  if (!is.null(status) && status != 0L) {
+    cli::cli_abort(c(
+      "dcm2niix failed with exit code {status} for {.path {dicom_dir}}.",
+      "i" = "{utils::tail(log, 3)}"
+    ))
+  }
 
   ext <- if (compress) "\\.nii\\.gz$" else "\\.nii$"
   outputs <- list.files(output_dir, pattern = ext, full.names = TRUE)
@@ -77,9 +92,15 @@ convert_dcm2niix <- function(dicom_dir,
 #'   nifti_root = file.path(tempdir(), "nifti")
 #' )
 #'
-#' \dontrun{
-#' # Not run: needs DICOM files and the external 'dcm2niix' converter.
-#' convert_batch(reg, "data/raw/dicom", "data/nifti")
+#' \donttest{
+#' # Needs the external 'dcm2niix' converter: both sessions of the bundled
+#' # synthetic DICOM files.
+#' if (check_dcm2niix(verbose = FALSE)$available) {
+#'   convert_batch(reg[1:2, ],
+#'     dicom_root = system.file("extdata", "dicom", package = "scimagR"),
+#'     nifti_root = file.path(tempdir(), "nifti")
+#'   )
+#' }
 #' }
 convert_batch <- function(registry,
                           dicom_root,

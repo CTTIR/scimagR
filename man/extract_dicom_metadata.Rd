@@ -20,16 +20,35 @@ extract_dicom_metadata(
 environment variable or \code{"python3"}.}
 }
 \value{
-Character. Path to output CSV (invisible).
+Character. Path to output CSV (invisible). The CSV has one row
+per session with the columns \code{pat_id}, \code{session}, \code{dcm_path},
+\code{study_date}, \code{modality}, \code{series_description}, \code{field_strength},
+\code{manufacturer}, \code{scanner_model}, \code{slice_thickness}, \code{pixel_spacing},
+\code{rows}, \code{columns} and \code{institution}.
 }
 \description{
 Walks a DICOM directory tree and extracts key header fields (StudyDate,
-Modality, SeriesDescription, FieldStrength, etc.) from the first DICOM
-file per session.
+Modality, SeriesDescription, MagneticFieldStrength, etc.) from the first
+DICOM file per session, using the bundled Python script and 'pydicom'.
+}
+\details{
+The \code{pat_id} and \code{session} columns are taken from the folder names
+(\verb{<dicom_dir>/<pat_id>/<session>/}), so that they match the paths that
+\code{\link[=convert_batch]{convert_batch()}} builds from the registry. The \code{PatientID} header,
+which may hold an identifying hospital number, is not exported.
+\code{modality} holds the DICOM code (\code{"MR"}, \code{"CT"}); \code{\link[=create_registry]{create_registry()}}
+maps \code{"MR"} to the registry code \code{"MRT"}.
 }
 \examples{
-\dontrun{
-# Not run: needs a directory of DICOM files and Python 3 with 'pydicom'.
-extract_dicom_metadata("data/raw/dicom", "data/metadata/dicom_metadata.csv")
+\donttest{
+# Needs Python 3 with 'pydicom'. The bundled DICOM files are synthetic
+# 8 x 8 pixel slices of one made-up patient with two sessions.
+if (check_pydicom(verbose = FALSE)$available) {
+  dicom_root <- system.file("extdata", "dicom", package = "scimagR")
+  csv <- extract_dicom_metadata(dicom_root,
+                                file.path(tempdir(), "dicom_metadata.csv"))
+  meta <- utils::read.csv(csv)
+  meta[, c("pat_id", "session", "study_date", "modality")]
+}
 }
 }

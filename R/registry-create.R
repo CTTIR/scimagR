@@ -4,6 +4,10 @@
 #' it into a proper imaging registry with computed fields (days_post_trauma,
 #' phase classification), and optionally saves to CSV.
 #'
+#' The DICOM modality code `"MR"` is recoded to the registry code `"MRT"`
+#' used by [validate_registry()] and the plotting palettes; `"CT"` and
+#' `"CT+MRT"` are kept.
+#'
 #' @param dicom_meta Data frame or character path to DICOM metadata CSV.
 #' @param trauma_dates Named vector: names = pat_id, values = trauma date
 #'   (Date or character coercible to Date).
@@ -17,7 +21,7 @@
 #'   pat_id = c("SCI001", "SCI001", "SCI002"),
 #'   session = c("ses-01", "ses-02", "ses-01"),
 #'   study_date = c("2024-01-20", "2024-03-15", "2024-02-25"),
-#'   modality = c("MRT", "MRT", "CT"),
+#'   modality = c("MR", "MR", "CT"),
 #'   series_description = c("T2w_sag", "T2w_sag", "CT_cervical"),
 #'   field_strength = c(3, 3, NA)
 #' )
@@ -44,8 +48,18 @@ create_registry <- function(dicom_meta,
 
   trauma_dates <- as.Date(trauma_dates)
 
+  no_date <- setdiff(unique(dicom_meta$pat_id), names(trauma_dates))
+  if (length(no_date) > 0) {
+    cli::cli_warn(
+      "No trauma date for {.val {no_date}}; their days_post_trauma and phase are NA."
+    )
+  }
+
   registry <- dicom_meta |>
     dplyr::mutate(
+      modality = dplyr::if_else(
+        .data$modality %in% "MR", "MRT", as.character(.data$modality)
+      ),
       study_date = as.Date(.data$study_date),
       trauma_date = trauma_dates[.data$pat_id],
       days_post_trauma = as.integer(
