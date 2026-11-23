@@ -55,11 +55,12 @@ check_metric_inputs <- function(..., call = rlang::caller_env()) {
   common <- if (any(sizes == 0L)) 0L else max(sizes)
   bad <- !(sizes == 1L | sizes == common)
   if (any(bad)) {
-    lens <- paste0(names(args), " = ", sizes, collapse = ", ")
     cli::cli_abort(
       c(
         "The inputs must have length 1 or a common length.",
-        "i" = "Lengths: {lens}."
+        "i" = paste0(
+          "Lengths: ", paste0(names(args), " = ", sizes, collapse = ", "), "."
+        )
       ),
       class = "scimagR_error_input",
       call = call

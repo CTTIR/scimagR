@@ -53,7 +53,7 @@ create_registry <- function(dicom_meta,
 
   trauma_dates <- as.Date(trauma_dates)
 
-  # Look dates up by name: indexing a named vector with a numeric pat_id
+  # Look dates up by name: indexing a named vector with a numeric patient ID
   # would pick dates by position and silently give patients wrong dates.
   no_date <- setdiff(
     unique(as.character(dicom_meta$pat_id)), names(trauma_dates)
@@ -196,7 +196,7 @@ validate_registry <- function(registry, strict = TRUE) {
   invisible(registry)
 }
 
-# Read a metadata or registry CSV with the ID columns `pat_id` and `session`
+# Read a metadata or registry CSV with the patient and session ID columns
 # as text, so that IDs such as "12" stay IDs instead of becoming numbers.
 read_id_csv <- function(path) {
   header <- names(readr::read_csv(path, n_max = 0, show_col_types = FALSE))
