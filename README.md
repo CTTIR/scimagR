@@ -10,10 +10,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889958.svg)](https://doi.org/10.5281/zenodo.21889958)
 <!-- badges: end -->
 
-An end-to-end R pipeline for longitudinal MRI and CT analysis in spinal cord
-injury (SCI) research. Provides R wrappers for the Spinal Cord Toolbox (SCT),
-DICOM tools, SCI-specific clinical metrics, and pipeline orchestration with
-built-in quality control.
+The building blocks of a longitudinal MRI and CT analysis in spinal cord
+injury (SCI) research: R wrappers for the Spinal Cord Toolbox (SCT) and DICOM
+tools, SCI-specific clinical metrics, an imaging registry, quality-control
+logs, plots, and a planner that lists the processing steps.
 
 ## Installation
 
@@ -32,7 +32,7 @@ work without them.
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| [Spinal Cord Toolbox](https://spinalcordtoolbox.com) | >= 6.4 | Segmentation, labeling, parameter extraction |
+| [Spinal Cord Toolbox](https://spinalcordtoolbox.com) | >= 6.4 (6.x and 7.x) | Segmentation, labelling, parameter extraction |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | any | DICOM to NIfTI conversion |
 | Python 3 + pydicom | any | DICOM metadata extraction & anonymization |
 
@@ -61,13 +61,21 @@ sci_create_project(
 
 # 3. Plan the processing steps; each row names the function to run
 sci_run_pipeline("~/projects/my-sci-study")
+
+# 4. Run those functions, then see which outputs exist
+sci_pipeline_status("~/projects/my-sci-study")
 ```
+
+`sci_run_pipeline()` is a planner: it does not run the external tools and
+reports every step as `"pending"`. The steps are run with the functions it
+names, for example `sct_segment_sc()`; `sci_pipeline_status()` shows which
+outputs exist.
 
 ## Modules
 
 | Module | Key Functions | Description |
 |--------|---------------|-------------|
-| **SCT Interface** | `sct_segment_sc()`, `sct_segment_lesion()`, `sct_label_vertebrae()` | R wrappers for all SCT CLI commands |
+| **SCT Interface** | `sct_segment_sc()`, `sct_segment_lesion()`, `sct_label_vertebrae()` | Wrappers for SCT segmentation, labelling, QC and morphometry (SCT 6 and 7) |
 | **DICOM Tools** | `extract_dicom_metadata()`, `anonymize_dicom()`, `convert_dcm2niix()` | Metadata extraction, anonymization, conversion |
 | **SCI Metrics** | `compute_mscc()`, `compute_compression_ratio()`, `classify_phase()` | Domain-specific clinical measures |
 | **Registry** | `create_registry()`, `validate_registry()`, `coverage_matrix()` | Structured time-point tracking |
