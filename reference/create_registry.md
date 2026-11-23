@@ -34,6 +34,18 @@ create_registry(dicom_meta, trauma_dates, op_dates = NULL, output_csv = NULL)
 
 Tibble with registry columns.
 
+## Details
+
+The DICOM modality code `"MR"` is recoded to the registry code `"MRT"`
+used by
+[`validate_registry()`](https://cttir.github.io/scimagR/reference/validate_registry.md)
+and the plotting palettes; `"CT"` and `"CT+MRT"` are kept.
+
+Trauma and surgery dates are matched to the patients by name, comparing
+`pat_id` as text, so numeric patient IDs (e.g. folders named `1`, `2`,
+...) get their own dates. A CSV is read with `pat_id` and `session` as
+text.
+
 ## Examples
 
 ``` r
@@ -42,7 +54,7 @@ meta <- data.frame(
   pat_id = c("SCI001", "SCI001", "SCI002"),
   session = c("ses-01", "ses-02", "ses-01"),
   study_date = c("2024-01-20", "2024-03-15", "2024-02-25"),
-  modality = c("MRT", "MRT", "CT"),
+  modality = c("MR", "MR", "CT"),
   series_description = c("T2w_sag", "T2w_sag", "CT_cervical"),
   field_strength = c(3, 3, NA)
 )

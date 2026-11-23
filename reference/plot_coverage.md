@@ -1,7 +1,8 @@
 # Plot Modality Coverage Matrix
 
-Creates a tile plot showing modality coverage per patient and session,
-with optional artifact grade overlay.
+Creates a tile plot showing modality coverage per patient and session.
+If the registry has an `artifact_grade` column, each tile shows the
+grade and a caption explains the numbers.
 
 ## Usage
 

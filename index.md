@@ -1,9 +1,10 @@
 # scimagR ![scimagR logo](reference/figures/logo-with-name.png)
 
-An end-to-end R pipeline for longitudinal MRI and CT analysis in spinal
-cord injury (SCI) research. Provides R wrappers for the Spinal Cord
-Toolbox (SCT), DICOM tools, SCI-specific clinical metrics, and pipeline
-orchestration with built-in quality control.
+The building blocks of a longitudinal MRI and CT analysis in spinal cord
+injury (SCI) research: R wrappers for the Spinal Cord Toolbox (SCT) and
+DICOM tools, SCI-specific clinical metrics, an imaging registry,
+quality-control logs, plots, and a planner that lists the processing
+steps.
 
 ## Installation
 
@@ -23,9 +24,9 @@ functions work without them.
 
 | Tool | Version | Purpose |
 |----|----|----|
-| [Spinal Cord Toolbox](https://spinalcordtoolbox.com) | \>= 6.4 | Segmentation, labeling, parameter extraction |
+| [Spinal Cord Toolbox](https://spinalcordtoolbox.com) | \>= 6.4 (6.x and 7.x) | Segmentation, labelling, parameter extraction |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | any | DICOM to NIfTI conversion |
-| Python 3 + pydicom | any | DICOM metadata extraction & anonymization |
+| Python 3 + pydicom | any | DICOM metadata extraction & anonymisation |
 
 Verify installation:
 
@@ -54,18 +55,29 @@ sci_create_project(
 
 # 3. Plan the processing steps; each row names the function to run
 sci_run_pipeline("~/projects/my-sci-study")
+
+# 4. Run those functions, then see which outputs exist
+sci_pipeline_status("~/projects/my-sci-study")
 ```
+
+[`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md)
+is a planner: it does not run the external tools and reports every step
+as `"pending"`. The steps are run with the functions it names, for
+example
+[`sct_segment_sc()`](https://cttir.github.io/scimagR/reference/sct_segment_sc.md);
+[`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md)
+shows which outputs exist.
 
 ## Modules
 
 | Module | Key Functions | Description |
 |----|----|----|
-| **SCT Interface** | [`sct_segment_sc()`](https://cttir.github.io/scimagR/reference/sct_segment_sc.md), [`sct_segment_lesion()`](https://cttir.github.io/scimagR/reference/sct_segment_lesion.md), [`sct_label_vertebrae()`](https://cttir.github.io/scimagR/reference/sct_label_vertebrae.md) | R wrappers for all SCT CLI commands |
-| **DICOM Tools** | [`extract_dicom_metadata()`](https://cttir.github.io/scimagR/reference/extract_dicom_metadata.md), [`anonymize_dicom()`](https://cttir.github.io/scimagR/reference/anonymize_dicom.md), [`convert_dcm2niix()`](https://cttir.github.io/scimagR/reference/convert_dcm2niix.md) | Metadata extraction, anonymization, conversion |
+| **SCT Interface** | [`sct_segment_sc()`](https://cttir.github.io/scimagR/reference/sct_segment_sc.md), [`sct_segment_lesion()`](https://cttir.github.io/scimagR/reference/sct_segment_lesion.md), [`sct_label_vertebrae()`](https://cttir.github.io/scimagR/reference/sct_label_vertebrae.md) | Wrappers for SCT segmentation, labelling, QC and morphometry (SCT 6 and 7) |
+| **DICOM Tools** | [`extract_dicom_metadata()`](https://cttir.github.io/scimagR/reference/extract_dicom_metadata.md), [`anonymize_dicom()`](https://cttir.github.io/scimagR/reference/anonymize_dicom.md), [`convert_dcm2niix()`](https://cttir.github.io/scimagR/reference/convert_dcm2niix.md) | Metadata extraction, anonymisation, conversion |
 | **SCI Metrics** | [`compute_mscc()`](https://cttir.github.io/scimagR/reference/compute_mscc.md), [`compute_compression_ratio()`](https://cttir.github.io/scimagR/reference/compute_compression_ratio.md), [`classify_phase()`](https://cttir.github.io/scimagR/reference/classify_phase.md) | Domain-specific clinical measures |
 | **Registry** | [`create_registry()`](https://cttir.github.io/scimagR/reference/create_registry.md), [`validate_registry()`](https://cttir.github.io/scimagR/reference/validate_registry.md), [`coverage_matrix()`](https://cttir.github.io/scimagR/reference/coverage_matrix.md) | Structured time-point tracking |
-| **QC System** | [`filter_evaluable()`](https://cttir.github.io/scimagR/reference/filter_evaluable.md), [`log_exclusion()`](https://cttir.github.io/scimagR/reference/log_exclusion.md), [`integrity_summary()`](https://cttir.github.io/scimagR/reference/integrity_summary.md) | Artifact grading and exclusion tracking |
-| **Visualization** | [`theme_sci()`](https://cttir.github.io/scimagR/reference/theme_sci.md), [`scale_colour_phase()`](https://cttir.github.io/scimagR/reference/scale_phase.md), [`plot_violin_box()`](https://cttir.github.io/scimagR/reference/plot_violin_box.md) | Publication-ready figures |
+| **QC System** | [`filter_evaluable()`](https://cttir.github.io/scimagR/reference/filter_evaluable.md), [`log_exclusion()`](https://cttir.github.io/scimagR/reference/log_exclusion.md), [`integrity_summary()`](https://cttir.github.io/scimagR/reference/integrity_summary.md) | Artefact grading and exclusion tracking |
+| **Visualisation** | [`theme_sci()`](https://cttir.github.io/scimagR/reference/theme_sci.md), [`scale_colour_phase()`](https://cttir.github.io/scimagR/reference/scale_phase.md), [`plot_violin_box()`](https://cttir.github.io/scimagR/reference/plot_violin_box.md) | Publication-ready figures |
 | **Pipeline** | [`sci_run_pipeline()`](https://cttir.github.io/scimagR/reference/sci_run_pipeline.md), [`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md) | Step plan and output status |
 | **Scaffold** | [`sci_create_project()`](https://cttir.github.io/scimagR/reference/sci_create_project.md) | Workflowr project setup |
 
@@ -73,11 +85,11 @@ sci_run_pipeline("~/projects/my-sci-study")
 
 If you use scimagR in your research, please cite:
 
-    Heller R (2026). scimagR: Spinal Cord Injury Imaging Pipeline for MRI and
+    R. Heller (2026). scimagR: Spinal Cord Injury Imaging Pipeline for MRI and
     CT Analysis. R package version 0.2.0.
     https://github.com/CTTIR/scimagR
 
-## License
+## Licence
 
 MIT
 

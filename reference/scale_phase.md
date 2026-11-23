@@ -5,7 +5,9 @@ Convenience wrappers around
 and
 [`ggplot2::scale_fill_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html)
 using
-[pal_phase](https://cttir.github.io/scimagR/reference/pal_phase.md).
+[pal_phase](https://cttir.github.io/scimagR/reference/pal_phase.md). The
+legend lists the phases in clinical order (hyperacute to chronic),
+whatever the order of the data.
 
 ## Usage
 

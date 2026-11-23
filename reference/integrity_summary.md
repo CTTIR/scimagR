@@ -13,7 +13,7 @@ integrity_summary(df, id_cols = NULL)
 
 - df:
 
-  Data frame to summarize.
+  Data frame to summarise.
 
 - id_cols:
 

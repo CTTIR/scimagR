@@ -1,4 +1,4 @@
-# Classify MRI Artifact Grade
+# Classify MRI Artefact Grade
 
 Maps integer grades 0–4 to an ordered factor:
 
@@ -22,8 +22,8 @@ classify_artifact(grade)
 
 - grade:
 
-  Integer vector (0–4). Values outside this range produce `NA` with a
-  warning.
+  Integer vector (0–4). Values outside this range, and values that are
+  not whole numbers, produce `NA` with a warning.
 
 ## Value
 

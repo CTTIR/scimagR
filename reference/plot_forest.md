@@ -41,5 +41,4 @@ est <- data.frame(
   ci_upper = c(-0.7, -0.4, -0.8)
 )
 plot_forest(est)
-#> `height` was translated to `width`.
 ```

@@ -23,7 +23,8 @@ classify_phase(days)
 
 - days:
 
-  Numeric vector. Days since trauma.
+  Numeric vector. Days since trauma. Negative values (an imaging date
+  before the trauma date) give `NA` with a warning.
 
 ## Value
 

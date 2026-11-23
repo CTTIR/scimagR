@@ -2,7 +2,7 @@
 
 A clean ggplot2 theme based on
 [`ggplot2::theme_bw()`](https://ggplot2.tidyverse.org/reference/ggtheme.html),
-optimized for publication-ready neuroimaging figures, with no minor
+optimised for publication-ready neuroimaging figures, with no minor
 gridlines and a bottom legend.
 
 ## Usage

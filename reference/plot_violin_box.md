@@ -17,7 +17,10 @@ plot_violin_box(df, x, y, fill = x, title = NULL, ylab = y)
 
 - x:
 
-  Character. Column name for x-axis (categorical).
+  Character. Column name for x-axis (categorical). Groups are shown in
+  factor level order, so use a factor (e.g. from
+  [`classify_phase()`](https://cttir.github.io/scimagR/reference/classify_phase.md))
+  to control the order.
 
 - y:
 
@@ -44,8 +47,10 @@ A ggplot2 object.
 ``` r
 set.seed(1)
 df <- data.frame(
-  phase = rep(c("acute", "subacute", "chronic"), each = 10),
+  # a factor keeps the phases in clinical rather than alphabetical order
+  phase = classify_phase(rep(c(5, 40, 400), each = 10)),
   mscc = c(rnorm(10, 30, 8), rnorm(10, 22, 6), rnorm(10, 15, 5))
 )
-plot_violin_box(df, x = "phase", y = "mscc", fill = "phase")
+plot_violin_box(df, x = "phase", y = "mscc", fill = "phase",
+                ylab = "MSCC (%)")
 ```

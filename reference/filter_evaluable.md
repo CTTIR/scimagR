@@ -1,6 +1,6 @@
 # Filter to Evaluable Imaging Sessions
 
-Filters a dataset to sessions that meet artifact grade and modality
+Filters a dataset to sessions that meet artefact grade and modality
 criteria for analysis.
 
 ## Usage
@@ -22,7 +22,7 @@ filter_evaluable(
 
 - max_artifact:
 
-  Integer. Maximum artifact grade to include. Default `2`.
+  Integer. Maximum artefact grade to include. Default `2`.
 
 - modalities:
 

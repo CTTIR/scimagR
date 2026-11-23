@@ -54,15 +54,21 @@ convert_batch(reg[1, ],
   nifti_root = file.path(tempdir(), "nifti")
 )
 #> Warning: Conversion failed for SCI001/ses-01: DICOM directory not found:
-#> /tmp/Rtmp5ydOUY/dicom/SCI001/ses-01
+#> /tmp/Rtmptg3SMc/dicom/SCI001/ses-01
 #> Batch conversion: 0 succeeded, 1 failed.
 #> # A tibble: 1 × 4
 #>   pat_id session status n_files
 #>   <chr>  <chr>   <chr>    <int>
 #> 1 SCI001 ses-01  error        0
 
-if (FALSE) { # \dontrun{
-# Not run: needs DICOM files and the external 'dcm2niix' converter.
-convert_batch(reg, "data/raw/dicom", "data/nifti")
-} # }
+# \donttest{
+# Needs the external 'dcm2niix' converter: both sessions of the bundled
+# synthetic DICOM files.
+if (check_dcm2niix(verbose = FALSE)$available) {
+  convert_batch(reg[1:2, ],
+    dicom_root = system.file("extdata", "dicom", package = "scimagR"),
+    nifti_root = file.path(tempdir(), "nifti")
+  )
+}
+# }
 ```

@@ -28,13 +28,19 @@ convert_dcm2niix(dicom_dir, output_dir, compress = TRUE, verbose = TRUE)
 
 ## Value
 
-Character vector of output NIfTI paths.
+Character vector of the NIfTI paths in `output_dir`. An error is raised
+if 'dcm2niix' exits with a non-zero status.
 
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Not run: needs DICOM files and the external 'dcm2niix' converter.
-convert_dcm2niix("data/raw/dicom/SCI001/ses-01", "data/nifti/SCI001/ses-01")
-} # }
+# \donttest{
+# Needs the external 'dcm2niix' converter. Converts one session of the
+# bundled synthetic DICOM files.
+if (check_dcm2niix(verbose = FALSE)$available) {
+  session <- system.file("extdata", "dicom", "SCI001", "ses-01",
+                         package = "scimagR")
+  convert_dcm2niix(session, file.path(tempdir(), "nifti", "ses-01"))
+}
+# }
 ```

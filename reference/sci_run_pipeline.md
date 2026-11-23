@@ -1,4 +1,4 @@
-# Run the SCI Analysis Pipeline
+# Plan the SCI Analysis Pipeline
 
 Checks a project created with
 [`sci_create_project()`](https://cttir.github.io/scimagR/reference/sci_create_project.md)
@@ -8,7 +8,7 @@ performs it:
 1.  DICOM metadata extraction
     ([`extract_dicom_metadata()`](https://cttir.github.io/scimagR/reference/extract_dicom_metadata.md))
 
-2.  Anonymization, if requested
+2.  Anonymisation, if requested
     ([`anonymize_dicom()`](https://cttir.github.io/scimagR/reference/anonymize_dicom.md))
 
 3.  DICOM to NIfTI conversion
@@ -20,7 +20,7 @@ performs it:
 5.  Lesion segmentation with SCIsegV2
     ([`sct_segment_lesion()`](https://cttir.github.io/scimagR/reference/sct_segment_lesion.md))
 
-6.  Vertebral labeling
+6.  Vertebral labelling
     ([`sct_label_vertebrae()`](https://cttir.github.io/scimagR/reference/sct_label_vertebrae.md))
 
 7.  Parameter extraction
@@ -51,20 +51,21 @@ sci_run_pipeline(
 
 - steps:
 
-  Integer vector. Which steps to run. Default `1:8`.
+  Integer vector. Which steps (1–8) to include in the plan. Default
+  `1:8`. Other values are skipped with a warning.
 
 - anonymize:
 
-  Logical. Run anonymization step. Default `FALSE`.
+  Logical. Include the anonymisation step (step 2). Default `FALSE`.
 
 - overwrite:
 
-  Logical. Kept for compatibility; not used while the runner only plans
-  steps. Default `FALSE`.
+  Logical. Kept for compatibility; not used, because no step is run.
+  Default `FALSE`.
 
 - verbose:
 
-  Logical. Print progress. Default `TRUE`.
+  Logical. Print the plan. Default `TRUE`.
 
 ## Value
 
@@ -74,11 +75,14 @@ reason for skipping).
 
 ## Details
 
-`sci_run_pipeline()` does not run the external tools itself: every
-requested step is reported as `"pending"` until you run its function.
-Use
+`sci_run_pipeline()` is a planner, not a runner. It does **not** call
+the Spinal Cord Toolbox, 'dcm2niix' or 'pydicom', does not read or write
+any image, and does not look at which outputs already exist: every
+requested step is reported as `"pending"` (step 2 as `"skipped"` unless
+`anonymize = TRUE`), whatever its state on disk. Run the function named
+in each row to perform the step, and use
 [`sci_pipeline_status()`](https://cttir.github.io/scimagR/reference/sci_pipeline_status.md)
-to see which outputs already exist.
+to see which outputs exist.
 
 ## Examples
 
@@ -89,7 +93,7 @@ sci_create_project(proj, open = FALSE)
 #> ── Creating SCI project: SCI Imaging Analysis ──────────────────────────────────
 #> ✔ Directory structure created.
 #> ✔ Templates created.
-#> ✔ Project created at /tmp/Rtmp5ydOUY/pipeline-study
+#> ✔ Project created at /tmp/Rtmptg3SMc/pipeline-study
 #> ℹ Next steps:
 #>   1. Place DICOM files in data/raw/dicom/
 #>   2. Fill in data/metadata/imaging_registry.csv
@@ -100,7 +104,7 @@ sci_run_pipeline(proj, steps = 1:3)
 #> ── Step 1: DICOM metadata extraction ──
 #> 
 #> ℹ Run `extract_dicom_metadata()` for this step.
-#> Step 2 (Anonymization): skipped (anonymize = FALSE)
+#> Step 2 (Anonymisation): skipped (anonymize = FALSE)
 #> 
 #> ── Step 3: DICOM to NIfTI conversion ──
 #> 
@@ -113,7 +117,7 @@ sci_run_pipeline(proj, steps = 1:3)
 #>    step name                      status  message                     
 #>   <int> <chr>                     <chr>   <chr>                       
 #> 1     1 DICOM metadata extraction pending run extract_dicom_metadata()
-#> 2     2 Anonymization             skipped anonymize = FALSE           
+#> 2     2 Anonymisation             skipped anonymize = FALSE           
 #> 3     3 DICOM to NIfTI conversion pending run convert_batch()         
 unlink(proj, recursive = TRUE)
 ```

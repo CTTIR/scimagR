@@ -18,7 +18,9 @@ sct_run(cmd, args = character(), error_msg = NULL, verbose = TRUE)
 
 - args:
 
-  Character vector. Arguments to pass.
+  Character vector. Arguments to pass; each one is quoted with
+  [`shQuote()`](https://rdrr.io/r/base/shQuote.html) before the command
+  is run.
 
 - error_msg:
 

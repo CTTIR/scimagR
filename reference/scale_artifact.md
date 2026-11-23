@@ -1,6 +1,8 @@
-# Colour and Fill Scales for Artifact Grades
+# Colour and Fill Scales for Artefact Grades
 
-Colour and Fill Scales for Artifact Grades
+Manual scales using
+[pal_artifact](https://cttir.github.io/scimagR/reference/pal_artifact.md);
+the legend lists the grades from none to non-evaluable.
 
 ## Usage
 
@@ -27,8 +29,7 @@ A ggplot2 scale object.
 
 ``` r
 library(ggplot2)
-df <- data.frame(grade = c("none", "mild", "moderate", "severe"),
-                 n = c(12, 7, 3, 1))
+df <- data.frame(grade = classify_artifact(0:3), n = c(12, 7, 3, 1))
 ggplot(df, aes(grade, n, fill = grade)) +
   geom_col() +
   scale_fill_artifact()

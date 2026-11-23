@@ -1,6 +1,7 @@
 # Colour and Fill Scales for Imaging Modalities
 
-Colour and Fill Scales for Imaging Modalities
+Manual scales using
+[pal_modality](https://cttir.github.io/scimagR/reference/pal_modality.md).
 
 ## Usage
 

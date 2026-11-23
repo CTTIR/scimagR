@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/CTTIR/scimagR/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/CTTIR/scimagR/blob/main/inst/CITATION)
 
 Heller R (2026). *scimagR: Spinal Cord Injury Imaging Pipeline for MRI
 and CT Analysis*. R package version 0.2.0,
