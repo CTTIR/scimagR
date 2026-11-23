@@ -9,3 +9,65 @@ template:
 
 development:
   mode: auto
+
+reference:
+  - title: Spinal Cord Toolbox
+    desc: Wrappers for SCT command-line tools (needs SCT 6.4 or later).
+    contents:
+      - check_sct
+      - sct_segment_sc
+      - sct_segment_lesion
+      - sct_label_vertebrae
+      - sct_analyze_lesion
+      - sct_process_segmentation
+      - sct_generate_qc
+  - title: DICOM tools
+    desc: Metadata extraction, anonymisation and NIfTI conversion (needs 'pydicom' or 'dcm2niix').
+    contents:
+      - check_pydicom
+      - check_dcm2niix
+      - extract_dicom_metadata
+      - anonymize_dicom
+      - convert_dcm2niix
+      - convert_batch
+  - title: SCI metrics
+    contents:
+      - compute_mscc
+      - compute_compression_ratio
+      - compute_csa_ratio
+      - classify_phase
+      - classify_artifact
+  - title: Imaging registry
+    contents:
+      - create_registry
+      - validate_registry
+      - coverage_matrix
+      - plot_coverage
+  - title: Quality control
+    contents:
+      - create_qc_log
+      - update_qc_log
+      - validate_qc_log
+      - filter_evaluable
+      - log_exclusion
+      - integrity_summary
+  - title: Plots, theme and palettes
+    contents:
+      - theme_sci
+      - plot_violin_box
+      - plot_spaghetti
+      - plot_forest
+      - scale_phase
+      - scale_artifact
+      - scale_modality
+      - pal_phase
+      - pal_artifact
+      - pal_modality
+  - title: Projects, pipeline and export
+    contents:
+      - sci_create_project
+      - sci_run_pipeline
+      - sci_pipeline_status
+      - save_fig
+      - save_table
+      - save_rds
