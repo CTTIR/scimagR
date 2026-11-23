@@ -89,7 +89,7 @@ outputs exist.
 If you use scimagR in your research, please cite:
 
 ```
-Heller R (2026). scimagR: Spinal Cord Injury Imaging Pipeline for MRI and
+R. Heller (2026). scimagR: Spinal Cord Injury Imaging Pipeline for MRI and
 CT Analysis. R package version 0.2.0.
 https://github.com/CTTIR/scimagR
 ```

@@ -1,12 +1,12 @@
 {
   "upload_type": "software",
-  "title": "scimagR: Spinal cord injury imaging pipeline for MRI and CT analysis",
+  "title": "scimagR: Spinal Cord Injury Imaging Pipeline for MRI and CT Analysis",
   "version": "0.2.0",
   "publication_date": "2026-08-11",
-  "description": "<p>scimagR provides an end-to-end pipeline for longitudinal magnetic resonance and computed tomography analysis in spinal cord injury research. It wraps the Spinal Cord Toolbox, including lesion segmentation, and adds tools for DICOM anonymisation and conversion to NIfTI. Injury-specific clinical measures are computed, covering maximum spinal cord compression, compression ratio and tissue bridge quantification, alongside grading of artefacts caused by implants. Pipeline orchestration with built-in quality control and integration with workflowr support reproducible, publication-ready neuroimaging analyses. It is intended for clinical neuroimaging groups studying spinal cord injury over time.</p>",
+  "description": "<p>scimagR provides an end-to-end pipeline for longitudinal magnetic resonance and computed tomography analysis in spinal cord injury research. It wraps the Spinal Cord Toolbox, including lesion segmentation, and adds tools for DICOM anonymisation and conversion to NIfTI. Injury-specific clinical measures are computed, covering maximum spinal cord compression, compression ratio and tissue bridge quantification, alongside grading of artefacts caused by implants. Quality-control logs, a planner that lists the processing steps, and integration with workflowr support reproducible, publication-ready neuroimaging analyses. It is intended for clinical neuroimaging groups studying spinal cord injury over time.</p>",
   "creators": [
     {
-      "name": "Heller, Raban",
+      "name": "Heller, R.",
       "orcid": "0000-0001-8006-9742"
     }
   ],
