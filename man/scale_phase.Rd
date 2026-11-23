@@ -19,7 +19,9 @@ A ggplot2 scale object.
 }
 \description{
 Convenience wrappers around \code{\link[ggplot2:scale_colour_manual]{ggplot2::scale_colour_manual()}} and
-\code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}} using \link{pal_phase}.
+\code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}} using \link{pal_phase}. The legend lists the
+phases in clinical order (hyperacute to chronic), whatever the order of
+the data.
 }
 \examples{
 library(ggplot2)

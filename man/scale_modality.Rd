@@ -18,7 +18,7 @@ scale_fill_modality(...)
 A ggplot2 scale object.
 }
 \description{
-Colour and Fill Scales for Imaging Modalities
+Manual scales using \link{pal_modality}.
 }
 \examples{
 library(ggplot2)

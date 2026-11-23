@@ -83,3 +83,8 @@ test_that("plot_forest honours xlab and vline", {
   p <- suppressWarnings(plot_forest(est_df, xlab = "Beta", vline = -1))
   expect_equal(p$labels$x, "Beta")
 })
+
+test_that("plot_forest builds without deprecation warnings", {
+  expect_no_warning(ggplot2::ggplot_build(plot_forest(est_df)))
+  expect_no_message(ggplot2::ggplot_build(plot_forest(est_df)))
+})

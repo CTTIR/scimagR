@@ -36,3 +36,9 @@ test_that("plot_coverage omits the text layer when artifact_grade is absent", {
 test_that("plot_coverage errors when required columns are missing", {
   expect_error(plot_coverage(data.frame(pat_id = "A")), "missing columns")
 })
+
+test_that("plot_coverage explains the grade numbers in a caption", {
+  expect_match(plot_coverage(reg)$labels$caption, "artefact grade")
+  p <- plot_coverage(reg[, c("pat_id", "session", "modality")])
+  expect_null(p$labels$caption)
+})

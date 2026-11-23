@@ -18,12 +18,12 @@ scale_fill_artifact(...)
 A ggplot2 scale object.
 }
 \description{
-Colour and Fill Scales for Artefact Grades
+Manual scales using \link{pal_artifact}; the legend lists the grades from
+none to non-evaluable.
 }
 \examples{
 library(ggplot2)
-df <- data.frame(grade = c("none", "mild", "moderate", "severe"),
-                 n = c(12, 7, 3, 1))
+df <- data.frame(grade = classify_artifact(0:3), n = c(12, 7, 3, 1))
 ggplot(df, aes(grade, n, fill = grade)) +
   geom_col() +
   scale_fill_artifact()

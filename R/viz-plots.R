@@ -4,7 +4,9 @@
 #' jittered individual data points. Uses viridis palette by default.
 #'
 #' @param df Data frame.
-#' @param x Character. Column name for x-axis (categorical).
+#' @param x Character. Column name for x-axis (categorical). Groups are
+#'   shown in factor level order, so use a factor (e.g. from
+#'   [classify_phase()]) to control the order.
 #' @param y Character. Column name for y-axis (numeric).
 #' @param fill Character. Column name for fill aesthetic. Default same as `x`.
 #' @param title Character. Plot title. Default `NULL`.
@@ -14,10 +16,12 @@
 #' @examples
 #' set.seed(1)
 #' df <- data.frame(
-#'   phase = rep(c("acute", "subacute", "chronic"), each = 10),
+#'   # a factor keeps the phases in clinical rather than alphabetical order
+#'   phase = classify_phase(rep(c(5, 40, 400), each = 10)),
 #'   mscc = c(rnorm(10, 30, 8), rnorm(10, 22, 6), rnorm(10, 15, 5))
 #' )
-#' plot_violin_box(df, x = "phase", y = "mscc", fill = "phase")
+#' plot_violin_box(df, x = "phase", y = "mscc", fill = "phase",
+#'                 ylab = "MSCC (%)")
 plot_violin_box <- function(df, x, y, fill = x, title = NULL, ylab = y) {
   rlang::check_required(df)
   rlang::check_required(x)
@@ -136,7 +140,7 @@ plot_forest <- function(estimates_df, xlab = "Estimate", title = NULL,
     ggplot2::geom_vline(
       xintercept = vline, linetype = "dashed", colour = "grey50"
     ) +
-    ggplot2::geom_errorbarh(height = 0.2) +
+    ggplot2::geom_errorbar(width = 0.2, orientation = "y") +
     ggplot2::geom_point(size = 3) +
     ggplot2::labs(x = xlab, y = NULL, title = title) +
     theme_sci()

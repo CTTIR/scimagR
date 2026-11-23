@@ -33,8 +33,9 @@ coverage_matrix <- function(registry) {
 
 #' Plot Modality Coverage Matrix
 #'
-#' Creates a tile plot showing modality coverage per patient and session,
-#' with optional artefact grade overlay.
+#' Creates a tile plot showing modality coverage per patient and session.
+#' If the registry has an `artifact_grade` column, each tile shows the
+#' grade and a caption explains the numbers.
 #'
 #' @param registry Data frame. Validated registry.
 #' @return A ggplot2 object.
@@ -64,10 +65,12 @@ plot_coverage <- function(registry) {
     theme_sci()
 
   if ("artifact_grade" %in% names(registry)) {
-    p <- p + ggplot2::geom_text(
-      ggplot2::aes(label = .data$artifact_grade),
-      size = 3, colour = "grey20"
-    )
+    p <- p +
+      ggplot2::geom_text(
+        ggplot2::aes(label = .data$artifact_grade),
+        size = 3.5, colour = "white", fontface = "bold"
+      ) +
+      ggplot2::labs(caption = "Numbers: artefact grade (0-4)")
   }
 
   p

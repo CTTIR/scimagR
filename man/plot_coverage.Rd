@@ -13,8 +13,9 @@ plot_coverage(registry)
 A ggplot2 object.
 }
 \description{
-Creates a tile plot showing modality coverage per patient and session,
-with optional artefact grade overlay.
+Creates a tile plot showing modality coverage per patient and session.
+If the registry has an \code{artifact_grade} column, each tile shows the
+grade and a caption explains the numbers.
 }
 \examples{
 reg <- validate_registry(
