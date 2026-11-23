@@ -8,31 +8,61 @@ sct_generate_qc(
   input,
   segmentation,
   qc_dir,
-  process = "sct_deepseg",
-  verbose = TRUE
+  process = "sct_deepseg_sc",
+  verbose = TRUE,
+  lesion = NULL,
+  plane = c("sagittal", "axial")
 )
 }
 \arguments{
 \item{input}{Character. Path to original NIfTI image.}
 
-\item{segmentation}{Character. Path to segmentation overlay.}
+\item{segmentation}{Character. Path to segmentation overlay (the spinal
+cord mask for a lesion report).}
 
 \item{qc_dir}{Character. Directory for QC HTML output.}
 
-\item{process}{Character. SCT process name for labeling.
-Default \code{"sct_deepseg"}.}
+\item{process}{Character. The \code{sct_qc -p} process the report is made
+for, e.g. \code{"sct_deepseg_sc"} (default), \code{"sct_deepseg_lesion"} or
+\code{"sct_label_vertebrae"}. The former default \code{"sct_deepseg"}, which
+\code{sct_qc} does not accept, is treated as \code{"sct_deepseg_sc"}.}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
+
+\item{lesion}{Character. Path to the lesion mask. Required when
+\code{process = "sct_deepseg_lesion"}, ignored otherwise. Default \code{NULL}.}
+
+\item{plane}{Character. \code{"sagittal"} (default) or \code{"axial"}; the plane of
+a lesion report.}
 }
 \value{
 Exit code (invisible).
 }
 \description{
-Creates an HTML QC report overlaying a segmentation on the original image.
+Creates an HTML QC report with \code{sct_qc}, overlaying a segmentation on the
+original image.
+}
+\details{
+For a lesion report (\code{process = "sct_deepseg_lesion"}), \code{segmentation}
+is the spinal cord mask and \code{lesion} the lesion mask; \code{sct_qc} then also
+needs the \code{plane} of the report.
 }
 \examples{
-\dontrun{
-# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
-sct_generate_qc("sub-01_T2w.nii.gz", "sub-01_T2w_seg.nii.gz", "qc/")
+# Inputs are checked before SCT is called:
+try(sct_generate_qc("missing_T2w.nii.gz", "missing_seg.nii.gz",
+                    file.path(tempdir(), "qc")))
+
+\donttest{
+# With SCT installed: QC report of the PAM50 template cord mask.
+sct <- check_sct(verbose = FALSE)
+if (sct$available) {
+  pam50 <- file.path(dirname(dirname(sct$path)), "data", "PAM50",
+                     "template")
+  t2w <- file.path(pam50, "PAM50_t2.nii.gz")
+  seg <- file.path(pam50, "PAM50_cord.nii.gz")
+  if (file.exists(t2w) && file.exists(seg)) {
+    sct_generate_qc(t2w, seg, qc_dir = file.path(tempdir(), "qc"))
+  }
+}
 }
 }

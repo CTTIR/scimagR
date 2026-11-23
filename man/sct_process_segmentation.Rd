@@ -9,30 +9,60 @@ sct_process_segmentation(
   vert_labels,
   output_dir = NULL,
   perslice = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  vert = NULL,
+  perlevel = FALSE
 )
 }
 \arguments{
 \item{sc_seg}{Character. Path to spinal cord segmentation NIfTI.}
 
-\item{vert_labels}{Character. Path to vertebral labels NIfTI.}
+\item{vert_labels}{Character. Path to the vertebral level file, i.e. the
+labelled segmentation returned by \code{\link[=sct_label_vertebrae]{sct_label_vertebrae()}}.}
 
-\item{output_dir}{Character. Directory for CSV output.}
+\item{output_dir}{Character. Directory for CSV output. Defaults to the
+directory of \code{sc_seg}.}
 
 \item{perslice}{Logical. Compute per-slice metrics. Default \code{FALSE}.}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
+
+\item{vert}{Vertebral levels to aggregate over, as a numeric vector
+(e.g. \code{2:7} for C2 to C7) or a character string in SCT syntax
+(e.g. \code{"2:7"}). Default \code{NULL} (all slices).}
+
+\item{perlevel}{Logical. One row per vertebral level in \code{vert}. Needs
+\code{vert}. Default \code{FALSE}.}
 }
 \value{
-Character. Path to output CSV, or \code{NA} on failure.
+Character. Path to output CSV (\verb{<sc_seg>_csa.csv}), or \code{NA} on
+failure (non-zero exit status, or no CSV written).
 }
 \description{
 Runs \code{sct_process_segmentation} to compute cross-sectional area (CSA),
-AP diameter, and transverse diameter per vertebral level.
+AP diameter, transverse diameter and other shape metrics of the spinal
+cord. By default SCT averages the metrics over all slices of the
+segmentation (the \code{VertLevel} column of the CSV lists the vertebral
+levels covered). Use \code{vert} to restrict the average to vertebral levels,
+and \code{perlevel = TRUE} to get one row per level.
 }
 \examples{
-\dontrun{
-# Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
-sct_process_segmentation("sub-01_seg.nii.gz", "sub-01_labels-disc.nii.gz")
+# Inputs are checked before SCT is called:
+try(sct_process_segmentation("missing_seg.nii.gz", "missing_labeled.nii.gz"))
+
+\donttest{
+# With SCT installed: CSA per vertebral level of the PAM50 template cord.
+sct <- check_sct(verbose = FALSE)
+if (sct$available) {
+  pam50 <- file.path(dirname(dirname(sct$path)), "data", "PAM50",
+                     "template")
+  cord <- file.path(pam50, "PAM50_cord.nii.gz")
+  levels <- file.path(pam50, "PAM50_levels.nii.gz")
+  if (file.exists(cord) && file.exists(levels)) {
+    csv <- sct_process_segmentation(cord, levels, output_dir = tempdir(),
+                                    vert = 2:4, perlevel = TRUE)
+    if (!is.na(csv)) utils::read.csv(csv, check.names = FALSE)
+  }
+}
 }
 }

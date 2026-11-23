@@ -1,20 +1,47 @@
 #' Label Vertebral Levels
 #'
-#' Runs SCT's vertebral labeling on a spinal cord segmentation.
+#' Runs SCT's `sct_label_vertebrae` on a spinal cord segmentation. SCT
+#' writes two files into `output_dir`, both named after the segmentation:
+#' `<segmentation>_labeled.nii.gz` (the cord segmentation with each voxel
+#' set to its vertebral level) and `<segmentation>_labeled_discs.nii.gz`
+#' (one label per intervertebral disc). The first is returned, because it
+#' is the vertebral level file that [sct_process_segmentation()] expects.
 #'
 #' @param input Character. Path to T2w NIfTI file.
 #' @param segmentation Character. Path to spinal cord segmentation.
-#' @param contrast Character. MRI contrast type. Default `"t2"`.
+#' @param contrast Character. MRI contrast type, `"t2"` (cord dark, CSF
+#'   bright) or `"t1"`. Default `"t2"`.
 #' @param output_dir Character. Directory for output labels. Defaults to
 #'   the directory of `input`.
 #' @param overwrite Logical. Re-run if output exists? Default `FALSE`.
 #' @param verbose Logical. Print progress. Default `TRUE`.
-#' @return Character. Path to vertebral label NIfTI, or `NA` on failure.
+#' @return Character. Path to the labelled segmentation
+#'   (`<segmentation>_labeled.nii.gz`), or `NA` on failure (non-zero exit
+#'   status, or no output file written).
 #' @export
 #' @examples
-#' \dontrun{
-#' # Not run: needs the Spinal Cord Toolbox and a NIfTI image.
-#' sct_label_vertebrae("sub-01_T2w.nii.gz", "sub-01_T2w_seg.nii.gz")
+#' # Without the Spinal Cord Toolbox: an existing labelled segmentation is
+#' # returned as is (here an empty placeholder file).
+#' dir <- file.path(tempdir(), "sct-label-example")
+#' dir.create(dir, showWarnings = FALSE)
+#' t2w <- file.path(dir, "sub-01_T2w.nii.gz")
+#' seg <- file.path(dir, "sub-01_T2w_seg.nii.gz")
+#' file.create(t2w, seg, file.path(dir, "sub-01_T2w_seg_labeled.nii.gz"))
+#' sct_label_vertebrae(t2w, seg)
+#' unlink(dir, recursive = TRUE)
+#'
+#' \donttest{
+#' # With SCT installed: label the PAM50 template (takes about a minute).
+#' sct <- check_sct(verbose = FALSE)
+#' if (sct$available && interactive()) {
+#'   pam50 <- file.path(dirname(dirname(sct$path)), "data", "PAM50",
+#'                      "template")
+#'   t2w <- file.path(pam50, "PAM50_t2.nii.gz")
+#'   seg <- file.path(pam50, "PAM50_cord.nii.gz")
+#'   if (file.exists(t2w) && file.exists(seg)) {
+#'     sct_label_vertebrae(t2w, seg, output_dir = tempdir())
+#'   }
+#' }
 #' }
 sct_label_vertebrae <- function(input,
                                 segmentation,
@@ -24,10 +51,8 @@ sct_label_vertebrae <- function(input,
                                 verbose = TRUE) {
   rlang::check_required(input)
   rlang::check_required(segmentation)
-  stopifnot(
-    is.character(input), length(input) == 1,
-    is.character(segmentation), length(segmentation) == 1
-  )
+  check_single_path(input)
+  check_single_path(segmentation)
 
   if (!file.exists(input)) {
     cli::cli_abort("Input file not found: {.path {input}}")
@@ -37,8 +62,10 @@ sct_label_vertebrae <- function(input,
   }
 
   dir_out <- output_dir %||% dirname(input)
-  base <- sub("\\.nii(\\.gz)?$", "", basename(input))
-  output <- file.path(dir_out, paste0(base, "_labels-disc.nii.gz"))
+  output <- file.path(
+    dir_out,
+    paste0(nii_stem(basename(segmentation)), "_labeled", nii_ext(segmentation))
+  )
 
   if (file.exists(output) && !overwrite) {
     if (verbose) cli::cli_alert_info("Output exists, skipping: {.path {output}}")
@@ -54,7 +81,8 @@ sct_label_vertebrae <- function(input,
 
   result <- sct_run("sct_label_vertebrae", args = args, verbose = verbose)
 
-  if (result$exit_code != 0L) {
+  if (result$exit_code != 0L ||
+      !sct_output_exists(output, "sct_label_vertebrae")) {
     return(NA_character_)
   }
 

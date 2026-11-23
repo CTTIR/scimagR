@@ -58,3 +58,52 @@ test_that("sct_generate_qc surfaces a non-zero exit code", {
   res <- sct_generate_qc(input, seg, file.path(dir, "qc"), verbose = FALSE)
   expect_equal(res, 1L)
 })
+
+test_that("sct_generate_qc defaults to a process sct_qc accepts", {
+  dir <- withr::local_tempdir()
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "seg.nii.gz"))
+  rec <- local_fake_sct()
+  sct_generate_qc(input, seg, file.path(dir, "qc"), verbose = FALSE)
+  expect_equal(arg_value(rec$calls[[1]]$args, "-p"), "sct_deepseg_sc")
+  # The former default "sct_deepseg" is not an sct_qc process.
+  sct_generate_qc(input, seg, file.path(dir, "qc"), process = "sct_deepseg",
+                  verbose = FALSE)
+  expect_equal(arg_value(rec$calls[[2]]$args, "-p"), "sct_deepseg_sc")
+})
+
+test_that("sct_generate_qc builds a lesion report with -d and -plane", {
+  dir <- withr::local_tempdir()
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "t2_sc_seg.nii.gz"))
+  les <- touch(file.path(dir, "t2_lesion_seg.nii.gz"))
+  rec <- local_fake_sct()
+  sct_generate_qc(input, seg, file.path(dir, "qc"),
+                  process = "sct_deepseg_lesion", lesion = les,
+                  plane = "axial", verbose = FALSE)
+  args <- rec$calls[[1]]$args
+  expect_equal(arg_value(args, "-s"), seg)
+  expect_equal(arg_value(args, "-d"), les)
+  expect_equal(arg_value(args, "-plane"), "axial")
+})
+
+test_that("sct_generate_qc requires the lesion mask for a lesion report", {
+  dir <- withr::local_tempdir()
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "seg.nii.gz"))
+  expect_error(
+    sct_generate_qc(input, seg, file.path(dir, "qc"),
+                    process = "sct_deepseg_lesion", verbose = FALSE),
+    class = "scimagR_error_input"
+  )
+  expect_error(
+    sct_generate_qc(input, seg, file.path(dir, "qc"),
+                    process = "sct_deepseg_lesion",
+                    lesion = file.path(dir, "nope.nii.gz"), verbose = FALSE),
+    "Lesion file not found"
+  )
+  expect_error(
+    sct_generate_qc(input, seg, file.path(dir, "qc"), plane = "coronal"),
+    "plane"
+  )
+})

@@ -11,20 +11,33 @@ sct_analyze_lesion(lesion_seg, sc_seg, output_dir = NULL, verbose = TRUE)
 
 \item{sc_seg}{Character. Path to spinal cord segmentation NIfTI.}
 
-\item{output_dir}{Character. Directory for CSV output.}
+\item{output_dir}{Character. Directory for the output files. Defaults to
+the directory of \code{lesion_seg}.}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
 }
 \value{
-Character. Path to output CSV, or \code{NA} on failure.
+Character. Path to the analysis spreadsheet written by SCT, or
+\code{NA} on failure (non-zero exit status, or no spreadsheet written).
 }
 \description{
-Runs \code{sct_analyze_lesion} to compute lesion volume, length, max axial
-damage ratio, and tissue bridge measurements.
+Runs \code{sct_analyze_lesion} to compute lesion volume, length, maximum axial
+damage ratio and tissue bridge measurements. SCT writes the results to a
+spreadsheet named after the lesion mask: \verb{<lesion_seg>_analysis.xlsx}
+(SCT 7.0 and later) or \verb{<lesion_seg>_analysis.xls} (earlier versions).
 }
 \examples{
-\dontrun{
-# Not run: needs the Spinal Cord Toolbox and NIfTI segmentations.
-sct_analyze_lesion("sub-01_lesion_seg.nii.gz", "sub-01_seg.nii.gz")
+# Inputs are checked before SCT is called:
+try(sct_analyze_lesion("missing_lesion_seg.nii.gz", "missing_seg.nii.gz"))
+
+\donttest{
+# With SCT installed: analyse your own lesion and cord masks, for example
+# those written by sct_segment_lesion().
+lesion <- "sub-01_T2w_lesion_seg.nii.gz"
+cord <- "sub-01_T2w_sc_seg.nii.gz"
+if (check_sct(verbose = FALSE)$available &&
+    file.exists(lesion) && file.exists(cord)) {
+  sct_analyze_lesion(lesion, cord, output_dir = tempdir())
+}
 }
 }

@@ -17,26 +17,54 @@ sct_segment_sc(
 \item{input}{Character. Path to NIfTI file (.nii.gz).}
 
 \item{output}{Character. Path for output segmentation. Auto-generated if
-\code{NULL}.}
+\code{NULL}: \verb{<input>_seg.nii.gz} in \code{output_dir}.}
 
-\item{output_dir}{Character. Directory for output. Alternative to \code{output}.}
+\item{output_dir}{Character. Directory for output. Alternative to \code{output}.
+Defaults to the directory of \code{input}.}
 
 \item{overwrite}{Logical. Re-run if output exists? Default \code{FALSE}
 (idempotent).}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
 
-\item{qc_dir}{Character. If provided, auto-generate QC report.}
+\item{qc_dir}{Character. If provided, \code{sct_deepseg} also writes its HTML
+QC report to this directory.}
 }
 \value{
-Character. Path to output segmentation file, or \code{NA} on failure.
+Character. Path to output segmentation file, or \code{NA} on failure
+(non-zero exit status, or no output file written).
 }
 \description{
-Runs SCT's contrast-agnostic spinal cord segmentation model.
+Runs the contrast-agnostic spinal cord segmentation model of the Spinal
+Cord Toolbox (Bédard et al. 2025) through \code{sct_deepseg}. The wrapper
+uses the task syntax of the installed SCT version
+(\verb{sct_deepseg spinalcord} from SCT 7.0, \verb{sct_deepseg -task seg_sc_contrast_agnostic} before).
 }
 \examples{
-\dontrun{
-# Not run: needs the Spinal Cord Toolbox and a NIfTI image.
-sct_segment_sc("sub-01_T2w.nii.gz")
+# Without the Spinal Cord Toolbox: an existing output is returned as is,
+# so finished sessions are skipped (here with an empty placeholder file).
+dir <- file.path(tempdir(), "sct-seg-example")
+dir.create(dir, showWarnings = FALSE)
+t2w <- file.path(dir, "sub-01_T2w.nii.gz")
+file.create(t2w, file.path(dir, "sub-01_T2w_seg.nii.gz"))
+sct_segment_sc(t2w)
+unlink(dir, recursive = TRUE)
+
+\donttest{
+# With SCT installed: segment the PAM50 T2w template shipped with SCT.
+# This runs a deep-learning model and can take several minutes.
+sct <- check_sct(verbose = FALSE)
+if (sct$available && interactive()) {
+  pam50_t2 <- file.path(dirname(dirname(sct$path)), "data", "PAM50",
+                        "template", "PAM50_t2.nii.gz")
+  if (file.exists(pam50_t2)) {
+    sct_segment_sc(pam50_t2, output_dir = tempdir())
+  }
 }
+}
+}
+\references{
+Bédard S, Karthik EN, Tsagkas C, et al. (2025). Towards
+contrast-agnostic soft segmentation of the spinal cord. \emph{Medical Image
+Analysis} 101:103473. \doi{10.1016/j.media.2025.103473}
 }

@@ -9,7 +9,8 @@ sct_run(cmd, args = character(), error_msg = NULL, verbose = TRUE)
 \arguments{
 \item{cmd}{Character. Full SCT command name (e.g., "sct_deepseg").}
 
-\item{args}{Character vector. Arguments to pass.}
+\item{args}{Character vector. Arguments to pass; each one is quoted with
+\code{\link[=shQuote]{shQuote()}} before the command is run.}
 
 \item{error_msg}{Character. Message on failure.}
 
