@@ -65,7 +65,7 @@ classify_artifact <- function(grade) {
   out_of_range <- !is.na(grade) & (grade < 0 | grade > 4)
   if (any(out_of_range)) {
     cli::cli_warn(
-      "Artifact grade values outside 0-4 will be set to NA: {grade[out_of_range]}"
+      "Artifact grades outside 0-4 will be set to NA: {grade[out_of_range]}"
     )
   }
   fractional <- !is.na(grade) & !out_of_range & grade != round(grade)

@@ -54,7 +54,7 @@ sci_create_project <- function(path,
   }
   cli::cli_alert_success("Directory structure created.")
 
-  # Copy and fill templates
+  # CSV templates shipped with the package
   template_dir <- system.file("templates", package = "scimagR")
 
   # _workflowr.yml
@@ -75,39 +75,39 @@ sci_create_project <- function(path,
       glue::glue('  title: "{title}"'),
       "  left:",
       '    - text: "Home"',
-      '      href: index.html',
+      "      href: index.html",
       '    - text: "Pipeline"',
-      '      menu:',
+      "      menu:",
       '        - text: "00 Orchestrate"',
-      '          href: 00-orchestrate.html',
+      "          href: 00-orchestrate.html",
       '        - text: "01 Data"',
-      '          href: 01-data.html',
+      "          href: 01-data.html",
       '    - text: "Analysis"',
-      '      menu:',
+      "      menu:",
       '        - text: "02 Descriptive"',
-      '          href: 02-descriptive.html',
+      "          href: 02-descriptive.html",
       '        - text: "03 Lesion"',
-      '          href: 03-lesion.html',
+      "          href: 03-lesion.html",
       '        - text: "04 Canal"',
-      '          href: 04-canal.html',
+      "          href: 04-canal.html",
       '        - text: "05 Longitudinal"',
-      '          href: 05-longitudinal.html',
+      "          href: 05-longitudinal.html",
       '    - text: "Advanced"',
-      '      menu:',
+      "      menu:",
       '        - text: "06 Sensitivity"',
-      '          href: 06-sensitivity.html',
+      "          href: 06-sensitivity.html",
       '        - text: "07 Prediction"',
-      '          href: 07-prediction.html',
+      "          href: 07-prediction.html",
       '    - text: "Output"',
-      '      menu:',
+      "      menu:",
       '        - text: "08 Figures"',
-      '          href: 08-manuscript-figures.html',
+      "          href: 08-manuscript-figures.html",
       '        - text: "09 Report"',
-      '          href: 09-report.html',
+      "          href: 09-report.html",
       '    - text: "About"',
-      '      href: about.html',
+      "      href: about.html",
       '    - text: "License"',
-      '      href: license.html',
+      "      href: license.html",
       "output:",
       "  workflowr::wflow_html:",
       "    toc: true",
@@ -190,20 +190,12 @@ sci_create_project <- function(path,
     writeLines(rmd_content, file.path(path, "analysis", paste0(name, ".Rmd")))
   }
 
-  # CSV templates (header-only)
-  writeLines(
-    "pat_id,session,study_date,modality,series_description,field_strength,trauma_date,days_post_trauma,phase,artifact_grade,notes",
-    file.path(path, "data", "metadata", "imaging_registry.csv")
-  )
-
-  writeLines(
-    "pat_id,age,sex,injury_level,ais_grade,trauma_date,op_date,notes",
-    file.path(path, "data", "metadata", "clinical_data.csv")
-  )
-
-  writeLines(
-    "pat_id,session,rater,date,seg_type,quality,notes",
-    file.path(path, "data", "metadata", "qc_segmentation_log.csv")
+  # CSV templates (header-only), shipped in inst/templates
+  file.copy(
+    file.path(template_dir, c(
+      "imaging_registry.csv", "clinical_data.csv", "qc_segmentation_log.csv"
+    )),
+    file.path(path, "data", "metadata")
   )
 
   # .gitignore
@@ -237,7 +229,9 @@ sci_create_project <- function(path,
 
   cli::cli_alert_success("Templates created.")
 
-  if (open && rlang::is_interactive() && requireNamespace("rstudioapi", quietly = TRUE)) {
+  can_open <- open && rlang::is_interactive() &&
+    requireNamespace("rstudioapi", quietly = TRUE)
+  if (can_open) {
     if (rstudioapi::isAvailable()) {
       rstudioapi::openProject(path, newSession = TRUE)
     }

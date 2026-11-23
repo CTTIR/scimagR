@@ -49,9 +49,15 @@ test_that("sci_create_project creates CSV templates", {
   proj <- file.path(tmp, "test-project4")
   sci_create_project(proj, title = "Test4", author = "Author4", open = FALSE)
 
-  expect_true(file.exists(file.path(proj, "data", "metadata", "imaging_registry.csv")))
-  expect_true(file.exists(file.path(proj, "data", "metadata", "clinical_data.csv")))
-  expect_true(file.exists(file.path(proj, "data", "metadata", "qc_segmentation_log.csv")))
+  expect_true(file.exists(
+    file.path(proj, "data", "metadata", "imaging_registry.csv")
+  ))
+  expect_true(file.exists(
+    file.path(proj, "data", "metadata", "clinical_data.csv")
+  ))
+  expect_true(file.exists(
+    file.path(proj, "data", "metadata", "qc_segmentation_log.csv")
+  ))
 })
 
 test_that("sci_create_project errors on existing directory", {

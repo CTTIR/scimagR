@@ -68,7 +68,9 @@ sct_label_vertebrae <- function(input,
   )
 
   if (file.exists(output) && !overwrite) {
-    if (verbose) cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    if (verbose) {
+      cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    }
     return(output)
   }
 
@@ -81,11 +83,15 @@ sct_label_vertebrae <- function(input,
 
   result <- sct_run("sct_label_vertebrae", args = args, verbose = verbose)
 
-  if (result$exit_code != 0L ||
-      !sct_output_exists(output, "sct_label_vertebrae")) {
+  if (result$exit_code != 0L) {
+    return(NA_character_)
+  }
+  if (!sct_output_exists(output, "sct_label_vertebrae")) {
     return(NA_character_)
   }
 
-  if (verbose) cli::cli_alert_success("Vertebral labels saved: {.path {output}}")
+  if (verbose) {
+    cli::cli_alert_success("Vertebral labels saved: {.path {output}}")
+  }
   output
 }

@@ -48,7 +48,8 @@ and \code{perlevel = TRUE} to get one row per level.
 }
 \examples{
 # Inputs are checked before SCT is called:
-try(sct_process_segmentation("missing_seg.nii.gz", "missing_labeled.nii.gz"))
+try(sct_process_segmentation("missing_seg.nii.gz",
+                             "missing_seg_labeled.nii.gz"))
 
 \donttest{
 # With SCT installed: CSA per vertebral level of the PAM50 template cord.

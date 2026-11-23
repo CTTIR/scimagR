@@ -51,7 +51,10 @@ create_registry <- function(dicom_meta,
   no_date <- setdiff(unique(dicom_meta$pat_id), names(trauma_dates))
   if (length(no_date) > 0) {
     cli::cli_warn(
-      "No trauma date for {.val {no_date}}; their days_post_trauma and phase are NA."
+      paste(
+        "No trauma date for {.val {no_date}};",
+        "their days_post_trauma and phase are NA."
+      )
     )
   }
 
@@ -118,7 +121,9 @@ validate_registry <- function(registry, strict = TRUE) {
   required_cols <- c("pat_id", "session", "study_date", "modality")
   missing_cols <- setdiff(required_cols, names(registry))
   if (length(missing_cols) > 0) {
-    issues <- c(issues, glue::glue("Missing required columns: {paste(missing_cols, collapse = ', ')}"))
+    issues <- c(issues, glue::glue(
+      "Missing required columns: {paste(missing_cols, collapse = ', ')}"
+    ))
   }
 
   if (all(c("pat_id", "session") %in% names(registry))) {
@@ -137,7 +142,9 @@ validate_registry <- function(registry, strict = TRUE) {
   if ("days_post_trauma" %in% names(registry)) {
     neg <- !is.na(registry$days_post_trauma) & registry$days_post_trauma < 0
     if (any(neg)) {
-      issues <- c(issues, glue::glue("{sum(neg)} records have negative days_post_trauma"))
+      issues <- c(issues, glue::glue(
+        "{sum(neg)} records have negative days_post_trauma"
+      ))
     }
   }
 
@@ -145,7 +152,9 @@ validate_registry <- function(registry, strict = TRUE) {
     invalid <- !is.na(registry$artifact_grade) &
       (registry$artifact_grade < 0 | registry$artifact_grade > 4)
     if (any(invalid)) {
-      issues <- c(issues, glue::glue("{sum(invalid)} records have artifact_grade outside 0-4"))
+      issues <- c(issues, glue::glue(
+        "{sum(invalid)} records have artifact_grade outside 0-4"
+      ))
     }
   }
 

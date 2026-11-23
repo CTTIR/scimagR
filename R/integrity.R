@@ -44,7 +44,9 @@ integrity_summary <- function(df, id_cols = NULL) {
       if (nrow(dups) > 0) {
         cli::cli_alert_warning("{nrow(dups)} duplicate combination{?s} found.")
       } else {
-        cli::cli_alert_success("No duplicates on {paste(id_cols, collapse = ' x ')}.")
+        cli::cli_alert_success(
+          "No duplicates on {paste(id_cols, collapse = ' x ')}."
+        )
       }
     }
   }

@@ -35,7 +35,9 @@ test_that("save_fig saves a ggplot at the requested filename", {
   dir <- withr::local_tempdir()
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
   path <- expect_invisible(
-    suppressMessages(save_fig(p, "fig.png", dir, width = 4, height = 3, dpi = 72))
+    suppressMessages(
+      save_fig(p, "fig.png", dir, width = 4, height = 3, dpi = 72)
+    )
   )
   expect_true(file.exists(path))
   expect_equal(basename(path), "fig.png")
@@ -45,7 +47,9 @@ test_that("save_fig creates the output directory if absent", {
   dir <- withr::local_tempdir()
   nested <- file.path(dir, "figs")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  path <- suppressMessages(save_fig(p, "f.png", nested, width = 3, height = 3, dpi = 72))
+  path <- suppressMessages(
+    save_fig(p, "f.png", nested, width = 3, height = 3, dpi = 72)
+  )
   expect_true(dir.exists(nested))
   expect_true(file.exists(path))
 })

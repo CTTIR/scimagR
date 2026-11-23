@@ -92,7 +92,9 @@ sci_run_pipeline <- function(project_dir,
     }
 
     if (s == 2 && !anonymize) {
-      if (verbose) cli::cli_inform("Step 2 (Anonymization): skipped (anonymize = FALSE)")
+      if (verbose) {
+        cli::cli_inform("Step 2 (Anonymization): skipped (anonymize = FALSE)")
+      }
       status_log <- dplyr::bind_rows(status_log, tibble::tibble(
         step = 2L, name = step_names[2], status = "skipped",
         message = "anonymize = FALSE"
@@ -104,7 +106,9 @@ sci_run_pipeline <- function(project_dir,
       cli::cli_h2("Step {s}: {step_names[s]}")
     }
 
-    if (verbose) cli::cli_alert_info("Run {.code {step_functions[s]}} for this step.")
+    if (verbose) {
+      cli::cli_alert_info("Run {.code {step_functions[s]}} for this step.")
+    }
     step_status <- tibble::tibble(
       step = as.integer(s),
       name = step_names[s],
@@ -119,7 +123,7 @@ sci_run_pipeline <- function(project_dir,
         "QC PAUSE: review the lesion segmentations before steps 6-8."
       )
       cli::cli_inform(
-        "Check the QC reports (argument {.arg qc_dir} or {.fn sct_generate_qc})."
+        "Check the QC reports ({.arg qc_dir} or {.fn sct_generate_qc})."
       )
     }
   }

@@ -123,14 +123,15 @@ test_that("sct_major_version is NA without SCT and caches per executable", {
   skip_if(!file.exists(fake_exe), "Rscript not resolvable")
   withr::defer(rm(list = ls(.sct_cache), envir = .sct_cache))
   local_mocked_bindings(sct_find_executable = function(cmd) "/fake/sct_version")
-  assign("/fake/sct_version", 6L, envir = .sct_cache)
+  .sct_cache[["/fake/sct_version"]] <- 6L
   expect_equal(sct_major_version(), 6L)
 })
 
 test_that("nii_stem and nii_ext split NIfTI file names", {
   expect_equal(nii_stem("a/b_seg.nii.gz"), "a/b_seg")
   expect_equal(nii_stem("b.nii"), "b")
-  expect_equal(nii_ext(c("x.nii.gz", "x.nii", "x.img")), c(".nii.gz", ".nii", ""))
+  expect_equal(nii_ext(c("x.nii.gz", "x.nii", "x.img")),
+               c(".nii.gz", ".nii", ""))
 })
 
 test_that("sct_major_version reads the output of sct_version", {

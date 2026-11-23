@@ -67,7 +67,9 @@ anonymize_dicom <- function(dicom_dir,
 
   script <- system.file("python", "anonymize_dicom.py", package = "scimagR")
   if (!nzchar(script)) {
-    cli::cli_abort("Bundled Python script not found. Is scimagR installed correctly?")
+    cli::cli_abort(
+      "Bundled Python script not found. Is scimagR installed correctly?"
+    )
   }
 
   mapping_dir <- dirname(mapping_csv)
@@ -75,7 +77,9 @@ anonymize_dicom <- function(dicom_dir,
     dir.create(mapping_dir, recursive = TRUE)
   }
 
-  cli::cli_alert_warning("This will modify DICOM files in-place. Ensure you have a backup!")
+  cli::cli_alert_warning(
+    "This will modify DICOM files in-place. Ensure you have a backup!"
+  )
 
   exit_code <- system2(
     command = python,
@@ -92,6 +96,8 @@ anonymize_dicom <- function(dicom_dir,
     cli::cli_abort("DICOM anonymization failed with exit code {exit_code}.")
   }
 
-  cli::cli_alert_success("DICOM anonymization complete. Mapping: {.path {mapping_csv}}")
+  cli::cli_alert_success(
+    "DICOM anonymization complete. Mapping: {.path {mapping_csv}}"
+  )
   invisible(exit_code)
 }

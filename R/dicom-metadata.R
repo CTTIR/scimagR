@@ -52,9 +52,14 @@ extract_dicom_metadata <- function(dicom_dir,
     ))
   }
 
-  script <- system.file("python", "extract_dicom_metadata.py", package = "scimagR")
+  script <- system.file(
+    "python", "extract_dicom_metadata.py",
+    package = "scimagR"
+  )
   if (!nzchar(script)) {
-    cli::cli_abort("Bundled Python script not found. Is scimagR installed correctly?")
+    cli::cli_abort(
+      "Bundled Python script not found. Is scimagR installed correctly?"
+    )
   }
 
   output_dir <- dirname(output_csv)
@@ -69,7 +74,9 @@ extract_dicom_metadata <- function(dicom_dir,
   )
 
   if (exit_code != 0L) {
-    cli::cli_abort("DICOM metadata extraction failed with exit code {exit_code}.")
+    cli::cli_abort(
+      "DICOM metadata extraction failed with exit code {exit_code}."
+    )
   }
 
   cli::cli_alert_success("DICOM metadata saved: {.path {output_csv}}")

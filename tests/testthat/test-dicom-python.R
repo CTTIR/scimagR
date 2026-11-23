@@ -20,7 +20,7 @@ test_that("the bundled DICOM fixture has the documented layout", {
   expect_equal(files, c("SCI001/ses-01/IM0001.dcm", "SCI001/ses-02/IM0001.dcm"))
 })
 
-test_that("extract_dicom_metadata takes pat_id from the folder, not PatientID", {
+test_that("extract_dicom_metadata takes pat_id from the folder name", {
   skip_without_pydicom()
   root <- system.file("extdata", "dicom", package = "scimagR")
   csv <- file.path(withr::local_tempdir(), "meta.csv")

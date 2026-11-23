@@ -3,7 +3,8 @@
 test_that("create_qc_log returns empty tibble with correct columns", {
   qc <- create_qc_log()
   expect_equal(nrow(qc), 0)
-  expect_true(all(c("pat_id", "session", "rater", "date", "seg_type", "quality", "notes") %in% names(qc)))
+  expect_true(all(c("pat_id", "session", "rater", "date", "seg_type",
+                    "quality", "notes") %in% names(qc)))
 })
 
 test_that("update_qc_log appends entries", {
@@ -44,7 +45,8 @@ test_that("filter_evaluable filters by modality", {
     artifact_grade = rep(0, 3),
     modality = c("MRT", "CT", "CT+MRT")
   )
-  result <- filter_evaluable(df, modalities = c("MRT", "CT+MRT"), verbose = FALSE)
+  result <- filter_evaluable(df, modalities = c("MRT", "CT+MRT"),
+                             verbose = FALSE)
   expect_equal(nrow(result), 2)
 })
 

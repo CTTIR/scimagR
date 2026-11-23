@@ -2,7 +2,7 @@
 
 test_that("sct_generate_qc errors on a missing input", {
   dir <- withr::local_tempdir()
-  seg <- file.path(dir, "seg.nii.gz"); file.create(seg)
+  seg <- touch(file.path(dir, "seg.nii.gz"))
   expect_error(
     sct_generate_qc(file.path(dir, "nope.nii.gz"), seg, file.path(dir, "qc"),
                     verbose = FALSE),
@@ -12,7 +12,7 @@ test_that("sct_generate_qc errors on a missing input", {
 
 test_that("sct_generate_qc errors on a missing segmentation", {
   dir <- withr::local_tempdir()
-  input <- file.path(dir, "t2.nii.gz"); file.create(input)
+  input <- touch(file.path(dir, "t2.nii.gz"))
   expect_error(
     sct_generate_qc(input, file.path(dir, "nope.nii.gz"), file.path(dir, "qc"),
                     verbose = FALSE),
@@ -20,10 +20,10 @@ test_that("sct_generate_qc errors on a missing segmentation", {
   )
 })
 
-test_that("sct_generate_qc creates the qc directory and returns the exit code", {
+test_that("sct_generate_qc creates the qc dir and returns the exit code", {
   dir <- withr::local_tempdir()
-  input <- file.path(dir, "t2.nii.gz"); file.create(input)
-  seg <- file.path(dir, "seg.nii.gz"); file.create(seg)
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "seg.nii.gz"))
   qc <- file.path(dir, "qc")
   local_mocked_bindings(
     sct_run = function(cmd, args = character(), ...) list(exit_code = 0L)
@@ -35,12 +35,13 @@ test_that("sct_generate_qc creates the qc directory and returns the exit code", 
 
 test_that("sct_generate_qc passes the process label through to sct_run", {
   dir <- withr::local_tempdir()
-  input <- file.path(dir, "t2.nii.gz"); file.create(input)
-  seg <- file.path(dir, "seg.nii.gz"); file.create(seg)
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "seg.nii.gz"))
   seen_args <- NULL
   local_mocked_bindings(
     sct_run = function(cmd, args = character(), ...) {
-      seen_args <<- args; list(exit_code = 0L)
+      seen_args <<- args
+      list(exit_code = 0L)
     }
   )
   sct_generate_qc(input, seg, file.path(dir, "qc"),
@@ -50,8 +51,8 @@ test_that("sct_generate_qc passes the process label through to sct_run", {
 
 test_that("sct_generate_qc surfaces a non-zero exit code", {
   dir <- withr::local_tempdir()
-  input <- file.path(dir, "t2.nii.gz"); file.create(input)
-  seg <- file.path(dir, "seg.nii.gz"); file.create(seg)
+  input <- touch(file.path(dir, "t2.nii.gz"))
+  seg <- touch(file.path(dir, "seg.nii.gz"))
   local_mocked_bindings(
     sct_run = function(cmd, args = character(), ...) list(exit_code = 1L)
   )

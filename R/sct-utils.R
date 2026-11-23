@@ -35,7 +35,10 @@ sct_run <- function(cmd, args = character(), error_msg = NULL, verbose = TRUE) {
   if (!nzchar(exe)) {
     cli::cli_abort(c(
       "Cannot find {.cmd {cmd}} on PATH.",
-      "i" = "Set the {.envvar SCT_DIR} environment variable or add SCT to your PATH.",
+      "i" = paste(
+        "Set the {.envvar SCT_DIR} environment variable",
+        "or add SCT to your PATH."
+      ),
       "i" = "Install SCT from {.url https://spinalcordtoolbox.com}."
     ))
   }

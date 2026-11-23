@@ -4,7 +4,8 @@ test_that("pipeline_step_extract_metadata delegates and returns 'complete'", {
   seen <- NULL
   local_mocked_bindings(
     extract_dicom_metadata = function(dicom_dir, output_csv, python) {
-      seen <<- list(dicom_dir, output_csv, python); invisible(output_csv)
+      seen <<- list(dicom_dir, output_csv, python)
+      invisible(output_csv)
     }
   )
   cfg <- list(dicom_root = "d", dicom_metadata_csv = "m.csv", python = "py")
@@ -16,7 +17,8 @@ test_that("pipeline_step_anonymize delegates with the default prefix", {
   seen_prefix <- NULL
   local_mocked_bindings(
     anonymize_dicom = function(dicom_dir, mapping_csv, prefix, python) {
-      seen_prefix <<- prefix; invisible(0L)
+      seen_prefix <<- prefix
+      invisible(0L)
     }
   )
   cfg <- list(dicom_root = "d", mapping_csv = "map.csv", python = "py")
@@ -28,7 +30,8 @@ test_that("pipeline_step_convert delegates to convert_batch", {
   called <- FALSE
   local_mocked_bindings(
     convert_batch = function(registry, dicom_root, nifti_root, verbose) {
-      called <<- TRUE; tibble::tibble()
+      called <<- TRUE
+      tibble::tibble()
     }
   )
   cfg <- list(dicom_root = "d", nifti_root = "n")

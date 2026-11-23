@@ -75,7 +75,10 @@ check_dcm2niix <- function(verbose = TRUE) {
       cli::cli_alert_success("dcm2niix found: {version} at {.path {exe}}")
     } else {
       cli::cli_alert_danger(
-        "dcm2niix not found. Install from {.url https://github.com/rordenlab/dcm2niix}."
+        paste(
+          "dcm2niix not found.",
+          "Install from {.url https://github.com/rordenlab/dcm2niix}."
+        )
       )
     }
   }

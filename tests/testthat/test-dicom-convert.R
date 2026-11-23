@@ -11,7 +11,9 @@ test_that("convert_dcm2niix errors when the DICOM directory is missing", {
 test_that("convert_dcm2niix errors when dcm2niix is unavailable", {
   dir <- withr::local_tempdir()
   local_mocked_bindings(
-    check_dcm2niix = function(...) list(available = FALSE, version = NA, path = NA)
+    check_dcm2niix = function(...) {
+      list(available = FALSE, version = NA, path = NA)
+    }
   )
   expect_error(convert_dcm2niix(dir, file.path(dir, "out"), verbose = FALSE),
                "dcm2niix is required")
@@ -21,7 +23,9 @@ test_that("convert_dcm2niix creates output dir and lists produced NIfTIs", {
   din <- withr::local_tempdir()
   dout <- file.path(withr::local_tempdir(), "nifti")
   local_mocked_bindings(
-    check_dcm2niix = function(...) list(available = TRUE, version = "x", path = "x")
+    check_dcm2niix = function(...) {
+      list(available = TRUE, version = "x", path = "x")
+    }
   )
   # Simulate the converter producing a file by stubbing system2.
   testthat::local_mocked_bindings(
@@ -36,11 +40,13 @@ test_that("convert_dcm2niix creates output dir and lists produced NIfTIs", {
   expect_equal(basename(outputs), "sub-01.nii.gz")
 })
 
-test_that("convert_dcm2niix matches uncompressed extension when compress=FALSE", {
+test_that("convert_dcm2niix finds .nii files when compress = FALSE", {
   din <- withr::local_tempdir()
   dout <- file.path(withr::local_tempdir(), "nifti")
   local_mocked_bindings(
-    check_dcm2niix = function(...) list(available = TRUE, version = "x", path = "x")
+    check_dcm2niix = function(...) {
+      list(available = TRUE, version = "x", path = "x")
+    }
   )
   testthat::local_mocked_bindings(
     system2 = function(...) {
@@ -82,7 +88,9 @@ test_that("convert_dcm2niix aborts when dcm2niix exits with an error", {
   din <- withr::local_tempdir()
   dout <- file.path(withr::local_tempdir(), "nifti")
   local_mocked_bindings(
-    check_dcm2niix = function(...) list(available = TRUE, version = "x", path = "x")
+    check_dcm2niix = function(...) {
+      list(available = TRUE, version = "x", path = "x")
+    }
   )
   testthat::local_mocked_bindings(
     system2 = function(...) structure("Error: no DICOM found", status = 2L),
@@ -93,7 +101,8 @@ test_that("convert_dcm2niix aborts when dcm2niix exits with an error", {
 
 test_that("convert_dcm2niix converts the bundled synthetic DICOM", {
   skip_on_cran()
-  skip_if_not(check_dcm2niix(verbose = FALSE)$available, "dcm2niix not installed")
+  skip_if_not(check_dcm2niix(verbose = FALSE)$available,
+              "dcm2niix not installed")
   session <- system.file("extdata", "dicom", "SCI001", "ses-01",
                          package = "scimagR")
   dout <- file.path(withr::local_tempdir(), "nifti")

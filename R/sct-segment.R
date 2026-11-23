@@ -59,11 +59,15 @@ sct_segment_sc <- function(input,
 
   if (is.null(output)) {
     dir_out <- output_dir %||% dirname(input)
-    output <- file.path(dir_out, paste0(nii_stem(basename(input)), "_seg.nii.gz"))
+    output <- file.path(
+      dir_out, paste0(nii_stem(basename(input)), "_seg.nii.gz")
+    )
   }
 
   if (file.exists(output) && !overwrite) {
-    if (verbose) cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    if (verbose) {
+      cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    }
     return(output)
   }
 
@@ -82,7 +86,9 @@ sct_segment_sc <- function(input,
     return(NA_character_)
   }
 
-  if (verbose) cli::cli_alert_success("SC segmentation saved: {.path {output}}")
+  if (verbose) {
+    cli::cli_alert_success("SC segmentation saved: {.path {output}}")
+  }
   output
 }
 
@@ -146,7 +152,9 @@ sct_segment_lesion <- function(input,
   }
 
   if (file.exists(output) && !overwrite) {
-    if (verbose) cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    if (verbose) {
+      cli::cli_alert_info("Output exists, skipping: {.path {output}}")
+    }
     return(output)
   }
 
@@ -172,7 +180,10 @@ sct_segment_lesion <- function(input,
   result <- sct_run("sct_deepseg", args = args, verbose = verbose)
 
   lesion_tmp <- paste0(stem, "_lesion_seg", ext)
-  if (result$exit_code != 0L || !sct_output_exists(lesion_tmp, "sct_deepseg")) {
+  if (result$exit_code != 0L) {
+    return(NA_character_)
+  }
+  if (!sct_output_exists(lesion_tmp, "sct_deepseg")) {
     return(NA_character_)
   }
 
@@ -180,11 +191,15 @@ sct_segment_lesion <- function(input,
   file.copy(lesion_tmp, output, overwrite = TRUE)
   sc_tmp <- paste0(stem, "_sc_seg", ext)
   if (file.exists(sc_tmp)) {
-    sc_out <- paste0(sub("_lesion_seg$", "", nii_stem(output)), "_sc_seg", ext)
+    sc_out <- paste0(
+      sub("_lesion_seg$", "", nii_stem(output)), "_sc_seg", ext
+    )
     file.copy(sc_tmp, sc_out, overwrite = TRUE)
   }
 
-  if (verbose) cli::cli_alert_success("Lesion segmentation saved: {.path {output}}")
+  if (verbose) {
+    cli::cli_alert_success("Lesion segmentation saved: {.path {output}}")
+  }
   output
 }
 

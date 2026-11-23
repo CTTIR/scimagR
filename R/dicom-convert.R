@@ -140,7 +140,9 @@ convert_batch <- function(registry,
       error = function(e) {
         status <<- "error"
         if (verbose) {
-          cli::cli_warn("Conversion failed for {pid}/{ses}: {conditionMessage(e)}")
+          cli::cli_warn(
+            "Conversion failed for {pid}/{ses}: {conditionMessage(e)}"
+          )
         }
       }
     )

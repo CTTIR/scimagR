@@ -104,7 +104,7 @@ test_that("sct_process_segmentation returns a CSA CSV path on success", {
   expect_false(any(c("-vert", "-perlevel", "-perslice") %in% args))
 })
 
-test_that("sct_process_segmentation adds -perslice flag and returns NA on failure", {
+test_that("sct_process_segmentation adds -perslice, NA on failure", {
   dir <- withr::local_tempdir()
   sc <- touch(file.path(dir, "sub-01_seg.nii.gz"))
   vert <- touch(file.path(dir, "sub-01_seg_labeled.nii.gz"))

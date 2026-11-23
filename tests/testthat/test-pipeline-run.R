@@ -15,11 +15,12 @@ test_that("sci_run_pipeline errors when project dir is missing", {
 
 test_that("sci_run_pipeline errors when config file is absent", {
   dir <- withr::local_tempdir()
-  proj <- file.path(dir, "proj"); dir.create(proj)
+  proj <- file.path(dir, "proj")
+  dir.create(proj)
   expect_error(sci_run_pipeline(proj), "Config file not found")
 })
 
-test_that("sci_run_pipeline reports requested steps as pending, never complete", {
+test_that("sci_run_pipeline reports steps as pending, never complete", {
   proj <- make_project()
   res <- sci_run_pipeline(proj, steps = c(1, 3, 4), verbose = FALSE)
   expect_equal(nrow(res), 3)
@@ -73,7 +74,8 @@ test_that("sci_pipeline_status returns an empty tibble before any processing", {
   res <- sci_pipeline_status(proj)
   expect_equal(nrow(res), 0)
   expect_named(res, c("pat_id", "session", "converted", "sc_seg",
-                      "lesion_seg", "vert_labels", "qc_done", "params_extracted"))
+                      "lesion_seg", "vert_labels", "qc_done",
+                      "params_extracted"))
 })
 
 test_that("sci_pipeline_status errors when the project dir is missing", {
@@ -139,7 +141,8 @@ test_that("sci_pipeline_status keeps its columns when no session exists", {
   res <- sci_pipeline_status(proj)
   expect_equal(nrow(res), 0)
   expect_named(res, c("pat_id", "session", "converted", "sc_seg",
-                      "lesion_seg", "vert_labels", "qc_done", "params_extracted"))
+                      "lesion_seg", "vert_labels", "qc_done",
+                      "params_extracted"))
 })
 
 test_that("sci_run_pipeline never runs a step or touches the project", {

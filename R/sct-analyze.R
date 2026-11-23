@@ -55,7 +55,9 @@ sct_analyze_lesion <- function(lesion_seg,
     return(NA_character_)
   }
 
-  base <- file.path(dir_out, paste0(nii_stem(basename(lesion_seg)), "_analysis"))
+  base <- file.path(
+    dir_out, paste0(nii_stem(basename(lesion_seg)), "_analysis")
+  )
   candidates <- paste0(base, c(".xlsx", ".xls"))
   found <- candidates[file.exists(candidates)]
   if (length(found) == 0L) {
@@ -64,7 +66,9 @@ sct_analyze_lesion <- function(lesion_seg,
   }
   output <- found[[1L]]
 
-  if (verbose) cli::cli_alert_success("Lesion analysis saved: {.path {output}}")
+  if (verbose) {
+    cli::cli_alert_success("Lesion analysis saved: {.path {output}}")
+  }
   output
 }
 
@@ -94,7 +98,8 @@ sct_analyze_lesion <- function(lesion_seg,
 #' @export
 #' @examples
 #' # Inputs are checked before SCT is called:
-#' try(sct_process_segmentation("missing_seg.nii.gz", "missing_labeled.nii.gz"))
+#' try(sct_process_segmentation("missing_seg.nii.gz",
+#'                              "missing_seg_labeled.nii.gz"))
 #'
 #' \donttest{
 #' # With SCT installed: CSA per vertebral level of the PAM50 template cord.
@@ -135,7 +140,9 @@ sct_process_segmentation <- function(sc_seg,
   }
 
   dir_out <- output_dir %||% dirname(sc_seg)
-  output_csv <- file.path(dir_out, paste0(nii_stem(basename(sc_seg)), "_csa.csv"))
+  output_csv <- file.path(
+    dir_out, paste0(nii_stem(basename(sc_seg)), "_csa.csv")
+  )
 
   args <- c(
     "-i", sc_seg,
@@ -155,12 +162,16 @@ sct_process_segmentation <- function(sc_seg,
 
   result <- sct_run("sct_process_segmentation", args = args, verbose = verbose)
 
-  if (result$exit_code != 0L ||
-      !sct_output_exists(output_csv, "sct_process_segmentation")) {
+  if (result$exit_code != 0L) {
+    return(NA_character_)
+  }
+  if (!sct_output_exists(output_csv, "sct_process_segmentation")) {
     return(NA_character_)
   }
 
-  if (verbose) cli::cli_alert_success("CSA metrics saved: {.path {output_csv}}")
+  if (verbose) {
+    cli::cli_alert_success("CSA metrics saved: {.path {output_csv}}")
+  }
   output_csv
 }
 
@@ -170,10 +181,14 @@ format_vert_levels <- function(vert, call = rlang::caller_env()) {
   if (is.character(vert) && length(vert) == 1L && !is.na(vert)) {
     return(vert)
   }
-  if (!is.numeric(vert) || length(vert) == 0L || anyNA(vert) ||
-      any(vert != round(vert))) {
+  whole <- is.numeric(vert) && length(vert) > 0L && !anyNA(vert) &&
+    all(vert == round(vert))
+  if (!whole) {
     cli::cli_abort(
-      "{.arg vert} must be whole numbers (e.g. {.code 2:7}) or a string such as {.str 2:7}.",
+      paste(
+        "{.arg vert} must be whole numbers (e.g. {.code 2:7})",
+        "or a string such as {.str 2:7}."
+      ),
       class = "scimagR_error_input",
       call = call
     )

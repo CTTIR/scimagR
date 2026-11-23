@@ -130,8 +130,10 @@ test_that("metric functions work inside dplyr::mutate()", {
 
 test_that("metric functions reject non-numeric input", {
   expect_error(compute_mscc("5", 8, 8), class = "scimagR_error_input")
-  expect_error(compute_compression_ratio(6, "12"), class = "scimagR_error_input")
-  expect_error(compute_csa_ratio(45, 70, list(72)), class = "scimagR_error_input")
+  expect_error(compute_compression_ratio(6, "12"),
+               class = "scimagR_error_input")
+  expect_error(compute_csa_ratio(45, 70, list(72)),
+               class = "scimagR_error_input")
   expect_true(is.na(compute_mscc(NA, NA, NA)))
 })
 
