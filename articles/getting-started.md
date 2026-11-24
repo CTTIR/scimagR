@@ -78,7 +78,7 @@ sci_create_project(
 #> ── Creating SCI project: Cervical SCI Longitudinal MRI Analysis ────────────────
 #> ✔ Directory structure created.
 #> ✔ Templates created.
-#> ✔ Project created at /tmp/Rtmpud1jXj/my-sci-study
+#> ✔ Project created at /tmp/RtmpQc1bjm/my-sci-study
 #> ℹ Next steps:
 #>   1. Place DICOM files in data/raw/dicom/
 #>   2. Fill in data/metadata/imaging_registry.csv

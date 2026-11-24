@@ -1,5 +1,8 @@
 # scimagR ![scimagR logo](reference/figures/logo-with-name.png)
 
+Zenodo DOI reserved for the release: `10.5281/zenodo.21889958` (not yet
+published).
+
 The building blocks of a longitudinal MRI and CT analysis in spinal cord
 injury (SCI) research: R wrappers for the Spinal Cord Toolbox (SCT) and
 DICOM tools, SCI-specific clinical metrics, an imaging registry,

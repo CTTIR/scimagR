@@ -93,7 +93,7 @@ sci_create_project(proj, open = FALSE)
 #> ── Creating SCI project: SCI Imaging Analysis ──────────────────────────────────
 #> ✔ Directory structure created.
 #> ✔ Templates created.
-#> ✔ Project created at /tmp/Rtmptg3SMc/pipeline-study
+#> ✔ Project created at /tmp/Rtmp0suB2O/pipeline-study
 #> ℹ Next steps:
 #>   1. Place DICOM files in data/raw/dicom/
 #>   2. Fill in data/metadata/imaging_registry.csv

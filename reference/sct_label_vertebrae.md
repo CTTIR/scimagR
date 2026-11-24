@@ -68,8 +68,8 @@ seg <- file.path(dir, "sub-01_T2w_seg.nii.gz")
 file.create(t2w, seg, file.path(dir, "sub-01_T2w_seg_labeled.nii.gz"))
 #> [1] TRUE TRUE TRUE
 sct_label_vertebrae(t2w, seg)
-#> ℹ Output exists, skipping: /tmp/Rtmptg3SMc/sct-label-example/sub-01_T2w_seg_labeled.nii.gz
-#> [1] "/tmp/Rtmptg3SMc/sct-label-example/sub-01_T2w_seg_labeled.nii.gz"
+#> ℹ Output exists, skipping: /tmp/Rtmp0suB2O/sct-label-example/sub-01_T2w_seg_labeled.nii.gz
+#> [1] "/tmp/Rtmp0suB2O/sct-label-example/sub-01_T2w_seg_labeled.nii.gz"
 unlink(dir, recursive = TRUE)
 
 # \donttest{

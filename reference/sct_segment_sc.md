@@ -71,8 +71,8 @@ t2w <- file.path(dir, "sub-01_T2w.nii.gz")
 file.create(t2w, file.path(dir, "sub-01_T2w_seg.nii.gz"))
 #> [1] TRUE TRUE
 sct_segment_sc(t2w)
-#> ℹ Output exists, skipping: /tmp/Rtmptg3SMc/sct-seg-example/sub-01_T2w_seg.nii.gz
-#> [1] "/tmp/Rtmptg3SMc/sct-seg-example/sub-01_T2w_seg.nii.gz"
+#> ℹ Output exists, skipping: /tmp/Rtmp0suB2O/sct-seg-example/sub-01_T2w_seg.nii.gz
+#> [1] "/tmp/Rtmp0suB2O/sct-seg-example/sub-01_T2w_seg.nii.gz"
 unlink(dir, recursive = TRUE)
 
 # \donttest{
